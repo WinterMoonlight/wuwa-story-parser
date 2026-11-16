@@ -1,0 +1,29 @@
+# Local Codex configuration and skills.
+/.codex/
+
+# Raw game data: keep local; not included in normal source commits.
+/ConfigDB/
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.pak
+*.utoc
+*.ucas
+
+# Regenerable corpora, caches and research downloads.
+/outputs/
+/work/
+/dist/
+/build/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
