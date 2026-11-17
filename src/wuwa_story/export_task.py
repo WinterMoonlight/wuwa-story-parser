@@ -6,7 +6,7 @@ from .database import P, O, rows, embedded, texts, json
 from .speakers import SpeakerResolver
 from .rendering import render_result
 from .sequence_calls import head_icon, sequence_call
-from .text_refs import option_container, non_dialogue_reason, control_references
+from .text_refs import option_container, non_dialogue_reason, control_references, phone_media_reference
 from .camera_effects import CAMERA_EFFECTS, camera_shape
 from .reading_effects import FLOW_LOCK_EFFECTS, flow_lock_shape, ENTITY_LOCK_EFFECTS, entity_lock_shape
 from .npc_perform import npc_perform_shape
@@ -62,10 +62,11 @@ def choose_option(options, override=None):
 
 
 class Exporter:
-    def __init__(self, choices=None, source=None, allow_incomplete=False, speaker_records=None, variable_environment=None, capture_control_prefix=False):
+    def __init__(self, choices=None, source=None, allow_incomplete=False, speaker_records=None, variable_environment=None, capture_control_prefix=False, configured_text_order=False):
         self.allow_incomplete = allow_incomplete
         self.variable_environment = variable_environment
         self.capture_control_prefix = capture_control_prefix
+        self.configured_text_order = configured_text_order
         self.unordered_attachments = []
         self.external_content = []
         self.task_ui_texts = []
@@ -361,11 +362,46 @@ class Exporter:
             self.speakers.actors = []
         elif name == 'ShowTalk':
             previous_items = getattr(self, '_active_talk_items', None)
+            previous_show = getattr(self, '_active_show_action', None)
             self._active_talk_items = params['TalkItems']
+            self._active_show_action = action
             try:
-                self.talk(params['TalkItems'])
+                if self.allow_incomplete and self.capture_control_prefix:
+                    from .pending_boundary import conditional_menu_prefix, PendingDialogueBoundary
+                    pending_menu = conditional_menu_prefix(action, texts)
+                    if pending_menu:
+                        from copy import deepcopy
+                        prefix, menu = pending_menu
+                        prefix_start = len(self.events)
+                        self.talk(prefix)
+                        original_items = {item['Id']: item for item in params['TalkItems']}
+                        for event in self.events[prefix_start:]:
+                            if event.get('state_key') == self.state_key and event.get('talk_id') in original_items:
+                                event['source_item'] = deepcopy(original_items[event['talk_id']])
+                        raise PendingDialogueBoundary('conditional_menu', action, self.state_key, menu)
+                if self.allow_incomplete and self.capture_control_prefix:
+                    from .qte_consensus import consensus_projection
+                    consensus = consensus_projection(action, texts)
+                    if consensus:
+                        self.talk(consensus[0])
+                        self.unverified_content.append(consensus[1])
+                        return
+                if self.allow_incomplete and self.configured_text_order:
+                    from .qte_text_order import append_configured_qte_text
+                    if append_configured_qte_text(self, action):
+                        return
+                if (self.allow_incomplete and self.capture_control_prefix
+                        and action.get('Async', False) is False
+                        and not set(action) - {'Name', 'Params', 'ActionId', 'ActionGuid', 'Async'}):
+                    from .qte_evidence import linear_qte_prefix, UnresolvedQteBoundary
+                    prefix = linear_qte_prefix(params)
+                    if prefix is not None:
+                        self.talk(prefix)
+                        raise UnresolvedQteBoundary(action, self.state_key)
+                self.talk(params['TalkItems'], params if action.get('Async', False) is False else None)
             finally:
                 self._active_talk_items = previous_items
+                self._active_show_action = previous_show
         elif name == 'ShowCenterText':
             key = params['TidCenterText']
             self.events.append({'kind': 'narration', 'state_key': self.state_key,
@@ -463,7 +499,7 @@ class Exporter:
             if control:
                 return control
 
-    def talk(self, items):
+    def talk(self, items, show_params=None):
         positions = {item['Id']: i for i, item in enumerate(items)}
         if len(positions) != len(items):
             raise ValueError('Duplicate talk IDs')
@@ -502,7 +538,7 @@ class Exporter:
                 if obj['Name'] == 'JumpTalk' and obj['Params']['TalkId'] not in positions:
                     raise ValueError('Missing JumpTalk target')
             for key in ('TidTalk', 'TidTalkOption'):
-                if key == 'TidTalk' and non_dialogue_reason(obj):
+                if key == 'TidTalk' and (non_dialogue_reason(obj) or phone_media_reference(obj)):
                     continue
                 if obj.get(key):
                     self.text(obj[key])
@@ -515,6 +551,7 @@ class Exporter:
         progress = 0
         while index < len(items):
             item = items[index]
+            self.current_talk_id = item['Id']
             signature = (index, progress)
             if signature in visits:
                 raise ValueError('Dialogue loop has no new option progress')
@@ -524,20 +561,39 @@ class Exporter:
                 raise ValueError('Conditional talk item is unsupported')
             key = item.get('TidTalk')
             if key and not non_dialogue_reason(item):
-                self.events.append({'kind': 'dialogue', 'state_key': self.state_key,
-                                    'talk_group': group,
-                                    'talk_id': item['Id'], 'text_id': key,
-                                    **self.speakers.identify(item.get('WhoId')),
-                                    'raw_text': self.text(key), 'source_item': item})
+                visual = phone_media_reference(item)
+                event = {'kind': 'dialogue', 'state_key': self.state_key,
+                         'talk_group': group,
+                         'talk_id': item['Id'], 'text_id': key,
+                         **self.speakers.identify(item.get('WhoId')),
+                         'raw_text': texts.get(key, '') if visual else self.text(key),
+                         'source_item': item}
+                if visual:
+                    event['phone_media'] = visual
+                self.events.append(event)
             # Only inspected combinations may cross the item/option boundary.
             options = item.get('Options', [])
             if options and item.get('Actions'):
+                if (self.allow_incomplete and self.capture_control_prefix
+                        and isinstance(getattr(self, '_active_show_action', None), dict)
+                        and self._active_show_action.get('Async', False) is False
+                        and not set(self._active_show_action) - {'Name','Params','ActionId','ActionGuid','Async'}):
+                    from .pending_boundary import enrollment_boundary, PendingDialogueBoundary
+                    pending_panel = enrollment_boundary(item)
+                    if pending_panel:
+                        raise PendingDialogueBoundary('enrollment', pending_panel, self.state_key, item)
                 from .combined_presentation import combined_hide, combined_actor, evidence as combined_evidence
                 safe_combined_hide = self.allow_incomplete and combined_hide(item)
                 safe_combined_actor = self.allow_incomplete and combined_actor(item, items, self.speakers.records)
+                combined_panel = None
+                if (self.allow_incomplete and len(item['Actions']) == 1
+                        and item['Actions'][0].get('Name') == 'OpenSystemBoard'
+                        and item['Actions'][0].get('Params', {}).get('SystemType') == 'InformationView'):
+                    from .combined_information import inspect_combined_information
+                    combined_panel = inspect_combined_information(item, show_params, self.rows)
                 # Other control/identity/text combinations retain their ordering barrier.
                 visual = {'FadeInScreen', 'FadeOutScreen', 'DestroyEntity', 'SetFlowTemplate', 'CameraLookAt'}
-                if not (safe_combined_hide or safe_combined_actor) and any(a['Name'] not in visual and not (self.allow_incomplete and a['Name'] == 'SetHeadIconVisible'
+                if not (safe_combined_hide or safe_combined_actor or combined_panel) and any(a['Name'] not in visual and not (self.allow_incomplete and a['Name'] == 'SetHeadIconVisible'
                         and head_icon(a.get('Params'))) for a in item['Actions']):
                     raise ValueError('Combined item/option actions need ordering verification')
                 if safe_combined_hide:
@@ -550,7 +606,16 @@ class Exporter:
                     self.unverified_content.append({'kind': 'combined_head_icon_presentation',
                         'state_key': self.state_key, 'talk_id': item['Id'],
                         'note': 'Icon visibility does not assign speaker or select dialogue; exact UI timing not verified'})
-                self.actions(item['Actions'])
+                if combined_panel:
+                    combined_panel['parent_state_key'] = self.state_key
+                    combined_panel['call_anchor']['after_event_count'] = len(self.events)
+                    self.unordered_attachments.append(combined_panel)
+                    self.action_log.append({'state_key': self.state_key, **item['Actions'][0]})
+                    self.unverified_content.append({'kind': 'combined_information_display_timing',
+                        'state_key': self.state_key, 'talk_id': item['Id'],
+                        'display_order_verified': False, 'dialogue_branches_verified': True})
+                else:
+                    self.actions(item['Actions'])
             if options:
                 choice_key = f'{self.state_key}:{item["Id"]}' + (f':group{group}' if group > 1 else '')
                 tried = chosen.setdefault(item['Id'], set())
@@ -682,9 +747,10 @@ def write_result(result, folder=None, quiet=False):
     folder = folder if folder is not None else O / ('待核验任务' if result['validation'].get('status') == 'needs_review' else '任务样本')
     folder.mkdir(parents=True, exist_ok=True)
     stem = str(result['quest_id']) + '_' + re.sub(r'[<>:"/\\|?*]', '_', result['title'])
-    (folder / (stem + '.json')).write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
-    from .reading import reading_text
-    (folder / (stem + '.txt')).write_text(reading_text(result), encoding='utf-8-sig')
+    from .mainline_reading import build_mainline_reading, mainline_reading_text
+    document = {**result, 'mainline_reading': build_mainline_reading(result)}
+    (folder / (stem + '.json')).write_text(json.dumps(document, ensure_ascii=False, indent=2), encoding='utf-8')
+    (folder / (stem + '.txt')).write_text(mainline_reading_text(document), encoding='utf-8-sig')
     if not quiet:
         if result.get('recap_backbone'):
             b = result['recap_backbone']

@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 from .database import O
-from .reading import reading_text
+from .mainline_reading import build_mainline_reading, mainline_reading_text
 
 
 def refresh_reading(root=O):
@@ -14,7 +14,8 @@ def refresh_reading(root=O):
         data = json.loads(raw.decode('utf-8-sig'))
         if not isinstance(data, dict) or not all(k in data for k in ('quest_id', 'title', 'events', 'validation')):
             continue
-        text = reading_text(data)
+        document = {**data, 'mainline_reading': build_mainline_reading(data)}
+        text = mainline_reading_text(document)
         prepared.append((path, data, raw, text))
     records = []
     for path, data, raw, text in prepared:
@@ -34,7 +35,7 @@ def refresh_reading(root=O):
               'txt_changed': sum(r['txt_changed'] for r in records), 'records': records}
     (root / '阅读版更新清单.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
     lines = ['# 已导出任务阅读索引', '', 'TXT 为阅读版，完整技术记录保存在同名 JSON。历史批次沿用各自原有路线和证据。', '',
-             '小游戏候选分支仍不代表已验证的成功路线；各任务缺口见阅读版末尾说明。', '', '## 任务入口', '']
+             'TXT保留主干和简短过程说明，复杂玩法和候选分支保存在JSON；局部片段会标明顺序范围。', '', '## 任务入口', '']
     for qid in sorted({r['quest_id'] for r in records}):
         candidates = [r for r in records if r['quest_id'] == qid]
         chosen = min(candidates, key=lambda r: (len(Path(r['txt']).parts), r['txt']))

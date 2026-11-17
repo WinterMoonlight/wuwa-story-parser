@@ -1,0 +1,501 @@
+{
+  "batch": "20261117_190946_700349",
+  "task_count": 12,
+  "total_task_nodes": 382,
+  "tasks": [
+    {
+      "quest_id": 140800000,
+      "title": "千里卷戎旌",
+      "quest_definition_present": true,
+      "node_count": 28,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 9,
+        "ChildQuest": 5,
+        "QuestSucceed": 1,
+        "ParallelSelect": 4,
+        "Condition": 4,
+        "Action": 5
+      },
+      "node_storage": {
+        "key_and_json_only": 28
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 0,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [
+        {
+          "path": [
+            "nodes",
+            1,
+            "EnterActions",
+            4,
+            "Params",
+            "Flow"
+          ],
+          "reference": {
+            "FlowListName": "剧情_天城生态_NPC",
+            "FlowId": 57
+          },
+          "action": "AddPlayBubble"
+        }
+      ],
+      "prequests": [
+        102000000
+      ],
+      "counterparts": [],
+      "first_export_error": "Flow reference has no explicit StateId",
+      "existing_local_groups": 0
+    },
+    {
+      "quest_id": 125000120,
+      "title": "梦境遗尘",
+      "quest_definition_present": true,
+      "node_count": 16,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 5,
+        "QuestSucceed": 1,
+        "ChildQuest": 9,
+        "ConditionSelector": 1
+      },
+      "node_storage": {
+        "key_and_json_only": 16
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 6,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [],
+      "prequests": [
+        880000013
+      ],
+      "counterparts": [
+        {
+          "quest_id": 121800000,
+          "recall_id": 110070,
+          "same_node_topology": true,
+          "node_count": 16,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in the two recall vectors"
+        }
+      ],
+      "first_export_error": "No unique PlotHandBook order for this quest",
+      "existing_local_groups": 0
+    },
+    {
+      "quest_id": 125000121,
+      "title": "远赴乘霄",
+      "quest_definition_present": true,
+      "node_count": 54,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 8,
+        "ChildQuest": 39,
+        "QuestSucceed": 1,
+        "ParallelSelect": 4,
+        "AlwaysFalse": 2
+      },
+      "node_storage": {
+        "key_and_json_only": 54
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 29,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [],
+      "prequests": [
+        125000120
+      ],
+      "counterparts": [
+        {
+          "quest_id": 121800001,
+          "recall_id": 110070,
+          "same_node_topology": true,
+          "node_count": 54,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in the two recall vectors"
+        }
+      ],
+      "first_export_error": "Unsupported task action: HideSpecificEntities",
+      "existing_local_groups": 0
+    },
+    {
+      "quest_id": 125000122,
+      "title": "朝觐之路",
+      "quest_definition_present": true,
+      "node_count": 30,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 5,
+        "ChildQuest": 21,
+        "QuestSucceed": 1,
+        "ParallelSelect": 1,
+        "AlwaysFalse": 1,
+        "Action": 1
+      },
+      "node_storage": {
+        "key_and_json_only": 30
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 15,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [],
+      "prequests": [
+        133000009
+      ],
+      "counterparts": [
+        {
+          "quest_id": 121800003,
+          "recall_id": 110070,
+          "same_node_topology": true,
+          "node_count": 30,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in the two recall vectors"
+        }
+      ],
+      "first_export_error": "Unsupported task action: MoveWithSpline",
+      "existing_local_groups": 0
+    },
+    {
+      "quest_id": 125000123,
+      "title": "时序之主",
+      "quest_definition_present": true,
+      "node_count": 10,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 3,
+        "ChildQuest": 6,
+        "QuestSucceed": 1
+      },
+      "node_storage": {
+        "key_and_json_only": 10
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 5,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [],
+      "prequests": [
+        146000002
+      ],
+      "counterparts": [
+        {
+          "quest_id": 121800005,
+          "recall_id": 110070,
+          "same_node_topology": true,
+          "node_count": 10,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in the two recall vectors"
+        }
+      ],
+      "first_export_error": "Unsupported task action: ToggleMapMarkState",
+      "existing_local_groups": 0
+    },
+    {
+      "quest_id": 125000124,
+      "title": "风消雪霁",
+      "quest_definition_present": true,
+      "node_count": 12,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 3,
+        "ChildQuest": 5,
+        "QuestSucceed": 1,
+        "ParallelSelect": 1,
+        "AlwaysFalse": 1,
+        "ConditionSelector": 1
+      },
+      "node_storage": {
+        "key_and_json_only": 12
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 4,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [],
+      "prequests": [
+        125000123
+      ],
+      "counterparts": [
+        {
+          "quest_id": 121800006,
+          "recall_id": 110070,
+          "same_node_topology": true,
+          "node_count": 12,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in the two recall vectors"
+        }
+      ],
+      "first_export_error": "Unsupported task action: EnableLevelPlay",
+      "existing_local_groups": 0
+    },
+    {
+      "quest_id": 133000009,
+      "title": "叩天关",
+      "quest_definition_present": true,
+      "node_count": 56,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 9,
+        "ChildQuest": 41,
+        "QuestSucceed": 1,
+        "ParallelSelect": 3,
+        "ConditionSelector": 1,
+        "QuestFailed": 1
+      },
+      "node_storage": {
+        "key_and_json_only": 56
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 15,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [],
+      "prequests": [
+        125000121
+      ],
+      "counterparts": [
+        {
+          "quest_id": 121800002,
+          "recall_id": 110070,
+          "same_node_topology": true,
+          "node_count": 56,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in the two recall vectors"
+        }
+      ],
+      "first_export_error": "Unsupported task action: ShowSpecificEntities",
+      "existing_local_groups": 1
+    },
+    {
+      "quest_id": 146000002,
+      "title": "眠龙庭",
+      "quest_definition_present": true,
+      "node_count": 57,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 12,
+        "Action": 2,
+        "ChildQuest": 28,
+        "QuestSucceed": 1,
+        "ParallelSelect": 11,
+        "Condition": 2,
+        "QuestFailed": 1
+      },
+      "node_storage": {
+        "key_and_json_only": 57
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 4,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [],
+      "prequests": [
+        125000122
+      ],
+      "counterparts": [
+        {
+          "quest_id": 121800004,
+          "recall_id": 110070,
+          "same_node_topology": true,
+          "node_count": 57,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in the two recall vectors"
+        }
+      ],
+      "first_export_error": "Unsupported world effect parameters: SetPlayerOperationRestriction",
+      "existing_local_groups": 1
+    },
+    {
+      "quest_id": 880000017,
+      "title": "解析被异常代码污染的心愿（一）",
+      "quest_definition_present": true,
+      "node_count": 16,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 5,
+        "ChildQuest": 8,
+        "QuestSucceed": 1,
+        "ParallelSelect": 1,
+        "QuestFailed": 1
+      },
+      "node_storage": {
+        "key_and_json_only": 16
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 10,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [],
+      "prequests": [
+        880000015
+      ],
+      "counterparts": [
+        {
+          "quest_id": 32750004,
+          "recall_id": 112000,
+          "same_node_topology": true,
+          "node_count": 16,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in replay vector; original task not explicitly paired by this row"
+        }
+      ],
+      "first_export_error": "No unique PlotHandBook order for this quest",
+      "existing_local_groups": 0
+    },
+    {
+      "quest_id": 880000021,
+      "title": "月下祈愿其二·筹备",
+      "quest_definition_present": true,
+      "node_count": 31,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 7,
+        "ChildQuest": 17,
+        "QuestSucceed": 1,
+        "ParallelSelect": 2,
+        "Condition": 3,
+        "AlwaysFalse": 1
+      },
+      "node_storage": {
+        "key_and_json_only": 31
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 8,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [
+        {
+          "path": [
+            "nodes",
+            7,
+            "FinishActions",
+            0,
+            "Params",
+            "Flow"
+          ],
+          "reference": {
+            "FlowListName": "剧情_V1.2追月节主线明线",
+            "FlowId": 8
+          },
+          "action": "RemoveFlowInteractOption"
+        }
+      ],
+      "prequests": [
+        880000017
+      ],
+      "counterparts": [
+        {
+          "quest_id": 32750005,
+          "recall_id": 112000,
+          "same_node_topology": true,
+          "node_count": 31,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in replay vector; original task not explicitly paired by this row"
+        }
+      ],
+      "first_export_error": "Unsupported task action: AddFlowInteractOption",
+      "existing_local_groups": 0
+    },
+    {
+      "quest_id": 880000025,
+      "title": "月下祈愿其三·筹备",
+      "quest_definition_present": true,
+      "node_count": 34,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 8,
+        "ChildQuest": 17,
+        "QuestSucceed": 1,
+        "ParallelSelect": 3,
+        "QuestFailed": 1,
+        "AlwaysFalse": 1,
+        "Condition": 3
+      },
+      "node_storage": {
+        "key_and_json_only": 34
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 6,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [],
+      "prequests": [
+        880000021
+      ],
+      "counterparts": [
+        {
+          "quest_id": 32750006,
+          "recall_id": 112000,
+          "same_node_topology": true,
+          "node_count": 34,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in replay vector; original task not explicitly paired by this row"
+        }
+      ],
+      "first_export_error": "Unsupported task action: ToggleScanSplineEffect",
+      "existing_local_groups": 0
+    },
+    {
+      "quest_id": 880000032,
+      "title": "月下祈愿其四·筹备",
+      "quest_definition_present": true,
+      "node_count": 38,
+      "handbook_rows": 0,
+      "node_types": {
+        "Sequence": 9,
+        "ChildQuest": 21,
+        "QuestSucceed": 1,
+        "ParallelSelect": 3,
+        "AlwaysFalse": 1,
+        "Condition": 3
+      },
+      "node_storage": {
+        "key_and_json_only": 38
+      },
+      "has_explicit_children": false,
+      "ancestry_errors": [],
+      "exact_flow_reference_count": 14,
+      "missing_exact_flow_definitions": [],
+      "references_without_state": [],
+      "prequests": [
+        880000025
+      ],
+      "counterparts": [
+        {
+          "quest_id": 32750027,
+          "recall_id": 112000,
+          "same_node_topology": true,
+          "node_count": 38,
+          "handbook_rows": 0,
+          "has_explicit_children": false,
+          "basis": "same title in replay vector; original task not explicitly paired by this row"
+        }
+      ],
+      "first_export_error": "Unsupported variable assignment",
+      "existing_local_groups": 0
+    }
+  ],
+  "source_sha256": {
+    "db_QuestData.db": "14a03291e5598993d3db31ac3ba9df1ab23d449de4c99f69f13e81a166c94965",
+    "db_QuestNodeData.db": "ee7a21366c9d697b4f718e163ee23811ec14a210bc1048dc1325aac0a88150a2",
+    "db_PlotHandBook.db": "ce76c3b33f244601dba2dcc27d429eb0d67de87c879dc4a2842f22c64cc3f0a6",
+    "db_QuestTree.db": "c959a4cd55e07be60066f14431299526838ece36cb5e3971f273edab889446a9",
+    "db_QuestRecall.db": "b22a04290ffd11c6ff74e24388f049c56f0a6e29887a84aa0d5d9fd3d0d9fd8d",
+    "db_flowState.db": "f6b8a427029f97f8d8d96910c34e2e2e33e8b0e61e5269b49e45b2e361f20516"
+  },
+  "conclusion": "All task definitions and exact referenced flows exist. No per-task PlotHandBook rows. Sibling execution order semantics still need evidence."
+}

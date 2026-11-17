@@ -82,6 +82,26 @@ def declared_levelplays(quest, task_nodes, entries, source):
             if not valid:
                 gaps.append({'declaration': declaration, 'node_id': node['Id'], 'reason': 'invalid_ancestry'})
                 continue
+            condition = node.get('Condition', {})
+            if condition.get('Type') == 'PlayFlow':
+                flow = condition.get('Flow')
+                if (isinstance(flow, dict) and isinstance(flow.get('FlowListName'), str)
+                        and flow['FlowListName'] and type(flow.get('FlowId')) is int
+                        and type(flow.get('StateId')) is int):
+                    links.append({'state_key': flow_key(flow), 'declaration': declaration,
+                                  'levelplay_id': play_id, 'map_id': map_id, 'node_id': node['Id'],
+                                  'phase': 'Condition', 'source_path': ['Condition', 'Flow'],
+                                  'source_condition': condition,
+                                  'reference_kind': 'flow_completion_condition',
+                                  'ancestor_ids': [a['Id'] for a in ancestors],
+                                  'ancestor_types': [a.get('Type') for a in ancestors],
+                                  'failure_ancestor': any(a.get('Type') == 'QuestFailed' for a in [node]+ancestors),
+                                  'source_row_key': r['Key'], 'source_sha256': hashlib.sha256(r['BinData']).hexdigest(),
+                                  'ownership_basis': 'QuestData.Children exact map/levelplay pair',
+                                  'order_verified': False, 'runtime_trigger_verified': False})
+                else:
+                    gaps.append({'declaration': declaration, 'node_id': node['Id'],
+                                 'phase': 'Condition', 'reason': 'malformed_flow_reference'})
             for phase in ('Actions', 'EnterActions', 'FinishActions'):
                 for index, action in enumerate(node.get(phase, [])):
                     flow = action.get('Params', {})

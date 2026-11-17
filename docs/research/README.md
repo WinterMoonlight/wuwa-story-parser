@@ -2,6 +2,70 @@
 
 历史报告保留当时的验证数字与本地产物路径。当前状态见项目根目录规划文件。
 
+- [后日谈关联回顾区段恢复](epilogue-linked-recap.md)：跨条目定位3/10→3/13→3/11，补回76条文字与选择。
+
+- [月下祈愿其三的心愿纸条调用顺序](wish-note-call-order.md)：将条件对白、资料面板和后续旁白按同节点调用顺序连接。
+
+- [远赴乘霄其他片段与节点阶段](departure-phase-progression.md)：恢复进入、完成阶段被漏过的4句对白，区分调用顺序与播放完成顺序。
+
+- [远赴乘霄的条件完成与后续对白](departure-condition-followup.md)
+
+- [风消雪霁三段对白的推进关系](wind-task-progression.md)
+
+- [复杂任务的条件流程与性别分支正文恢复](task-condition-flow-recovery.md)
+
+- [数据库同步前置对白恢复](database-sync-prefix.md)
+
+- [补齐逻辑树与剧情运行器后的第二轮核查](client-script-execution-review.md)
+
+- [新导出JavaScript脚本的三路核查](client-script-review.md)
+
+- [眠龙庭的Sequence推进与跨分支依赖](mianlong-sequence-dependencies.md)
+
+- [眠龙庭与最复杂无主干任务试验](hardest-mainline-case.md)
+
+- [主线精简阅读投影与荣耀暗面验证](mainline-reading-projection.md)
+
+- [时序之主节点推进与分段阅读](master-of-time-sequence.md)
+
+- [无整体顺序的12条任务数据来源核查](unordered-task-sources.md)
+
+- [任务调用优先与补充片段恢复](task-finish-supplement.md)
+
+- [荣耀暗面的回顾顺序与任务调用](glory-dependency-order.md)
+
+- [唯一回顾提示下的同步完成对白](tip-finish-flow-validation.md)
+
+- [阿维纽林过场核验与场景触发对白](avinuolin-trigger-review.md)
+
+- [阅读版中的操作标签与任务对白](reading-labels-validation.md)
+
+- [并行分支内的连续同步调用](parallel-task-order-validation.md)
+
+- [无回顾任务中的连续同步对白](adjacent-task-order-validation.md)
+
+- [任务独有对白的局部调用顺序](task-local-sequence-validation.md)
+
+- [单线QTE配置的通用文本顺序](qte-configured-text-order.md)
+
+- [入学界面返回后的现有文本顺序](panel-return-text-validation.md)
+
+- [现有文本顺序与阻塞重分类](known-text-order-validation.md)
+
+- [剩余20项阻塞的证据与FModel补文件清单](remaining20-evidence-request.md)
+
+- [浮动字幕、条件路线与界面调度专项](focused-blockers-validation.md)
+
+- [剩余20项独立阻塞闭合证据复核](remaining20-revalidation.md)
+
+- [可解析无条件备选路线核查](viable-choice-validation.md)
+
+- [Enrollment与变量条件边界复核](enrollment-variable-boundaries.md)
+
+- [24项独立阻塞逐项核查](blocker-queue-validation.md)
+
+- [第十轮阻塞复核与正文恢复](blockers-round10-validation.md)
+
 - [AdjustPlayerCamera及曲线恢复参数核查](adjust-camera-validation.md)
 - [批量阅读版姓名与文本类型核查](batch-speaker-validation.md)
 - [镜头与朝向动作阅读支持](camera-effects-validation.md)
@@ -67,3 +131,11 @@
 - [万象新声·下：外部内容调查与待核验导出](wanxiang-lower-validation.md)
 - [万象新声·上：跨任务验证与导出](wanxiang-upper-validation.md)
 - [WuwaID 同数据对照：荣耀暗面](wuwaid-comparison.md)
+
+- [资源引用空缺与阅读标签清理](resource-reference-cleanup.md)，手机图片误报修正、流程空缺前后文和标签清理验证。
+
+- [来自毁灭的回声第28、29段核查](echoes-recap-28-29.md)，精确引用缺失原因、玩法条件漏扫修正与新增19条文本。
+
+- [当前解析能力盘点](parser-capability-audit.md)，明确各解析入口的剩余问题、统计范围及具体任务实例。
+
+- [占位符显示与后续解析计划](reading-templates-plan.md)，本轮显示处理及界面场景降级、变量和引用覆盖的实施安排。

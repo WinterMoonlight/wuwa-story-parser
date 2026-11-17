@@ -1,6 +1,30 @@
 """Classify speech references by node semantics, never by missing-key prefixes."""
 
 
+PHONE_MEDIA_TEXT = {'Emoji': '【表情：图片内容尚未核验】',
+                     'Attachment': '【附件：内容尚未核验】'}
+
+
+def phone_media_reference(item):
+    """Recognize non-text message references without resolving attachment contents."""
+    if item.get('Type') != 'PhoneMessage':
+        return None
+    message = item.get('MessageType')
+    if not isinstance(message, dict):
+        return None
+    identifiers = {'Emoji': ('EmojiId', 'emoji_id'),
+                   'Attachment': ('AttachmentId', 'attachment_id')}
+    fields = identifiers.get(message.get('Type'))
+    if fields is None:
+        return None
+    source_field, output_field = fields
+    if (set(message) != {'Type', source_field} or type(message[source_field]) is not int
+            or message[source_field] <= 0):
+        return None
+    return {'type': message['Type'], output_field: message[source_field],
+            'visual_content_verified': False}
+
+
 def option_container(item):
     return (item.get('Type') == 'Option'
             and not item.get('PlotLineKey') and 'TextId' not in item)

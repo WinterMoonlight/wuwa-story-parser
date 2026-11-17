@@ -75,6 +75,7 @@ def entity_trigger_content(quest, source):
                     links.append({'state_key': flow_key(flow), 'declaration': declaration,
                         'map_id': pair[0], 'entity_id': pair[1], 'row_id': row['Id'],
                         'component': component, 'source_component': value, 'source_path': source_path,
+                        'trigger_range': config.get('RangeComponent'),
                         'source_action': action, 'equivalent_json_fields': [i for i, _ in configs],
                         'source_sha256': hashlib.sha256(row['BinData']).hexdigest(),
                         'ownership_basis': 'QuestData.Children exact map/entity pair; explicit PlayFlow action',

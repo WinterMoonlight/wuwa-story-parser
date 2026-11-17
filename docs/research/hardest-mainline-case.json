@@ -1,0 +1,157 @@
+{
+  "selected_quest_id": 146000002,
+  "selection_basis": "largest node count and largest parallel-node count in the current twelve tasks",
+  "tasks": [
+    {
+      "quest_id": 146000002,
+      "title": "眠龙庭",
+      "node_count": 57,
+      "node_types": {
+        "Sequence": 12,
+        "Action": 2,
+        "ChildQuest": 28,
+        "QuestSucceed": 1,
+        "ParallelSelect": 11,
+        "Condition": 2,
+        "QuestFailed": 1
+      }
+    },
+    {
+      "quest_id": 133000009,
+      "title": "叩天关",
+      "node_count": 56,
+      "node_types": {
+        "Sequence": 9,
+        "ChildQuest": 41,
+        "QuestSucceed": 1,
+        "ParallelSelect": 3,
+        "ConditionSelector": 1,
+        "QuestFailed": 1
+      }
+    },
+    {
+      "quest_id": 125000121,
+      "title": "远赴乘霄",
+      "node_count": 54,
+      "node_types": {
+        "Sequence": 8,
+        "ChildQuest": 39,
+        "QuestSucceed": 1,
+        "ParallelSelect": 4,
+        "AlwaysFalse": 2
+      }
+    },
+    {
+      "quest_id": 880000032,
+      "title": "月下祈愿其四·筹备",
+      "node_count": 38,
+      "node_types": {
+        "Sequence": 9,
+        "ChildQuest": 21,
+        "QuestSucceed": 1,
+        "ParallelSelect": 3,
+        "AlwaysFalse": 1,
+        "Condition": 3
+      }
+    },
+    {
+      "quest_id": 880000025,
+      "title": "月下祈愿其三·筹备",
+      "node_count": 34,
+      "node_types": {
+        "Sequence": 8,
+        "ChildQuest": 17,
+        "QuestSucceed": 1,
+        "ParallelSelect": 3,
+        "QuestFailed": 1,
+        "AlwaysFalse": 1,
+        "Condition": 3
+      }
+    },
+    {
+      "quest_id": 880000021,
+      "title": "月下祈愿其二·筹备",
+      "node_count": 31,
+      "node_types": {
+        "Sequence": 7,
+        "ChildQuest": 17,
+        "QuestSucceed": 1,
+        "ParallelSelect": 2,
+        "Condition": 3,
+        "AlwaysFalse": 1
+      }
+    },
+    {
+      "quest_id": 125000122,
+      "title": "朝觐之路",
+      "node_count": 30,
+      "node_types": {
+        "Sequence": 5,
+        "ChildQuest": 21,
+        "QuestSucceed": 1,
+        "ParallelSelect": 1,
+        "AlwaysFalse": 1,
+        "Action": 1
+      }
+    },
+    {
+      "quest_id": 140800000,
+      "title": "千里卷戎旌",
+      "node_count": 28,
+      "node_types": {
+        "Sequence": 9,
+        "ChildQuest": 5,
+        "QuestSucceed": 1,
+        "ParallelSelect": 4,
+        "Condition": 4,
+        "Action": 5
+      }
+    },
+    {
+      "quest_id": 880000017,
+      "title": "解析被异常代码污染的心愿（一）",
+      "node_count": 16,
+      "node_types": {
+        "Sequence": 5,
+        "ChildQuest": 8,
+        "QuestSucceed": 1,
+        "ParallelSelect": 1,
+        "QuestFailed": 1
+      }
+    },
+    {
+      "quest_id": 125000120,
+      "title": "梦境遗尘",
+      "node_count": 16,
+      "node_types": {
+        "Sequence": 5,
+        "QuestSucceed": 1,
+        "ChildQuest": 9,
+        "ConditionSelector": 1
+      }
+    },
+    {
+      "quest_id": 125000124,
+      "title": "风消雪霁",
+      "node_count": 12,
+      "node_types": {
+        "Sequence": 3,
+        "ChildQuest": 5,
+        "QuestSucceed": 1,
+        "ParallelSelect": 1,
+        "AlwaysFalse": 1,
+        "ConditionSelector": 1
+      }
+    },
+    {
+      "quest_id": 125000123,
+      "title": "时序之主",
+      "node_count": 10,
+      "node_types": {
+        "Sequence": 3,
+        "ChildQuest": 6,
+        "QuestSucceed": 1
+      }
+    }
+  ]
+}

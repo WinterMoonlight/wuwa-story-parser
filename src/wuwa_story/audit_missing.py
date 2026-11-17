@@ -11,7 +11,7 @@ from pathlib import Path
 
 from .database import P, rows, texts
 from .export_task import flow_actions
-from .text_refs import non_dialogue_reason
+from .text_refs import non_dialogue_reason, phone_media_reference
 
 
 def quote(name):
@@ -28,26 +28,39 @@ def audit(report_path):
         result = json.loads((report_path.parent / task['files'][0]).read_text(encoding='utf-8'))
         recap_only = {key for gap in task['gaps'] if gap['kind'] == 'recap_reference_difference'
                       for key in gap.get('recap_only', [])}
+        reported = {k for g in task['gaps'] if g['kind'] == 'missing_text' for k in g['text_ids']}
         refs = []
         for record in result['batch_coverage']['records']:
-            if not record.get('missing'):
+            value = result
+            if record.get('pointer'):
+                for part in record['pointer'].strip('/').split('/'):
+                    value = value[int(part)] if isinstance(value, list) else value[part]
+            else:
+                value = record
+            key = value.get('text_id')
+            if key not in reported:
                 continue
-            key = record['text_id']
             keys.add(key)
-            row = states[record['origin']]
-            actions, _ = flow_actions(row['BinData'])
-            node = actions
-            for part in record['source_path'][:-1]:
-                node = node[part]
+            state_key = value.get('state_key') or record.get('origin')
+            row = states[state_key]
+            node = value.get('source_item')
+            if node is None:
+                node = flow_actions(row['BinData'])[0]
+                for part in record['source_path'][:-1]:
+                    node = node[part]
             reason = non_dialogue_reason(node)
-            refs.append({'text_id': key, 'state_key': record['origin'],
-                         'reference_scope': 'recap_only' if record['origin'] in recap_only else 'task_or_shared',
-                         'source_path': record['source_path'], 'source_item': node,
+            visual = phone_media_reference(node)
+            classification = ('media_reference' if visual else
+                              'control_reference' if reason else 'unresolved_body_reference')
+            refs.append({'text_id': key, 'state_key': state_key,
+                         'reference_scope': 'recap_only' if state_key in recap_only else 'task_or_shared',
+                         'source_path': record.get('source_path'), 'pointer': record.get('pointer'),
+                         'source_item': node,
                          'source_sha256': hashlib.sha256(row['BinData']).hexdigest(),
-                         'classification': 'control_reference' if reason else 'unresolved_body_reference',
-                         'reason': reason or 'Ordinary speech reference; missing resource versus stale/wrong reference not proven'})
+                         'classification': classification,
+                         'reason': reason or ('phone_visual' if visual else
+                             'Ordinary speech reference; missing resource versus stale/wrong reference not proven')})
         observed = {r['text_id'] for r in refs}
-        reported = {k for g in task['gaps'] if g['kind'] == 'missing_text' for k in g['text_ids']}
         tasks.append({'quest_id': task['quest_id'], 'title': task['title'], 'references': refs,
                       'unlocated_report_keys': sorted(reported - observed)})
         keys.update(reported)

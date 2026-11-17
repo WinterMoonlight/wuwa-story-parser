@@ -37,12 +37,12 @@ class RoundFourTests(unittest.TestCase):
         self.assertIn('秧秧啊',s['events'][i+1]['text'])
         self.assertNotIn('剧情_3_5_拉海洛今州_2_1',[x['state_key'] for x in d['recap_backbone']['segments']])
 
-    def test_finish_state_is_not_ignored(self):
+    def test_terminal_text_keeps_finish_state_unexecuted(self):
         key='剧情_2_0_黎那汐塔主线_第三幕下_狂欢节_60_1'
         d=export_task_backbone(114000029)
         s=next(s for s in d['recap_backbone']['segments'] if s['state_key']==key)
-        self.assertEqual(s['status'],'blocked')
-        self.assertIn('FinishState',s['error'])
-        self.assertEqual(s['prefix_event_count'],4)
-        self.assertEqual(s['events'][-1]['kind'],'recap_gap')
-        self.assertFalse(s['control_boundary']['boundary_executed'])
+        self.assertEqual(s['status'],'parsed')
+        self.assertEqual(len(s['events']),4)
+        proof=next(p for p in s['unverified_content'] if p['kind']=='terminal_text_boundary')
+        self.assertFalse(proof['state_controls_executed'])
+        self.assertFalse(proof['runtime_completion_verified'])

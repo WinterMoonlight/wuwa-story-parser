@@ -14,15 +14,17 @@ python run.py export-task --quest-id 139000026 --allow-incomplete
 
 `export-reading-batch`生成135条当前分类任务的覆盖阅读版与严格批处理报告。`export-recap`生成单任务阅读草稿，使用相同批量分析逻辑。`export-task`运行任务导出器，`--allow-incomplete`允许其已支持的阅读投影。
 
+以上导出的TXT采用主线精简阅读版，JSON追加`mainline_reading`并保留全部已提取材料。批量生成`主线阅读报告.md/json`，列出有序草稿、局部片段和暂无正文记录。`refresh-reading`沿用同一显示规则重建TXT，原JSON文件保持不变。
+
 选择文件为JSON对象，键为解析器输出的选择键，值为从0开始的选项索引。实际例子见[条件路线验证](research/capture-dream-variables-validation.md)。
 
 ## 阅读审查版
 
 ```powershell
-python run.py export-review --batch outputs/主线批量/20261117_132957_607004/覆盖阅读版 --review docs/reviews/reading-acceptance-005.json --output outputs/review
+python run.py export-review --batch outputs/my-batch/覆盖阅读版 --review review.json --output outputs/review
 ```
 
-审查记录绑定源JSON/TXT的SHA-256。批次或文件变化时需重新核查，再更新审查记录。当前审查记录需要恢复对应本地批次才能重导。
+以上路径是示例，需要替换为实际批次和审查文件。审查记录绑定源JSON/TXT的SHA-256，批次或文件变化时需重新核查，不能沿用旧结论。批次核对工具位于`scripts/audits/`。
 
 ## 数据和诊断
 

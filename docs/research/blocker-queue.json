@@ -1,0 +1,668 @@
+{
+  "baseline": "outputs/主线批量/20261117_135850_383960/覆盖阅读版",
+  "scope": "24 exact recap blockers, 26 occurrences",
+  "items": [
+    {
+      "id": "B01",
+      "round": 1,
+      "category": "combined_interaction",
+      "state_key": "剧情_3_0_主线_拉海洛主线_上半_1_15_1",
+      "error": "Combined item/option actions need ordering verification",
+      "occurrences": 1,
+      "quest_ids": [
+        915000001
+      ],
+      "evidence_needed": "界面调用与选项的关系、控制影响及正文归属",
+      "titles": [
+        "冰原下的星炬"
+      ],
+      "cases": [
+        {
+          "quest_id": 915000001,
+          "entry_index": 22,
+          "source_sha256": "f7d127d3f1505457a84f721fefa4335052f52f1a6b7d127f3b1dba0aa84921f5"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B01.md",
+      "assigned_agent": "queue_b01",
+      "decision": "panel_return_text_ordered_runtime_unverified",
+      "followup": "26 text events placed in order under the explicit panel-return premise; original UI boundary retained; dispatch and runtime return remain unverified"
+    },
+    {
+      "id": "B02",
+      "round": 1,
+      "category": "state_control",
+      "state_key": "剧情_2.8千夏活动主线_9_14",
+      "error": "Unsupported action: SetVar",
+      "occurrences": 1,
+      "quest_ids": [
+        880000044
+      ],
+      "evidence_needed": "赋值后控制边界与执行语义；已有前缀不代表整段完成",
+      "titles": [
+        "曙光停摆于荒地之上"
+      ],
+      "cases": [
+        {
+          "quest_id": 880000044,
+          "entry_index": 80,
+          "source_sha256": "e8372cd283326f3fd0db54b5f695465d6423c8503bac79941fe9e51ec16e8d4f"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B02.md",
+      "assigned_agent": "queue_b02",
+      "decision": "keep_gap",
+      "alternative": "explicit option1 parses 18 events; default unchanged",
+      "followup": "implicit default uses fully parsed unconditional alternative; explicit original option remains blocked and audited"
+    },
+    {
+      "id": "B03",
+      "round": 1,
+      "category": "state_control",
+      "state_key": "剧情_2_0_黎那汐塔主线_第三幕下_狂欢节_21_1",
+      "error": "Unsupported action: SetVar",
+      "occurrences": 1,
+      "quest_ids": [
+        114000029
+      ],
+      "evidence_needed": "赋值后控制边界与执行语义；已有前缀不代表整段完成",
+      "titles": [
+        "昔我悲伤，今却歌唱"
+      ],
+      "cases": [
+        {
+          "quest_id": 114000029,
+          "entry_index": 24,
+          "source_sha256": "5dc537193e72be2673830f8bce1b4ec807644aed4487cae5a791d12275d39658"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B03.md",
+      "assigned_agent": "queue_b03",
+      "decision": "terminal_text_complete_runtime_unverified"
+    },
+    {
+      "id": "B04",
+      "round": 2,
+      "category": "state_control",
+      "state_key": "剧情_2_0_黎那汐塔主线_第三幕下_狂欢节_60_1",
+      "error": "Unsupported action: FinishState",
+      "occurrences": 1,
+      "quest_ids": [
+        114000029
+      ],
+      "evidence_needed": "状态结束影响及调用栈边界；不能直接当FinishTalk",
+      "titles": [
+        "昔我悲伤，今却歌唱"
+      ],
+      "cases": [
+        {
+          "quest_id": 114000029,
+          "entry_index": 61,
+          "source_sha256": "c5a1f959a28ba3a57bbd24a36715bdef4dbc32acc23bb1eb2b2fa8f9c809547d"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B04.md",
+      "assigned_agent": "queue_b01",
+      "decision": "terminal_text_complete_runtime_unverified"
+    },
+    {
+      "id": "B05",
+      "round": 2,
+      "category": "variable_state",
+      "state_key": "剧情_尤诺线npc生态_5_1",
+      "error": "Unsupported action: CalculateVar",
+      "occurrences": 1,
+      "quest_ids": [
+        886000001
+      ],
+      "evidence_needed": "实际可用初值、作用域及计算语义；实体默认值不等于回顾当前值",
+      "titles": [
+        "今夜，注定属于月亮"
+      ],
+      "cases": [
+        {
+          "quest_id": 886000001,
+          "entry_index": 5,
+          "source_sha256": "18d1deab82a33da02272f7c867cd65ea8cec528ceb8a5e684d80948e273230ae"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B05.md",
+      "assigned_agent": "queue_b02",
+      "decision": "conditional_text_ordered_runtime_unverified",
+      "followup": "conditional text route implemented; both original options preserve seven dialogue events and one choice under explicit entry assumptions; runtime state remains unknown"
+    },
+    {
+      "id": "B06",
+      "round": 2,
+      "category": "qte",
+      "state_key": "剧情_2_7_黎那汐塔主线_下半_3_6",
+      "error": "QTE runtime outcome evaluator is unsupported",
+      "occurrences": 1,
+      "quest_ids": [
+        175000000
+      ],
+      "evidence_needed": "结果映射及可证明的控制路径；不能猜实际成功/失败",
+      "titles": [
+        "独在异乡为异客"
+      ],
+      "cases": [
+        {
+          "quest_id": 175000000,
+          "entry_index": 22,
+          "source_sha256": "9afcc04324540eca5b409bbb4587d138193d6efa441f1ac23e770227fa3eddc6"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B06.md",
+      "assigned_agent": "queue_b03",
+      "decision": "configured_qte_text_ordered_runtime_unverified"
+    },
+    {
+      "id": "B07",
+      "round": 3,
+      "category": "qte",
+      "state_key": "剧情_3_0_拉海洛主线_下半_2_4_5",
+      "error": "QTE runtime outcome evaluator is unsupported",
+      "occurrences": 1,
+      "quest_ids": [
+        936000002
+      ],
+      "evidence_needed": "结果映射及可证明的控制路径；不能猜实际成功/失败",
+      "titles": [
+        "致第二次日出"
+      ],
+      "cases": [
+        {
+          "quest_id": 936000002,
+          "entry_index": 36,
+          "source_sha256": "5324c5d755ec1c0fd4fdfb2b94fe5e6f13bf449dbd796532a18ea0da74cbcfdd"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B07.md",
+      "assigned_agent": "queue_b01",
+      "decision": "configured_qte_text_ordered_runtime_unverified"
+    },
+    {
+      "id": "B08",
+      "round": 3,
+      "category": "qte",
+      "state_key": "剧情_3_1_拉梅洛地上主线_高达流程_10_1",
+      "error": "QTE runtime outcome evaluator is unsupported",
+      "occurrences": 1,
+      "quest_ids": [
+        114000031
+      ],
+      "evidence_needed": "结果映射及可证明的控制路径；不能猜实际成功/失败",
+      "titles": [
+        "远航星"
+      ],
+      "cases": [
+        {
+          "quest_id": 114000031,
+          "entry_index": 72,
+          "source_sha256": "1855d4365bfdfd5b63f26f8235cc321be919da69be328fd3b9dc8a3143b147bc"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B08.md",
+      "assigned_agent": "queue_b02",
+      "decision": "configured_qte_text_ordered_runtime_unverified"
+    },
+    {
+      "id": "B09",
+      "round": 3,
+      "category": "qte",
+      "state_key": "剧情_3_1_拉梅洛地上主线_高达流程_3_1",
+      "error": "QTE runtime outcome evaluator is unsupported",
+      "occurrences": 1,
+      "quest_ids": [
+        114000031
+      ],
+      "evidence_needed": "结果映射及可证明的控制路径；不能猜实际成功/失败",
+      "titles": [
+        "远航星"
+      ],
+      "cases": [
+        {
+          "quest_id": 114000031,
+          "entry_index": 60,
+          "source_sha256": "a3e13c17b85a6bbc13f633a58d92a56618c83df715a898d12b421cfed323e6ed"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B09.md",
+      "assigned_agent": "queue_b03",
+      "decision": "configured_qte_text_ordered_runtime_unverified",
+      "followup": "floating subtitle Id4 traced across all config databases; shared text has no independent caller or QTE completion edge"
+    },
+    {
+      "id": "B10",
+      "round": 4,
+      "category": "qte",
+      "state_key": "剧情_3_5_穗穗线_玩法副本_1_6_1",
+      "error": "QTE runtime outcome evaluator is unsupported",
+      "occurrences": 1,
+      "quest_ids": [
+        880000045
+      ],
+      "evidence_needed": "结果映射及可证明的控制路径；不能猜实际成功/失败",
+      "titles": [
+        "玄翎振壑定澜音"
+      ],
+      "cases": [
+        {
+          "quest_id": 880000045,
+          "entry_index": 143,
+          "source_sha256": "e13e0752fdf95b4d35b90ebebb4d31f2b1e673944a7b56279156165261f7c819"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B10.md",
+      "assigned_agent": "queue_b01",
+      "decision": "all_declared_qte_outcomes_same_text_runtime_unverified"
+    },
+    {
+      "id": "B11",
+      "round": 4,
+      "category": "missing_flow",
+      "state_key": "剧情_1_1_乘宵山主线_岁光副本_1_3",
+      "error": "Missing flow state",
+      "occurrences": 1,
+      "quest_ids": [
+        125900000
+      ],
+      "evidence_needed": "同版本精确StateKey对应的流程定义，或明确别名/替代引用证据",
+      "titles": [
+        "往岁乘霄醒惊蛰"
+      ],
+      "cases": [
+        {
+          "quest_id": 125900000,
+          "entry_index": 162,
+          "source_sha256": null
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B11.md",
+      "assigned_agent": "queue_b02",
+      "decision": "keep_gap"
+    },
+    {
+      "id": "B12",
+      "round": 4,
+      "category": "missing_flow",
+      "state_key": "剧情_1_3_黑海岸主线_6_17",
+      "error": "Missing flow state",
+      "occurrences": 1,
+      "quest_ids": [
+        145000004
+      ],
+      "evidence_needed": "同版本精确StateKey对应的流程定义，或明确别名/替代引用证据",
+      "titles": [
+        "来自毁灭的回声"
+      ],
+      "cases": [
+        {
+          "quest_id": 145000004,
+          "entry_index": 68,
+          "source_sha256": null
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B12.md",
+      "assigned_agent": "queue_b03",
+      "decision": "keep_gap"
+    },
+    {
+      "id": "B13",
+      "round": 5,
+      "category": "missing_flow",
+      "state_key": "剧情_1_3_黑海岸主线_6_3",
+      "error": "Missing flow state",
+      "occurrences": 1,
+      "quest_ids": [
+        145000004
+      ],
+      "evidence_needed": "同版本精确StateKey对应的流程定义，或明确别名/替代引用证据",
+      "titles": [
+        "来自毁灭的回声"
+      ],
+      "cases": [
+        {
+          "quest_id": 145000004,
+          "entry_index": 69,
+          "source_sha256": null
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B13.md",
+      "assigned_agent": "queue_b01",
+      "decision": "keep_gap"
+    },
+    {
+      "id": "B14",
+      "round": 5,
+      "category": "missing_flow",
+      "state_key": "剧情_2_0_黎那汐塔主线_第三幕上_帕尔米罗_4_8",
+      "error": "Missing flow state",
+      "occurrences": 1,
+      "quest_ids": [
+        140000011
+      ],
+      "evidence_needed": "同版本精确StateKey对应的流程定义，或明确别名/替代引用证据",
+      "titles": [
+        "昔我悲伤，今却歌唱"
+      ],
+      "cases": [
+        {
+          "quest_id": 140000011,
+          "entry_index": 34,
+          "source_sha256": null
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B14.md",
+      "assigned_agent": "queue_b02",
+      "decision": "keep_gap"
+    },
+    {
+      "id": "B15",
+      "round": 5,
+      "category": "missing_flow",
+      "state_key": "剧情_2_2_阿维纽林主线_10_1",
+      "error": "Missing flow state",
+      "occurrences": 1,
+      "quest_ids": [
+        145000005
+      ],
+      "evidence_needed": "同版本精确StateKey对应的流程定义，或明确别名/替代引用证据",
+      "titles": [
+        "圣者，忤逆者，告死者"
+      ],
+      "cases": [
+        {
+          "quest_id": 145000005,
+          "entry_index": 137,
+          "source_sha256": null
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B15.md",
+      "assigned_agent": "queue_b03",
+      "decision": "keep_gap"
+    },
+    {
+      "id": "B16",
+      "round": 6,
+      "category": "missing_flow",
+      "state_key": "剧情_2_2_阿维纽林主线_11_27",
+      "error": "Missing flow state",
+      "occurrences": 1,
+      "quest_ids": [
+        145000005
+      ],
+      "evidence_needed": "同版本精确StateKey对应的流程定义，或明确别名/替代引用证据",
+      "titles": [
+        "圣者，忤逆者，告死者"
+      ],
+      "cases": [
+        {
+          "quest_id": 145000005,
+          "entry_index": 182,
+          "source_sha256": null
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B16.md",
+      "assigned_agent": "queue_b01",
+      "decision": "keep_gap"
+    },
+    {
+      "id": "B17",
+      "round": 6,
+      "category": "missing_flow",
+      "state_key": "剧情_2_2_阿维纽林主线_4_11",
+      "error": "Missing flow state",
+      "occurrences": 1,
+      "quest_ids": [
+        145000005
+      ],
+      "evidence_needed": "同版本精确StateKey对应的流程定义，或明确别名/替代引用证据",
+      "titles": [
+        "圣者，忤逆者，告死者"
+      ],
+      "cases": [
+        {
+          "quest_id": 145000005,
+          "entry_index": 40,
+          "source_sha256": null
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B17.md",
+      "assigned_agent": "queue_b02",
+      "decision": "keep_gap"
+    },
+    {
+      "id": "B18",
+      "round": 6,
+      "category": "missing_flow",
+      "state_key": "剧情_2_2_阿维纽林主线_5_30",
+      "error": "Missing flow state",
+      "occurrences": 1,
+      "quest_ids": [
+        145000005
+      ],
+      "evidence_needed": "同版本精确StateKey对应的流程定义，或明确别名/替代引用证据",
+      "titles": [
+        "圣者，忤逆者，告死者"
+      ],
+      "cases": [
+        {
+          "quest_id": 145000005,
+          "entry_index": 84,
+          "source_sha256": null
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B18.md",
+      "assigned_agent": "queue_b03",
+      "decision": "keep_gap"
+    },
+    {
+      "id": "B19",
+      "round": 7,
+      "category": "missing_flow",
+      "state_key": "剧情_2_4_七丘主线_上1_5_5",
+      "error": "Missing flow state",
+      "occurrences": 3,
+      "quest_ids": [
+        125000125,
+        125000126
+      ],
+      "evidence_needed": "同版本精确StateKey对应的流程定义，或明确别名/替代引用证据",
+      "titles": [
+        "荣耀暗面"
+      ],
+      "cases": [
+        {
+          "quest_id": 125000125,
+          "entry_index": 41,
+          "source_sha256": null
+        },
+        {
+          "quest_id": 125000126,
+          "entry_index": 28,
+          "source_sha256": null
+        },
+        {
+          "quest_id": 125000126,
+          "entry_index": 69,
+          "source_sha256": null
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B19.md",
+      "assigned_agent": "queue_b01",
+      "decision": "keep_gap"
+    },
+    {
+      "id": "B20",
+      "round": 7,
+      "category": "missing_flow",
+      "state_key": "剧情_2_7_黎那汐塔主线_下半_6_11",
+      "error": "Missing flow state",
+      "occurrences": 1,
+      "quest_ids": [
+        175000000
+      ],
+      "evidence_needed": "同版本精确StateKey对应的流程定义，或明确别名/替代引用证据",
+      "titles": [
+        "独在异乡为异客"
+      ],
+      "cases": [
+        {
+          "quest_id": 175000000,
+          "entry_index": 33,
+          "source_sha256": null
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B20.md",
+      "assigned_agent": "queue_b02",
+      "decision": "keep_gap"
+    },
+    {
+      "id": "B21",
+      "round": 7,
+      "category": "sequence_call",
+      "state_key": "剧情_1_1_乘宵山主线_岩壁遗迹_5_2",
+      "error": "Unsupported action: PlaySequenceData",
+      "occurrences": 1,
+      "quest_ids": [
+        125900000
+      ],
+      "evidence_needed": "回调及正文来源证据；资产暂后置，不靠演出占位减少阻塞",
+      "titles": [
+        "往岁乘霄醒惊蛰"
+      ],
+      "cases": [
+        {
+          "quest_id": 125900000,
+          "entry_index": 69,
+          "source_sha256": "6698b11ba35c37c7932f98f06600a0b38ba9905297ea4d8f2ad5cdc79cc7b125"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B21.md",
+      "assigned_agent": "queue_b03",
+      "decision": "media_content_deferred"
+    },
+    {
+      "id": "B22",
+      "round": 8,
+      "category": "sequence_call",
+      "state_key": "剧情_2_0_主线_金库上层副本_2_19",
+      "error": "Unsupported action: PlaySequenceData",
+      "occurrences": 1,
+      "quest_ids": [
+        114000030
+      ],
+      "evidence_needed": "回调及正文来源证据；资产暂后置，不靠演出占位减少阻塞",
+      "titles": [
+        "夜与昼，均请摘下面纱"
+      ],
+      "cases": [
+        {
+          "quest_id": 114000030,
+          "entry_index": 50,
+          "source_sha256": "218dafa55dfd9f2ac160241329bff88d7827de2422084221962e6b45cf9dd5b5"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B22.md",
+      "assigned_agent": "queue_b01",
+      "decision": "media_content_deferred"
+    },
+    {
+      "id": "B23",
+      "round": 8,
+      "category": "sequence_call",
+      "state_key": "剧情_2_0_主线_金库上层副本_2_20",
+      "error": "Unsupported action: PlaySequenceData",
+      "occurrences": 1,
+      "quest_ids": [
+        114000030
+      ],
+      "evidence_needed": "回调及正文来源证据；资产暂后置，不靠演出占位减少阻塞",
+      "titles": [
+        "夜与昼，均请摘下面纱"
+      ],
+      "cases": [
+        {
+          "quest_id": 114000030,
+          "entry_index": 66,
+          "source_sha256": "e1e8d526f1dba446acc2914576b975a4893e76dd0677a786c4ec463fd2c65024"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B23.md",
+      "assigned_agent": "queue_b02",
+      "decision": "media_content_deferred"
+    },
+    {
+      "id": "B24",
+      "round": 8,
+      "category": "sequence_call",
+      "state_key": "剧情_第四章_26_2",
+      "error": "Unsupported action: PlaySequenceData",
+      "occurrences": 1,
+      "quest_ids": [
+        139000031
+      ],
+      "evidence_needed": "回调及正文来源证据；资产暂后置，不靠演出占位减少阻塞",
+      "titles": [
+        "庭际刀刃鸣"
+      ],
+      "cases": [
+        {
+          "quest_id": 139000031,
+          "entry_index": 22,
+          "source_sha256": "cfbad66c53c58b1bd6db3fe6f7d5d2e6a8bee58810dd43f60ffb677364ed773a"
+        }
+      ],
+      "status": "reviewed",
+      "evidence_file": "docs/research/blocker-reviews/B24.md",
+      "assigned_agent": "queue_b03",
+      "decision": "media_content_deferred"
+    }
+  ],
+  "reviewed_count": 24,
+  "implemented_ids": [
+    "B03",
+    "B04",
+    "B10"
+  ],
+  "result_batch": "outputs/主线批量/20261117_141230_051601/覆盖阅读版",
+  "remaining_summary": {
+    "tasks": 7,
+    "occurrences": 12,
+    "unique_exact_blockers": 10,
+    "unresolved_original_choices": 1
+  },
+  "latest_followup_batch": "outputs/主线批量/20261117_163557_602439/覆盖阅读版",
+  "latest_followup_report": "docs/research/qte-configured-text-order.md",
+  "conditional_text_ordered_ids": ["B05"],
+  "panel_return_text_ordered_ids": ["B01"],
+  "media_content_deferred_ids": ["B21", "B22", "B23", "B24"],
+  "text_order_unresolved_ids": [],
+  "configured_qte_text_ordered_ids": ["B06", "B07", "B08", "B09"],
+  "missing_definition_ids": ["B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "B19", "B20"],
+  "last_review_result": "four single-sequence QTE text paths ordered under continuation premise; ten missing definitions remain in the tracked recap scope"
+}

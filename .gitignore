@@ -27,3 +27,14 @@ venv/
 !.env.example
 .DS_Store
 Thumbs.db
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+*.tmp
+*.bak
+
+# Packaging and local release review.
+/wheelhouse/

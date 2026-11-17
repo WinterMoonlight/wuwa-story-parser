@@ -53,6 +53,41 @@ class DeclaredLevelPlayTests(unittest.TestCase):
         self.assertFalse(links)
         self.assertIn('SaveConfig',audits[0]['nodes'][0])
 
+    def test_completion_flow_is_kept_with_condition_evidence(self):
+        condition = {'Type': 'PlayFlow', 'Flow': {'FlowListName': 'f', 'FlowId': 9, 'StateId': 2}}
+        node = {'Id': 10, 'ParentNodeId': 0, 'Type': 'ChildQuest', 'Condition': condition}
+        links, gaps, _ = self.run_case(nodes=[node])
+        self.assertFalse(gaps)
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]['state_key'], 'f_9_2')
+        self.assertEqual(links[0]['source_condition'], condition)
+        self.assertEqual(links[0]['phase'], 'Condition')
+        self.assertNotIn('source_action', links[0])
+        self.assertFalse(links[0]['runtime_trigger_verified'])
+        self.assertFalse(links[0]['order_verified'])
+
+    def test_invalid_completion_flow_is_reported(self):
+        node = {'Id': 10, 'ParentNodeId': 0, 'Type': 'ChildQuest',
+                'Condition': {'Type': 'PlayFlow', 'Flow': {'FlowListName': 'f', 'FlowId': True}}}
+        links, gaps, _ = self.run_case(nodes=[node])
+        self.assertFalse(links)
+        self.assertEqual(gaps[0]['phase'], 'Condition')
+        self.assertEqual(gaps[0]['reason'], 'malformed_flow_reference')
+
+    def test_echoes_pollution_dialogue_is_recovered_as_candidate(self):
+        from wuwa_story.recap_backbone import export_task_backbone
+        result = export_task_backbone(145000004)
+        coverage = result['batch_coverage']
+        key = '剧情_1_3_世界_黑海岸_去除污染_9_2'
+        links = [link for link in coverage['declared_levelplay_links'] if link['state_key'] == key]
+        self.assertEqual(len(links), 1)
+        self.assertEqual((links[0]['levelplay_id'], links[0]['node_id']), (134000035, 10))
+        records = [record for record in coverage['records'] if record.get('origin') == key]
+        self.assertEqual(len(records), 4)
+        self.assertTrue(all(r['category'] == 'candidate_branch' and not r['order_verified'] for r in records))
+        segments = result['recap_backbone']['segments']
+        self.assertEqual([s['error'] for s in segments[27:29]], ['Missing flow state'] * 2)
+
     def test_real_glory_four_lines_keep_recap_and_asset_gaps(self):
         from wuwa_story.recap_backbone import export_task_backbone
         d=export_task_backbone(125000125)

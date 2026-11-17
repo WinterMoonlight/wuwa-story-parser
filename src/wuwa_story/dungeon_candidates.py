@@ -3,7 +3,6 @@ from collections import defaultdict
 import hashlib
 
 from .declared_levelplay import declared_levelplays, one_config
-from .export_task import flow_key
 
 
 def dungeon_candidates(task_nodes, source):
@@ -58,24 +57,6 @@ def dungeon_candidates(task_nodes, source):
             link.update(ownership_basis=proof['basis'], dungeon_link=proof)
         for audit in candidate_audits:
             audit['dungeon_link'] = proof
-            # A condition's flow is an explicit completion reference, distinct
-            # from an action invocation. Preserve that distinction in evidence.
-            for node in audit['nodes']:
-                condition = node.get('Condition', {})
-                flow = condition.get('Flow', {})
-                if (condition.get('Type') != 'PlayFlow'
-                        or set(flow) != {'FlowListName', 'FlowId', 'StateId'}
-                        or not isinstance(flow['FlowListName'], str)
-                        or not flow['FlowListName']
-                        or type(flow['FlowId']) is not int or type(flow['StateId']) is not int):
-                    continue
-                candidate_links.append({'state_key': flow_key(flow), 'levelplay_id': play_id,
-                    'map_id': map_id, 'node_id': node['Id'], 'phase': 'Condition',
-                    'source_condition': condition, 'source_row_key': f"{play_id}_{node['Id']}",
-                    'source_sha256': audit['node_sha256'][f"{play_id}_{node['Id']}"],
-                    'ownership_basis': proof['basis'], 'dungeon_link': proof,
-                    'reference_kind': 'flow_completion_condition',
-                    'runtime_trigger_verified': False, 'order_verified': False})
         links.extend(candidate_links)
         gaps.extend(dict(gap, dungeon_id=dungeon_id) for gap in candidate_gaps)
         audits.extend(candidate_audits)

@@ -37,11 +37,25 @@ ConfigDB只读快照
 
 ## 文件生命周期
 
+GitHub仓库按下面的层次组织；保留现有解析模块名，避免目录调整破坏调用方。
+
+```text
+.github/workflows/   无游戏数据的CI检查
+src/wuwa_story/      解析、证据关联、渲染和CLI
+tests/unit/          不需要数据库的测试
+tests/               配置回归与规则测试
+scripts/audits/      批次比较与专项检查
+examples/            虚构的输出格式示例
+docs/                指南、状态、研究和历史
+```
+
 - `ConfigDB/`保存输入快照，由数据库模块使用SQLite只读连接访问。
 - `outputs/`保存可复现语料、覆盖报告和审查版。批次目录带时间戳。
 - `work/`保存临时探查及运行日志。
 - `docs/research/`保存长期有用的规则证据，`docs/reviews/`保存审查结论。
 - 根目录规划文件只保留当前状态，完整历史存于`docs/history/`。
+
+`work/asset_exports/`和`work/client-scripts/`属于本地补充输入，不按普通缓存处理。清理目录前先区分输入与可重新生成的产物。
 
 ## 能力与已知限制
 

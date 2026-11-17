@@ -43,13 +43,16 @@ class DependenciesTests(unittest.TestCase):
             self.assertFalse(d['recap_dependency_consistent'])
             self.assertEqual(d['recap_dependency_unresolved'][0]['reason'], 'ambiguous_recap_order_source')
 
-    def test_real_conflict_is_visible_without_reordering_recap(self):
+    def test_real_original_conflict_is_preserved_with_reading_order_correction(self):
         from wuwa_story.recap_backbone import export_task_backbone
         result = export_task_backbone(125000125)
         self.assertFalse(result['batch_coverage']['order']['selected_route_verified'])
         conflicts = result['batch_coverage']['order']['dependencies']['recap_dependency_conflicts']
         self.assertTrue(any(c['node_id'] == 117 for c in conflicts))
-        self.assertIn('【顺序待核验】', reading_text(result))
+        self.assertIn('【顺序修正】', reading_text(result))
+        corrections = result['recap_backbone']['dependency_order_corrections']['proofs']
+        self.assertEqual(corrections[0]['node_id'], 117)
+        self.assertFalse(corrections[0]['runtime_executed'])
 
     def test_changed_pattern_and_shared_call_not_separated(self):
         for mode in ('center', 'count', 'async', 'shared', 'failure'):

@@ -1,0 +1,9 @@
+{
+  "quest_id": 145000005,
+  "state_key": "剧情_2_2_阿维纽林主线_4_11",
+  "source_entry_sha256": "817e27eeada6c7323244620e1beddd04d4fd539d8e344ea5b39ea2fe57587069",
+  "status": "user_reported_cutscene",
+  "source": "本会话用户查看剧情录播后的反馈",
+  "feedback": "缺失流程4-11并不缺失，中间只是有一段过程动画而已。",
+  "text_completeness_verified": false
+}

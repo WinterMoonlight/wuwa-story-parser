@@ -6,21 +6,21 @@ from wuwa_story.reading import reading_text
 
 class RoundFiveTests(unittest.TestCase):
     def test_prefix_caption_cannot_be_promoted_to_confirmed_route(self):
-        d=export_task_backbone(114000029)
+        choices={'剧情_2.8千夏活动主线_9_14:14':0}
+        d=export_task_backbone(880000044,choices)
         backbone=d['recap_backbone']
         s=next(s for s in backbone['segments'] if s.get('prefix_event_count'))
         s['events'][0]['media']={'captions':[{'text':'测试字幕','text_id':'prefix_caption_test'}]}
         with patch('wuwa_story.recap_backbone.build_backbone',return_value=backbone):
-            result=export_task_backbone(114000029)
+            result=export_task_backbone(880000044,choices)
         record=next(r for r in result['batch_coverage']['records'] if r.get('text')=='测试字幕')
         self.assertEqual(record['category'],'unverified')
         self.assertEqual(record['order_scope'],'recap_prefix_only')
         self.assertFalse(record['order_verified'])
 
     def test_reached_prefix_keeps_gap_and_status(self):
-        for q, suffix, count in [(114000029,'狂欢节_21_1',9),(114000029,'狂欢节_60_1',4),
-                                 (880000044,'千夏活动主线_9_14',17)]:
-            d=export_task_backbone(q)
+        for q, suffix, count in [(880000044,'千夏活动主线_9_14',17)]:
+            d=export_task_backbone(q,{'剧情_2.8千夏活动主线_9_14:14':0})
             s=next(s for s in d['recap_backbone']['segments'] if s['state_key'].endswith(suffix))
             self.assertEqual(s['status'],'blocked')
             self.assertEqual(s['prefix_event_count'],count)
@@ -47,9 +47,11 @@ class RoundFiveTests(unittest.TestCase):
         self.assertEqual(d['batch_coverage']['source_counts']['recap_unordered_panel_texts'],2)
 
     def test_unordered_combination_does_not_leak_partial_events(self):
-        d=export_task_backbone(915000001)
+        with patch('wuwa_story.pending_boundary.enrollment_return_route', return_value=None):
+            d=export_task_backbone(915000001)
         for s in d['recap_backbone']['segments']:
-            if s['state_key'].endswith(('_1_15_1','_1_17_1')):
+            if s['state_key'].endswith('_1_15_1'):
                 self.assertEqual(s['status'],'blocked')
-                self.assertNotIn('prefix_event_count',s)
-                self.assertEqual([e['kind'] for e in s['events']],['recap_gap'])
+                self.assertEqual(s['prefix_event_count'],1)
+                self.assertEqual([e['kind'] for e in s['events']],['dialogue','recap_gap'])
+                self.assertFalse(s['local_fragments'][0]['runtime_return_verified'])

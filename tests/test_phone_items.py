@@ -3,9 +3,18 @@ import unittest
 
 from wuwa_story.phone import apply_phone_media_item, inspect_message
 from wuwa_story.database import rows
+from wuwa_story.rendering import render_result
 
 
 class PhoneMediaTests(unittest.TestCase):
+    def test_attachment_display_uses_resolved_type(self):
+        for attachment_type in ('Image', 'InformationView'):
+            result = render_result({'title': '', 'route': {'choices': []}, 'events': [{
+                'kind': 'attachment', 'raw_text': '', 'phone_media': {'type': 'Attachment'},
+                'attachment': {'attachment_type': attachment_type}}]})
+            text = result['events'][0]['text']
+            self.assertIn('图片' if attachment_type == 'Image' else '附件：内容', text)
+
     def test_exact_shapes_preserve_source_and_voice_text(self):
         original = {'kind': 'dialogue', 'text': '正文', 'raw_text': '原文',
                     'source_item': {'TidTalk': 'id', 'MessageType': {'Type': 'Voice'}}}
@@ -49,7 +58,7 @@ class PhoneMediaTests(unittest.TestCase):
                     if media.get('type') == 'Emoji':
                         self.assertEqual(event['text'], '【表情：图片内容尚未核验】')
         result = inspect_message(34001, rows)
-        self.assertIn('Main_LahaiRoi_WMXZTK_1_1', result['missing_text_ids'])
+        self.assertNotIn('Main_LahaiRoi_WMXZTK_1_1', result['missing_text_ids'])
         result = inspect_message(38005, rows)
         emoji = next(i for i, e in enumerate(result['events']) if e.get('phone_media', {}).get('type') == 'Emoji')
         self.assertEqual(result['events'][emoji]['talk_id'], 26)

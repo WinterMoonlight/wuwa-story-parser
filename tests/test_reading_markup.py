@@ -14,13 +14,20 @@ class ReadingMarkupTests(unittest.TestCase):
         self.assertEqual(reading_markup(source), expected)
         self.assertEqual(reading_markup(expected), expected)
 
-    def test_unknown_and_malformed_markup_survives(self):
+    def test_all_presentation_tags_are_removed(self):
         for source in ('<color=Unknown>x</color>', '<color=#123>x</color>',
                        '<color=Highlight>x', '<ano=术语>x',
-                       '<color=Highlight><foo>x</color></foo>',
-                       '<foo>x</foo>', 'a < b > c'):
+                       '<color=Highlight><foo>x</color></foo>', '<foo>x</foo>',
+                       '<TE href="850166">x</TE>', '<b><i><s>x</s></i></b>',
+                       '<size=28>x</size><alignright/>'):
             with self.subTest(source=source):
-                self.assertEqual(reading_markup(source), source)
+                self.assertEqual(reading_markup(source), 'x')
+
+    def test_attributes_line_breaks_and_comparisons(self):
+        source = '<te href="a>b">术语</te><BR/>下行<br>末行\na < b > c，1 < 2'
+        expected = '术语\n下行\n末行\na < b > c，1 < 2'
+        self.assertEqual(reading_markup(source), expected)
+        self.assertEqual(reading_markup(expected), expected)
 
     def test_runtime_placeholders_and_gender_tokens_are_not_guessed(self):
         source = '消灭残象（{q_count}/2）按{0}与{1}，{PlayerName}{MALE=哥;FEMALE=姐}'

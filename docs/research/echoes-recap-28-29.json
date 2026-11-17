@@ -1,0 +1,2381 @@
+{
+  "quest_id": 145000004,
+  "title": "来自毁灭的回声",
+  "user_feedback": "来自毁灭的回声确实缺了一些解析的内容，要求查找回顾第28、29段并记录原因。",
+  "baseline": "outputs\\主线批量\\20261117_194907_930076\\覆盖阅读版",
+  "output_batch": "outputs\\主线批量\\20261117_200726_855297\\覆盖阅读版",
+  "segments": [
+    {
+      "reading_segment": 28,
+      "recap_entry_index": 68,
+      "state_key": "剧情_1_3_黑海岸主线_6_17",
+      "source_entry": {
+        "TidTip": "",
+        "Flow": {
+          "FlowListName": "剧情_1_3_黑海岸主线",
+          "FlowId": 6,
+          "StateId": 17
+        },
+        "IsHideUi": true
+      },
+      "failure_stage": "exact_state_lookup",
+      "decoder_called": false,
+      "error": "Missing flow state",
+      "exact_reference_owners": [
+        {
+          "file": "db_PlotHandBook.db",
+          "table": "plothandbookconfig",
+          "row": {
+            "QuestId": 145000004
+          },
+          "path": [
+            68,
+            "Flow"
+          ],
+          "reference": {
+            "FlowListName": "剧情_1_3_黑海岸主线",
+            "FlowId": 6,
+            "StateId": 17
+          },
+          "blob_sha256": "c6ef1885b48feef9e2e722ee4b73089768404686398e7b93f72aa0b9e8b78a16"
+        }
+      ]
+    },
+    {
+      "reading_segment": 29,
+      "recap_entry_index": 69,
+      "state_key": "剧情_1_3_黑海岸主线_6_3",
+      "source_entry": {
+        "TidTip": "",
+        "Flow": {
+          "FlowListName": "剧情_1_3_黑海岸主线",
+          "FlowId": 6,
+          "StateId": 3
+        },
+        "IsHideUi": true
+      },
+      "failure_stage": "exact_state_lookup",
+      "decoder_called": false,
+      "error": "Missing flow state",
+      "exact_reference_owners": [
+        {
+          "file": "db_PlotHandBook.db",
+          "table": "plothandbookconfig",
+          "row": {
+            "QuestId": 145000004
+          },
+          "path": [
+            69,
+            "Flow"
+          ],
+          "reference": {
+            "FlowListName": "剧情_1_3_黑海岸主线",
+            "FlowId": 6,
+            "StateId": 3
+          },
+          "blob_sha256": "c6ef1885b48feef9e2e722ee4b73089768404686398e7b93f72aa0b9e8b78a16"
+        }
+      ]
+    }
+  ],
+  "flow_catalog": {
+    "key": "剧情_1_3_黑海岸主线_6",
+    "sha256": "8893e89dafb55af4079b76bf3819e0d8cdd2c72aeb0a2231c724ea94e2f6c58a",
+    "state_ids_field1": [
+      16,
+      19,
+      20,
+      2,
+      7,
+      14,
+      15,
+      10,
+      6
+    ],
+    "state_ids_field2": [
+      16,
+      19,
+      20,
+      2,
+      7,
+      14,
+      15,
+      10,
+      6
+    ]
+  },
+  "same_family_states": [
+    "剧情_1_3_黑海岸主线_6_2",
+    "剧情_1_3_黑海岸主线_6_7",
+    "剧情_1_3_黑海岸主线_6_6",
+    "剧情_1_3_黑海岸主线_6_10",
+    "剧情_1_3_黑海岸主线_6_14",
+    "剧情_1_3_黑海岸主线_6_15",
+    "剧情_1_3_黑海岸主线_6_16",
+    "剧情_1_3_黑海岸主线_6_19",
+    "剧情_1_3_黑海岸主线_6_20"
+  ],
+  "scan": {
+    "scope": "Root SQLite BLOBs containing UTF-8/JSON-escaped flow list, decodable embedded JSON references; not all binary fields or runtime assets",
+    "database_count": 515,
+    "same_family_reference_count": 27,
+    "source_files": [
+      {
+        "file": "db_AbnormalDamage.db",
+        "sha256": "fc6c3e6278f298707a8290fbfd054ff60f3b833d069ccbb169fb75372cc045ba"
+      },
+      {
+        "file": "db_AbpExtendConfigCsv.db",
+        "sha256": "7f272ba5967c707fc5dc8127e56b38815c267ae677c74e090afbdcd5a8339bd2"
+      },
+      {
+        "file": "db_AbpMontageData.db",
+        "sha256": "b6467d47582384a45009ebc6a8d5a7f498b0b4460b1f2e0987b6b99d1944a40c"
+      },
+      {
+        "file": "db_AbpState.db",
+        "sha256": "79faa6f685f5bb666550dabdff288bcb8d6f9220aa108b25b47aa608029a6184"
+      },
+      {
+        "file": "db_accesspath.db",
+        "sha256": "0f6b889bb8174d91e38d808e7cc539e0c7a73582941a8eb4c22a59dc805ba486"
+      },
+      {
+        "file": "db_achievement.db",
+        "sha256": "2fe7fc1c9306d3a1a695aa5e3f53855f8d5c5813c4102a78bdcdca23becf688a"
+      },
+      {
+        "file": "db_activity.db",
+        "sha256": "41281594cbd1c6b6d837df964ae933ebb0fc737a2bf1a5c22f40c8d61fad6369"
+      },
+      {
+        "file": "db_ActivityAction.db",
+        "sha256": "545242d062a6bdbb147cb3dab5eda0304619c0f15983902fbd7ab76cfda91942"
+      },
+      {
+        "file": "db_ActivityCondition.db",
+        "sha256": "67a0c06550c4dfaf8235507a31a07e6fc9df8d442be40ca00be36749f060261f"
+      },
+      {
+        "file": "db_activityfunplay.db",
+        "sha256": "c7a62c8117bf25fc685f22491db63df4548b9a8a9fd5268a2a2379e90385127f"
+      },
+      {
+        "file": "db_ActivityGamePlayPlot.db",
+        "sha256": "b796efa7984c9471e3c8a17a59b98a5422f742e2bf42999b3992c7dcc71a8eff"
+      },
+      {
+        "file": "db_ActivityLinkage.db",
+        "sha256": "829ef55c650516c4cb530dfde6117c78929ab241044b9b674b7e82970b2ee6e8"
+      },
+      {
+        "file": "db_ActivityMapTravel.db",
+        "sha256": "388b884e0357fa6c5ae179e04593e848df8edd66d74629f057eb5af61f3682aa"
+      },
+      {
+        "file": "db_ActivityMatchThree.db",
+        "sha256": "3cc8fcf6a30f77bfd35fab37cea31750057424e98bf113b484f9d1e38fb4f3ac"
+      },
+      {
+        "file": "db_ActivityQuestConfig.db",
+        "sha256": "f75c741c9bb0efe8cf21c0f1d1fb93f4443aa965d2a10d4304156da93853312c"
+      },
+      {
+        "file": "db_ActivityRecommend.db",
+        "sha256": "de30f6038103afda30b3bedc45bfec7e2a331dc9d78f088358d272af5154ccee"
+      },
+      {
+        "file": "db_adventure_detect.db",
+        "sha256": "b15ed4cec5fb2ca8492dd3bdbecbab700ecca978ee331aa36193f51761d3ede5"
+      },
+      {
+        "file": "db_adventurerecord.db",
+        "sha256": "817bcf96ea3728ece15c049aaaeaad85724aea4c2d923b5b409d6515949ff0a3"
+      },
+      {
+        "file": "db_adventuretask.db",
+        "sha256": "1a14394f543845f3654a8549b614a0ad125431bfe6cbff42cf703b6587d78641"
+      },
+      {
+        "file": "db_AdvertisingPage.db",
+        "sha256": "b799fdd2426a53cca96d0ff73060b31a43273d834a41eb3f9d0374e6e25f4b69"
+      },
+      {
+        "file": "db_advice.db",
+        "sha256": "56fdd759abffd61382ff7b1db6a39d0bf26f48171b7040f7d8ad638d15a239d3"
+      },
+      {
+        "file": "db_ai.db",
+        "sha256": "a632172701e01cd0a10b5f9776175d48f3ac1a09a0cd816cc900e020611170ec"
+      },
+      {
+        "file": "db_AiBehaviorTree.db",
+        "sha256": "aa9763c29e7b0f066c6c1e875a48f1441b86eabb390ba8de096b883fe4f61c43"
+      },
+      {
+        "file": "db_AiStateMachineConfig.db",
+        "sha256": "72d6288402537013f9eae1dc80078a7b8bfda1520023669a475f75c6c8f903fc"
+      },
+      {
+        "file": "db_AlertAreaConfig.db",
+        "sha256": "f25fb026a3ac8ef7d1855a8f87436198d58c8b26c207ca0e6b2091f4c1ae7757"
+      },
+      {
+        "file": "db_AnimalStandbyMotnageConfig.db",
+        "sha256": "40266066170641778e04d7905814d8f83cc5c4ba0603a30acf55bfbcc83b1106"
+      },
+      {
+        "file": "db_Anniversaryt.db",
+        "sha256": "dd3c7396b8a7782e88bc8d9ba176151ff80786c51cb4766844168e3e30730ddf"
+      },
+      {
+        "file": "db_AnsPerform.db",
+        "sha256": "98ae531a4f713f7f7a2529a0602e0b45352dd2e91aad3ee59637f0396f3387cf"
+      },
+      {
+        "file": "db_aoi.db",
+        "sha256": "ac137fa3fb54193088154e37ffd85eab4ca933ec386a9e4d262a2c37dcdc734a"
+      },
+      {
+        "file": "db_area.db",
+        "sha256": "286a1beea0a56c6cdf8694d0b9a02fde7c2239cb1c789987f04f0f6b1b5e39d8"
+      },
+      {
+        "file": "db_AreaFunction.db",
+        "sha256": "06de235dd0837ea1f25b288ce0909f7cebcf14b2217230b8181b0f99f357329e"
+      },
+      {
+        "file": "db_areaMpc.db",
+        "sha256": "e2a8aee1f12933131c716962a584660265ff3fe035c4cd9ae4e26745019d8ba5"
+      },
+      {
+        "file": "db_areaquest.db",
+        "sha256": "f8256319ef26a53d0170322becdef91c52b95da978715ecea504c5f198e39b04"
+      },
+      {
+        "file": "db_AreaQuestTracking.db",
+        "sha256": "7618aba4baec450c09ac4875b6fa78f8a81690cb8bd45649b6b52e882adb5abd"
+      },
+      {
+        "file": "db_AreaTerminal.db",
+        "sha256": "fede07d12be159bf2d4a7de4ece308cabf0c39459ea753d9db83448ba3aad959"
+      },
+      {
+        "file": "db_Artemis.db",
+        "sha256": "4ccf543edbf801c1d38ea97c616d3e19bc598d8d4e2572ce1a0f807e29e0d0e3"
+      },
+      {
+        "file": "db_audio.db",
+        "sha256": "24d462bb8843e29269db7b1eb0cc95367dc17e0adbda4cceadf9c5f3a19d9729"
+      },
+      {
+        "file": "db_audio_interjection.db",
+        "sha256": "da94f9eb2d7e779e465ac319a082942a52990129057140c0009c5e3b230824c9"
+      },
+      {
+        "file": "db_AutoPilotCircles.db",
+        "sha256": "09ab2d3a1325bf78c60ab4fe2fc50e2650bc4c84ac6c17a1723d9ecb513b3185"
+      },
+      {
+        "file": "db_AvgBackground.db",
+        "sha256": "997210c4f01949848bbc686ed5bf540f519dd94b8c984ee6966fe51d015c7bf8"
+      },
+      {
+        "file": "db_AvgCg.db",
+        "sha256": "21e23ab93e7f379b5065c1b34ace972e0145fe0e8f432bf67e1a45667f65b232"
+      },
+      {
+        "file": "db_AvgLocationChange.db",
+        "sha256": "0e1b9849486aeaf5a5cb63d248bb7834635829bcd3041401b82db0861e47034a"
+      },
+      {
+        "file": "db_AvgShowItem.db",
+        "sha256": "085e499d497d6e618f185ce8da384212278f789c0b65c5c2dcd94b633705cc54"
+      },
+      {
+        "file": "db_AvgShowPrefab.db",
+        "sha256": "744b8aac05bd108343d224aa1f35e1cb517a4cde384f434a5c4b3cebb7109a25"
+      },
+      {
+        "file": "db_AvgSolarSchoolRoleAnimation.db",
+        "sha256": "d3c2b193f3f4a128e7e5e7222cb099c77a1527d25ac19d4d02e4ffcbf9965364"
+      },
+      {
+        "file": "db_AvgTalkerConfig.db",
+        "sha256": "16aadd925d54bcf0078eab0dd3edeac0b418006d933d740d0dacd68b5d3b4e39"
+      },
+      {
+        "file": "db_Avignon.db",
+        "sha256": "836de313147b2659e00498d38bf89d917963f47c5a694e376e66766d33a96d10"
+      },
+      {
+        "file": "db_AvoidBlock.db",
+        "sha256": "acc3a6cd5bd4acf67cf67f54e8f6ee70945c632be9157b876aa9ab4112682b8e"
+      },
+      {
+        "file": "db_BabelTower.db",
+        "sha256": "bbbd707f8bc40480b91c9d4ce86b709205672fd05a314dcdc3fd295331c09cac"
+      },
+      {
+        "file": "db_bag.db",
+        "sha256": "c1c50977029111fcb25578373ae3fc3ace821400ebafce853a2021e638f93852"
+      },
+      {
+        "file": "db_battle_pass.db",
+        "sha256": "4a1c4ca61ce39df25511db33b2063a7f339317237d051910afd0ad1198f22d5b"
+      },
+      {
+        "file": "db_BattleHeadIcon.db",
+        "sha256": "8cf47104afd0a694dbe6fd35c2bdc06b2f7a4d6258a58e9221e00809b097f043"
+      },
+      {
+        "file": "db_BattleScore.db",
+        "sha256": "93c9406b11edba72380a871760c3998f248d23a7b462f0a574cc2081ee35058a"
+      },
+      {
+        "file": "db_BattleScoreCalc.db",
+        "sha256": "f98e87762a5463200b06d15a118ee0984cbfad1351fce43c3cc249b0ec5a2264"
+      },
+      {
+        "file": "db_battletag.db",
+        "sha256": "bb5e07f2402c939234c9814877f3ea757bae6d93747c56640ec4dd1030d6e2a2"
+      },
+      {
+        "file": "db_BeginnerLogReport.db",
+        "sha256": "035ff025135c455f7fb439d68c469e57b327b9e5eabba8bfecbe1a4c0fde6d8b"
+      },
+      {
+        "file": "db_Birthday.db",
+        "sha256": "d3578513335d88d6ee600b4aeaae88bf9c378815f0502b5f854bd38ac1edd5a7"
+      },
+      {
+        "file": "db_BlackCoastTheme.db",
+        "sha256": "4cee4c2fbe8a191d26297d3f375d2f2c54ffa22fd8d04752a9fb5cd3b878bcb8"
+      },
+      {
+        "file": "db_BlackSwordChallenge.db",
+        "sha256": "8808ddd223cb4914a9f9abb677912faea39b9b5ac25abe4e1f6b35e6fa446bd6"
+      },
+      {
+        "file": "db_blueprint.db",
+        "sha256": "e2bb8b896e21912ea9327e88f2b41c27f07959e3eafa48a878e702254bbe43f6"
+      },
+      {
+        "file": "db_BossPiling.db",
+        "sha256": "d029f8fb2a63e66120357345a1970d4321d3dbcaa1eb3413fca4019d81cd96c6"
+      },
+      {
+        "file": "db_BossRushActivity.db",
+        "sha256": "96eeb416697b73c1d0a6a7234a03c905ff5dbe2071b4e04467ea2c8771c1e7d7"
+      },
+      {
+        "file": "db_Brochure.db",
+        "sha256": "d6eadb929e66a979bb07355ad8cb4e6ab56dd9e72c048ab82b18ea3a4f6dedf6"
+      },
+      {
+        "file": "db_BrokenRockConfig.db",
+        "sha256": "14c7757c90a14d9b5406be87c74d8ebb66c2f1aa38837221183ca1cb78af6fb8"
+      },
+      {
+        "file": "db_BubbleData.db",
+        "sha256": "ff9cf300c0779cbd6b71acfc7c63e363f2fc4f1a2490f258ee096e0403fae899"
+      },
+      {
+        "file": "db_buff.db",
+        "sha256": "6128f32f75a49046cff322ea6fd88c8515b97b818b8de81f43665e3a2164d9bc"
+      },
+      {
+        "file": "db_buffeffect.db",
+        "sha256": "bc238b4415811a071906f483f990f679826bf651d109c98620b21c189469e841"
+      },
+      {
+        "file": "db_BuffGroup.db",
+        "sha256": "ac4d4a47628c182a661c7f8a16b5f4bc62c8a5ffb1278e2203fbbb6941d497aa"
+      },
+      {
+        "file": "db_bullet_preload.db",
+        "sha256": "b68e228e8938bd61078cf82471fc8d1ff62ce55cbeea92300879a0da6f6e7c35"
+      },
+      {
+        "file": "db_calabash.db",
+        "sha256": "681ec5ba6f172b3259e3ecabcdd9b40bd452070abaec185e3498d569c70d2dab"
+      },
+      {
+        "file": "db_catchSignalDifficulty.db",
+        "sha256": "2d80fa0a0fd9df1dfb9f00506576fec671a87df6710b94cb92970c3638a5cd47"
+      },
+      {
+        "file": "db_catchSignalGameplay.db",
+        "sha256": "3f04569b6df9483be8726f9705a65ad55e54707cb10154fbc82c93df9f78fb3b"
+      },
+      {
+        "file": "db_cgVedio.db",
+        "sha256": "965077851b493a39ce9bab63905534d8a01a3c33ceee1cce7e43da7e9b355fbe"
+      },
+      {
+        "file": "db_character_preload.db",
+        "sha256": "33173a7187e79e3ed8ca8269ecf0a12364551900e3437f840c3d6d55b565c8ba"
+      },
+      {
+        "file": "db_CharacterDisplayStyle.db",
+        "sha256": "e6811a1f7b464d48c40592c60acf6ad37f5f910b184fb652c3e94813f5e30286"
+      },
+      {
+        "file": "db_chat.db",
+        "sha256": "0fe9d7bac18274a7e9519ea3436af6678aa37058d6ff12d4d5a7a1f36f46df4d"
+      },
+      {
+        "file": "db_ChildEntityOwnerData.db",
+        "sha256": "2db3c6bb6404a16678799e221967a3fb2b9b00380a36fd6770a8e68b37cd701e"
+      },
+      {
+        "file": "db_CiacconaGal.db",
+        "sha256": "ea899714da8923dce13c935056197312e7478232269b9824b965fe17c0440f18"
+      },
+      {
+        "file": "db_cipherGameplay.db",
+        "sha256": "9b669e4d7171ade82ee5affa2d6ac0c0d1f723209a2f406ce007a4f2cbe30b51"
+      },
+      {
+        "file": "db_CircumFluence.db",
+        "sha256": "413eebead0a0ba3a349b513dfc29887e2746e8200512c1dea5ab5b3802551ed6"
+      },
+      {
+        "file": "db_climb.db",
+        "sha256": "2ecada6647ed1a56f52c2eb76bdd1a9ad9e37934c8dd2a520969b29b60b22042"
+      },
+      {
+        "file": "db_clue.db",
+        "sha256": "c708ed6599d5ae400615c6b90fcd51883b7c58a15dec607ee29be1436b259ca3"
+      },
+      {
+        "file": "db_CollaborativeContent.db",
+        "sha256": "9d18afe52b0fa8ae124143ec2f92ec1cecbcb2a6c452856cd6adbcb82832815b"
+      },
+      {
+        "file": "db_CollectionActivity.db",
+        "sha256": "8c009a5bbe6b5ed49bc649a4ddc31504c616d0e5ad93569f0c477a9ceef60b55"
+      },
+      {
+        "file": "db_combo_teaching.db",
+        "sha256": "fc538a370d24c5ed35f0e0868d59c12274e6bff938aebb5f8ab05b975eccff37"
+      },
+      {
+        "file": "db_Comic.db",
+        "sha256": "5cd96efcc7709aee79f8218ce70c3e95c6d57fb976190a2b71ba0f16ccced7e2"
+      },
+      {
+        "file": "db_common_param.db",
+        "sha256": "48d8c81549a75a9224c6a6e8c4f7e72624c1aac85efcb026b5458dd3f30500de"
+      },
+      {
+        "file": "db_common_skill_preload.db",
+        "sha256": "71a7226700bd298113f52a2b6999ceac1af4820ad54adb6b80283d4ac045b636"
+      },
+      {
+        "file": "db_CommonBackground.db",
+        "sha256": "30453f5012d1b44b0803dbaac3fb63d31c82d5cf5ad03ef3a7949b7dc92a373c"
+      },
+      {
+        "file": "db_CommonBtData.db",
+        "sha256": "eb4a976d2d86a5146540d0420ab847255d32c557d3565c413e9d10ceec2b5d9c"
+      },
+      {
+        "file": "db_CommonTouchUiEdit.db",
+        "sha256": "0f0118273e0949d000885a1f38ba77cf6ae9c58e622e6c8a04e6b9978014544d"
+      },
+      {
+        "file": "db_communicate.db",
+        "sha256": "ed22e54bc56e3a77094058491b44dc88422ab34e6fe9fce0a22913db64c2c45e"
+      },
+      {
+        "file": "db_component_config.db",
+        "sha256": "d475b450ede5332cff455c47d01390aa8195302d3d4afd74de5e2cc5d1d9368e"
+      },
+      {
+        "file": "db_compose.db",
+        "sha256": "f908a30d9d4aa30133ada16a08d0548bbcfda34a645894e3320ab0e525e59ea0"
+      },
+      {
+        "file": "db_condition.db",
+        "sha256": "7bde2c6d21f5621c13d6aabe4dae62fb8ec462d871515b7bf01b9ba3c68b69af"
+      },
+      {
+        "file": "db_confirmbox.db",
+        "sha256": "8681634f71cb9f8f91728d93e8534f428b6deb9a9fe1dc3006c57098227c2e76"
+      },
+      {
+        "file": "db_ConsumptiveActivity.db",
+        "sha256": "9976ec232062e2168c3adc73443e632403daeeea3bd6760a27db26eb1f6af6c4"
+      },
+      {
+        "file": "db_contrast.db",
+        "sha256": "95a495a4ce3856d6aae141b53675e1e498023c4256c2038d9dfefcd499111795"
+      },
+      {
+        "file": "db_ControlBody.db",
+        "sha256": "29a612bdd0154e01c4170caf9b272ed23d3a21dc0f065ea292741ffc959255b4"
+      },
+      {
+        "file": "db_cook.db",
+        "sha256": "1e954d0b00bf976ebfbb943e38d447ad1fd409f3c858ab4880d788a63bf70e6d"
+      },
+      {
+        "file": "db_CoopRoleLevel.db",
+        "sha256": "7ccbdd2d48ee07a64b516610e1be0da8132e7b4daaae009d4d6322d5c2e31e00"
+      },
+      {
+        "file": "db_CorniceChallenge.db",
+        "sha256": "443bc7998482de000ab284a1ed0464bcc651695a6ddee048516351efea32be9a"
+      },
+      {
+        "file": "db_creature_gen.db",
+        "sha256": "136e8443272077b648d467d688fed894a4e98f9cf8618bb60a99004db393fddc"
+      },
+      {
+        "file": "db_creature_gen_group.db",
+        "sha256": "192651814f677f5ea8fc0006a272457d4687553f5361a5159cd73e6ac687c8d5"
+      },
+      {
+        "file": "db_custom_sequence.db",
+        "sha256": "d4c64c77b2c4bffd93dff890f350be36f80ba57ce200cff90b1ba0f0fdfb271b"
+      },
+      {
+        "file": "db_cycle_tower.db",
+        "sha256": "4d0524742f26385f9f162d8b4d0b3499dde5c5b159809badd1a26927a055dada"
+      },
+      {
+        "file": "db_DaemonHackConfigCsv.db",
+        "sha256": "700e34bb828274fd8d19e66badf0a6957460415342baa32e7fc0871458940389"
+      },
+      {
+        "file": "db_daily_activity.db",
+        "sha256": "c542deb824766ee696662752b022b6e924a3227845ac44709a5fe198095175cd"
+      },
+      {
+        "file": "db_daily_task.db",
+        "sha256": "25846e994c94e90ecc3b7258ef133f5309ba9c9780205ecc116b39989aafa121"
+      },
+      {
+        "file": "db_DailyAdventureActivity.db",
+        "sha256": "709654bec2055189e2a51ef54d214785d522156805f9eb806f6f5c1a6401f621"
+      },
+      {
+        "file": "db_damage.db",
+        "sha256": "a14b82db160d6bfb6f87c50eab2f578ac26ecca90b1108f1c74a6d8f4e4b25ed"
+      },
+      {
+        "file": "db_damage_text.db",
+        "sha256": "d21e28ddbb51d6e89efa224e8748055e28f82de1f68bee56644ba6865e562b8f"
+      },
+      {
+        "file": "db_DamagePayload.db",
+        "sha256": "f0d2ea0f5e11e645c8e168ace6587166c6f292431212c83288b47a7aa3bbd22d"
+      },
+      {
+        "file": "db_Dango.db",
+        "sha256": "a01602c186fcfac503bc57a88d4665424479904024a98ba15bd25041fa615ab4"
+      },
+      {
+        "file": "db_DangoAbyss.db",
+        "sha256": "636c545dbc6fb5c9b9e366aa9115bc998def57e5a785e2e1edf4e8f4c0fad0fd"
+      },
+      {
+        "file": "db_DangoAbyssSuit.db",
+        "sha256": "f6be5187f47d89913c357d4d811809244a3f861c26770db1e3c5de3d394987db"
+      },
+      {
+        "file": "db_DangoBrawl.db",
+        "sha256": "cb5c1352b6a589931e0b4e065720afac18c1e403f12a3fd30f5bd9853ddc2395"
+      },
+      {
+        "file": "db_DangoBrawlLevel.db",
+        "sha256": "77594d7b25deaf796ab6bbda16eeba18f52f5070ecbf0d33968ad80c2e5a1c8a"
+      },
+      {
+        "file": "db_DangoBrawlObjectTemplate.db",
+        "sha256": "78a597e7ea4ed6bbebb185b6994c9915543d55ef191835b9f3b54074404b4383"
+      },
+      {
+        "file": "db_DangoMonopoly.db",
+        "sha256": "5d088ae0dd42a6aaf5e9fcc5f6a70c64a58d019570cca1fb7f0e4fc2b91f8641"
+      },
+      {
+        "file": "db_datalayer.db",
+        "sha256": "32f32da2df812978864643cda16897e00258a6ab24a2f03b7160944e6e599200"
+      },
+      {
+        "file": "db_debugview.db",
+        "sha256": "b0cf0eca749a0abd254317cc1cbcc4b859701371688daf6b2fa38cc45b2e6d54"
+      },
+      {
+        "file": "Db_DetectionGear.db",
+        "sha256": "545feff21d33dffe7c2948cacedf9f1c37697772d2a0c3ccf1f74fc688dcbbf4"
+      },
+      {
+        "file": "db_device_render_feature.db",
+        "sha256": "4b922a1f725a1b0c54975d2f48d55841b5c03ef18dcd6c52c0825a6a79e91735"
+      },
+      {
+        "file": "db_DevicePlatform.db",
+        "sha256": "3a979c90ae72951f3fe4eb60e1926098dc7658a04dcef045c5901291d8935d05"
+      },
+      {
+        "file": "db_digital_screen.db",
+        "sha256": "7d579856d637f6397562856a026ab0975e54ec7fefce6212608bfab3017dbcce"
+      },
+      {
+        "file": "db_DirectTrain.db",
+        "sha256": "e82b40e36d13c120bfcde9341f2e70e6c238017a18dd048960bbcf2c3e9a77be"
+      },
+      {
+        "file": "db_DollGrabItemComboCsv.db",
+        "sha256": "26e86a4ffa1d991d75ed3b43ef991535539f0853cefbe4d8b3547f6ddcc7149e"
+      },
+      {
+        "file": "db_DollGrabItemsCsv.db",
+        "sha256": "82c65e8bc5f53dd7ee41ae88da4a917c70c9e1ae41cd8261140ca6f0a0a02865"
+      },
+      {
+        "file": "db_DollGrabMachineHelpInfo.db",
+        "sha256": "ad27d2c5a4c98cbb294a3d630257cd816cf56ae5789e61037d926f389ada8d55"
+      },
+      {
+        "file": "db_DoubleRewardActivity.db",
+        "sha256": "87f75c07d39bc8f7e0d8fcd7e5c4b5859837ed9876316f745bdd035fd598057d"
+      },
+      {
+        "file": "db_DownLoad.db",
+        "sha256": "1487a34732da23e1b0eb2f3184d32f76e5eca6d4528e5477bb13953e52471405"
+      },
+      {
+        "file": "db_dragon_ball.db",
+        "sha256": "c1ad465e83f97ef8546da214b38ec588be3b73b9f1471e35eb39f84f1c971d6a"
+      },
+      {
+        "file": "db_DreamLink.db",
+        "sha256": "cb42038f89f695ce238e51985fb1ed84f7de0f386d8132178c14e7c547a0245c"
+      },
+      {
+        "file": "db_Drinks.db",
+        "sha256": "1d65d53797650436e019ff497d9c162c2c3a0e2afdb730eed7fbaabd11e38f25"
+      },
+      {
+        "file": "db_drop.db",
+        "sha256": "88742369366cc8dbc3f3bba9ef277bb9d45266520379f781247fb320e31fa809"
+      },
+      {
+        "file": "db_DropCatch.db",
+        "sha256": "5f5aef61cdcb9f2a80ddfa05eef673fb762bd1efc97bd53ffb1526ca55f386b6"
+      },
+      {
+        "file": "db_DungeonPackInfo.db",
+        "sha256": "48d4515555b14476a4e9f5ac505588672b7be73952502c9521e6c444c8b03f0c"
+      },
+      {
+        "file": "db_dynamic_creaturegen.db",
+        "sha256": "7ec2025b348662c1581c6cd2a0bae5d065c3a982dceb840185e139c6f91675d2"
+      },
+      {
+        "file": "db_EasterEggConfig.db",
+        "sha256": "ef3cd98f32038669541581cbd80a6839f6ee0cd90af7605e83bf607c49f77374"
+      },
+      {
+        "file": "db_EdgeRunner.db",
+        "sha256": "c5856e26d1a0abe3d2d4700d188c2518547d23fb24342b3ce38aa3935fbf635d"
+      },
+      {
+        "file": "db_effect.db",
+        "sha256": "ad666f2416752a74ea36b7c0fabefa38f81fce039ea6d2bdb8024e3528481d9d"
+      },
+      {
+        "file": "db_EffectCsvConfig.db",
+        "sha256": "d129d21c9545874c5604e0cf39636fa3310389a2c3a274f62b31176912f8653f"
+      },
+      {
+        "file": "db_EffectSave.db",
+        "sha256": "0810b77571a190959621f2f131b63aebcdc385925a463cc8cd894c7acb037d93"
+      },
+      {
+        "file": "db_effectSpec.db",
+        "sha256": "39083956fe09c9a8291104c4a8d310fb08c92ef3357c40feb19c9220754b0e7b"
+      },
+      {
+        "file": "db_element_info.db",
+        "sha256": "be3424d366c3dd6b425536b6fa914784ad49174f6f64cb4954549cc0b8217440"
+      },
+      {
+        "file": "db_ElementalBoxDefine.db",
+        "sha256": "67c24b5941b44405950f8802cb8e6d3ca9c9217be054c9c89b46491c177843fb"
+      },
+      {
+        "file": "db_Elevator.db",
+        "sha256": "9751c251e95d8f106c14f971d7fc347763fb599fd4b033bebb289498ae5f7297"
+      },
+      {
+        "file": "db_EmotionBubbleAnimalConfig.db",
+        "sha256": "e54bf4733d1bd74713a8a3d16a27ea69d7501ecba9dd80ee3f692a5157bda591"
+      },
+      {
+        "file": "db_EmotionBubbleConfig.db",
+        "sha256": "a2a9c6c918184640850b3775c1df0dddc6de2ee9e5c82caf2685efca7f3d035a"
+      },
+      {
+        "file": "db_EmotionBubbleMonsterConfig.db",
+        "sha256": "d7b6688bd267f9212f036018b753666c7da4f2fcfd12db9189496c7de3edffa2"
+      },
+      {
+        "file": "db_Encircle.db",
+        "sha256": "99a0a1aaa109d77014f0ac5959e774ec8ba670265973d2b9c8026a94e4302470"
+      },
+      {
+        "file": "db_enrichment.db",
+        "sha256": "d856d9bb746bad7f3570807e736dc6d156574f2854ae0aedc1c6d55b1721030d"
+      },
+      {
+        "file": "db_entity_audio.db",
+        "sha256": "47305e02c2eeb400cb5d0c4f501f24ccfeb2d7b1877243b7458f4023c3aa755f"
+      },
+      {
+        "file": "db_entity_skill_preload.db",
+        "sha256": "c10412732a4a93e60fcfec60b18568247607d00af0736c0befef9de095c7cab3"
+      },
+      {
+        "file": "db_EntityGravity.db",
+        "sha256": "575d8a5ef9e9d18eca61a8851f2c76347a7b83755d96668ec27ab26969840310"
+      },
+      {
+        "file": "db_EntityOwnerData.db",
+        "sha256": "d498aa548eef4b8a0bb8a8f5eef492ea201159c5f4fd4e57b98cee040eaae83c"
+      },
+      {
+        "file": "db_EntitySelfEventConfig.db",
+        "sha256": "315d9cfdabfe3ee04a27d3866f5120bf9ccad6f1356072ca97937bb4074beaf9"
+      },
+      {
+        "file": "db_EntityVoxelInfo.db",
+        "sha256": "d97a9174e017b1bc7093248c7b445c4907f6c82bb8b93d043db7cf806191ce9a"
+      },
+      {
+        "file": "db_error_code.db",
+        "sha256": "feb2b8e30291cafcb572c096fb8b1d27a5d4ddfdf8eb76980a6c28565c84f751"
+      },
+      {
+        "file": "db_exchangereward.db",
+        "sha256": "7d8e2bc2806b167fe215d7fc93205323a57ad3f539c63ca2b51575018b4d5b05"
+      },
+      {
+        "file": "db_ExploratoryTypeConfig.db",
+        "sha256": "61f6b191f699e8b312a74321347e85c1f205929eb0975512048f0f070a3d4ba9"
+      },
+      {
+        "file": "db_explore_progress.db",
+        "sha256": "0522ac5e0f3750564f6570365010e0f67fbfaaf997d8696f71222600ea571e81"
+      },
+      {
+        "file": "db_explore_skill.db",
+        "sha256": "76fab174aee0b4994ff38bf9b5510e7428cc65d9bc0bcef38a5aaf4f2eb6bf79"
+      },
+      {
+        "file": "db_ExploreActivity.db",
+        "sha256": "44a0f4363f8d51d327c30a723646ef1dd7ffb646624b535f4f49db27b5dcecba"
+      },
+      {
+        "file": "db_ExploreSkillInteract.db",
+        "sha256": "d2b949b9f19d85c6d4680cc683b0bda1216cd018e0ffe5b8d79b9a24f2cb4428"
+      },
+      {
+        "file": "db_FaceExpressionData.db",
+        "sha256": "cf2ea5f0c323c0678aca5f292c187f0010488ad9ca8d1110c1cbda36eaadb941"
+      },
+      {
+        "file": "db_FarmGold.db",
+        "sha256": "f4469bfdd39ca27841e768c4d9d5101865108610a58c76a89189beba41e7d886"
+      },
+      {
+        "file": "db_favor.db",
+        "sha256": "399f03857545ba67f9f79fbe81ea28d80c123781c62a9cc76f9aaaf6d7c51a00"
+      },
+      {
+        "file": "db_FeedBackReward.db",
+        "sha256": "0cc4e39deb2fd18503ea237fb37c793cb4115c937e730e3ac17dafb404e53b9e"
+      },
+      {
+        "file": "db_FeedingAnimal.db",
+        "sha256": "2fd07024a6d8c4421c42be32ed04b38752bd96ee4fe6fd426886cd0b75d160cf"
+      },
+      {
+        "file": "db_FeiXuePreheat_db.db",
+        "sha256": "03729d7d804f049462ce3841766069e18555c24811b9da8621c357cf7bbc8ee8"
+      },
+      {
+        "file": "db_FightPhotograph.db",
+        "sha256": "9b5e7de4e096ae7610a938d290efca502d4c11a33fbee5f445afaaa5df0f9f3d"
+      },
+      {
+        "file": "db_FightPhotoOption.db",
+        "sha256": "76a2dde2b869b4da5cdfb2fa0c4f03cb1ad20478d57ba03b9ec683cc8f956ec2"
+      },
+      {
+        "file": "db_filter_sort.db",
+        "sha256": "817125920b68e52a487688fbb862433e5be27394f18054352eff16fc826551f7"
+      },
+      {
+        "file": "db_FindSunSpirit.db",
+        "sha256": "f3b6166eb43afc5ab7504e6df0ecda349dd4b2ef9684cfd9c2fe82da5b834a7d"
+      },
+      {
+        "file": "db_FirstPersonParkour.db",
+        "sha256": "533f615c50217346c7b45255c5cf8a4ff0f06b038a5072fb16a2581e3a5628b4"
+      },
+      {
+        "file": "db_Fishing.db",
+        "sha256": "0ebdd0d9e34dd1975f2ff648be373ebacac55eb4165f9bcc58cb81a1b6fe766a"
+      },
+      {
+        "file": "db_FishingGridItemShape.db",
+        "sha256": "b8432e4f1f102b88c3150fda56fa8742d2456e7e07d2989dc6474094a7ac77d2"
+      },
+      {
+        "file": "db_FishingQteConfig.db",
+        "sha256": "a57bb4c8cde573f271bf5aa0142e59ac1af182cc2a9b2d524193b94c275094d9"
+      },
+      {
+        "file": "db_FlagChallenge.db",
+        "sha256": "ae40e2750a30bb6e6c3c9753794aa7d0e7e4ed36ffc3c4a1d2a76ec247b2a3fc"
+      },
+      {
+        "file": "db_FloatingSubtitle.db",
+        "sha256": "4554c38804c6a334797be11c0485b88d6d426a0b3e09d8e8f7766b46c9699866"
+      },
+      {
+        "file": "db_FloroRanch.db",
+        "sha256": "7841e79ae78c8cd349432f3862e8e13c1b71661ee2430fec1e043eb425cf9fbe"
+      },
+      {
+        "file": "db_FloroRanchAction.db",
+        "sha256": "887b6d878bf989271f31b126580b72674191af72cc0bb5da8ea34d6b991a705d"
+      },
+      {
+        "file": "db_FloroRanchBuff.db",
+        "sha256": "3241024b1ac3d41953c25cefb877a4c54ab16d9ac624d508b3cbb1139df31efc"
+      },
+      {
+        "file": "db_FloroRanchEvent.db",
+        "sha256": "037c4749b798014bfb7fd3cc58fb2cecf7d7eecd452300334777b440bc2aedc3"
+      },
+      {
+        "file": "db_FloroRanchTag.db",
+        "sha256": "ff5a5c890fd4927776d0bbd826b710cc10c8c7ea76faa13d6a0db3d7b4863927"
+      },
+      {
+        "file": "db_flow.db",
+        "sha256": "e50317d92a40671b2033b957f7c57020a9de035269b25b8c1c0adbd022b86f00"
+      },
+      {
+        "file": "db_flow_text.db",
+        "sha256": "6ce58b6b2b06f1e62d558a8b7fc3350d81c9cad21e7ee1893802aca7cd9e74a9"
+      },
+      {
+        "file": "db_flowState.db",
+        "sha256": "f6b8a427029f97f8d8d96910c34e2e2e33e8b0e61e5269b49e45b2e361f20516"
+      },
+      {
+        "file": "db_FlowTemplateData.db",
+        "sha256": "94b6d65209fcb61c0bb52535ed98e8a66470327326bd0157833b6e396cbc4a5c"
+      },
+      {
+        "file": "db_forge.db",
+        "sha256": "f70b2ff56bfee5ebc75f0bcc1b155bbc527408c6879c9ac60b55f23053865162"
+      },
+      {
+        "file": "db_formation.db",
+        "sha256": "7e01af989bed31107715021e1db07207357c1108adcca963ad2ecc63810c8ed6"
+      },
+      {
+        "file": "db_FormationProperty.db",
+        "sha256": "17176f080386b70e3ea8e74df48974fd2671658b3bdb544b52cfd5fb50320414"
+      },
+      {
+        "file": "db_FragmentMemory.db",
+        "sha256": "21643f6184047dcef83fe0cb4f9ae337d62a5262b4aba6dfd872d94aa672d4b6"
+      },
+      {
+        "file": "db_friend.db",
+        "sha256": "2c8af493106b101e76b95c90a403675d0d6a0f5b7626552b9ad31d91f5ad8310"
+      },
+      {
+        "file": "db_function.db",
+        "sha256": "df607ed2d427d5cfb7c49a8153aa2a4946c19e03de6d5c22bc8d98f747c92a3b"
+      },
+      {
+        "file": "db_Furniture.db",
+        "sha256": "794e5214f6d4d3d80d3622f860c3b00192355672f0d63b5828c96230bb9835a3"
+      },
+      {
+        "file": "db_gacha.db",
+        "sha256": "00b845b39837b23067a2f8ed9336b46979707faba726dfda870a626958b4dc13"
+      },
+      {
+        "file": "db_GachaAccumulate.db",
+        "sha256": "1da2a301f9a93389fc6ae25638c8fb0e793cd0f1bae6abe343fb85de31a0d59f"
+      },
+      {
+        "file": "db_GachaRoleDevelop.db",
+        "sha256": "eb50bf37c657c42bdbbdeef2f7b2b0f323ef214ec55b027d96267b6f4b5fca84"
+      },
+      {
+        "file": "db_gameplaytimer.db",
+        "sha256": "711261276f0b2cf50f57887807b4ebd773f0197836c8e1f9ad32922e7fbab9d0"
+      },
+      {
+        "file": "db_gender_text.db",
+        "sha256": "ff648648ad8378c08c69ac9d04c829372e196716025c2c54d41973bc9ecdbe9c"
+      },
+      {
+        "file": "db_general_action.db",
+        "sha256": "af6d57e86df178147ed32b605978eb4c722487804979455cdc0f488f57b2934d"
+      },
+      {
+        "file": "db_general_event.db",
+        "sha256": "516134356059485b5d85dc607d807135d13a42e255c246131ae37ad7a7fa8a48"
+      },
+      {
+        "file": "db_generic_tips.db",
+        "sha256": "2763055f538bce5b1a7d80f2b5c18a936629ba0229a0722edcd08d643081f329"
+      },
+      {
+        "file": "db_Giant.db",
+        "sha256": "06b152d980bf3aa1269daaa27d5dfcc5e2ea965dac0bd00588f8757c89cbea7f"
+      },
+      {
+        "file": "db_GiantAnimationRegister.db",
+        "sha256": "484c241daaeb6d91e3fc64e700928afc80827f0ceecaa762408f30603753c2bc"
+      },
+      {
+        "file": "db_GiantResponse.db",
+        "sha256": "c14a850173fbb6bee0502ae97b3ba1f4741e416e3d9eda2fb9f1d4b749afa64b"
+      },
+      {
+        "file": "db_giftpackage.db",
+        "sha256": "b1c4af50d64e81c7f49543c33f7bdd37f9315d036c7293fc5dcaefc88a67f019"
+      },
+      {
+        "file": "db_global_config.db",
+        "sha256": "3cf4f747b6c9b777fd49bfc1463ceaf91710efd08990368cae827dead5ddc139"
+      },
+      {
+        "file": "db_gm.db",
+        "sha256": "7096aed8ccea1bccab53f7132dab5a9e36e9fe7c71a9c0bae82ece9de56adbdb"
+      },
+      {
+        "file": "db_GolemCrack.db",
+        "sha256": "d09e996180090191802ca53b417026b7a34d3a972429b6e32f5d88bb74f987ce"
+      },
+      {
+        "file": "db_GongduolaPassengerVoiceConfig.db",
+        "sha256": "61e427c220a57edd0b28dad362b254e8d7ce5c79f69073e91aed0833ff1993d0"
+      },
+      {
+        "file": "db_GpuEntity.db",
+        "sha256": "fc56f8cd9cebecafa1cf4155bbc0363007c7f7e08e4c7566de45a3876fedcdfa"
+      },
+      {
+        "file": "db_GuessJokerCard.db",
+        "sha256": "aa591ea4129fed42ed5b8740b60e2652b0fbba8af221a2ec6ac4e09760adaa10"
+      },
+      {
+        "file": "db_guide_new.db",
+        "sha256": "0182ecf542056eed98f531186fe832c5982dc8398b4151c866f282d2380d0287"
+      },
+      {
+        "file": "db_Guqin.db",
+        "sha256": "dedeccf2e2b31cb036f5c95ec541795eede475d71f13b7029dd9b418ca161ec7"
+      },
+      {
+        "file": "db_GuQinActivity.db",
+        "sha256": "f58158c0afe29974db5bebaf3f345055413579a76fdb44f2a139e6c9ade9cfdf"
+      },
+      {
+        "file": "db_H5Activity.db",
+        "sha256": "aa75af195061b4a7723d72d2ef9d6bc183a00f4029357881739d51be9f4a764e"
+      },
+      {
+        "file": "db_H5Circum.db",
+        "sha256": "291b35b2c1fc7bcc03618401b15e19e581b4a8304730a35fb1a9567afd624631"
+      },
+      {
+        "file": "db_handbook.db",
+        "sha256": "ba0bc6c16d06fc670888eba8da3ee51353e9743467a4426a1b73d2b5a9da6f22"
+      },
+      {
+        "file": "db_handbook_entrance.db",
+        "sha256": "c0cabdc26c6a7561e7cd06ac76cbc09cec1945c8fdb39a1f40e046883fb216e7"
+      },
+      {
+        "file": "db_hardness_mode.db",
+        "sha256": "d7354e2397510d7a7e6e2090e8eba42c22894317c5296385f929dbf1e605beed"
+      },
+      {
+        "file": "db_head_icon.db",
+        "sha256": "47e760eabc02afe199c5246b51f8555a54963d194347671ff95dd9f180a66ed3"
+      },
+      {
+        "file": "db_heal.db",
+        "sha256": "d9e7aadd7aaa4680beb8b0a9a8250da09a3f0f55f2714505326990d6716ce532"
+      },
+      {
+        "file": "db_help.db",
+        "sha256": "fc2535b08dd1a19c92dec2f2c2f397dba37406e21fcb5581edaf139f5f278111"
+      },
+      {
+        "file": "db_HomeBtnStyle.db",
+        "sha256": "9ad9669786dc6b23b42f3e1a17b9e83b14a0bd05bd96526ce7ef1ab5948854a3"
+      },
+      {
+        "file": "db_HonamiStory.db",
+        "sha256": "8eec2904a46d330c4f8a0f53186e2ec6045474a0f9c581dde241f2cbafffdb01"
+      },
+      {
+        "file": "db_hot_patch.db",
+        "sha256": "1b36c59931ca2b65c4de283ec8a0e0fb46c97f6c5b22c28633ea2df4a35fe9cb"
+      },
+      {
+        "file": "db_I18nResources.db",
+        "sha256": "c01447736cd9161b9df6e174499c15746c52763d1a0109a679e48ed69109c8f2"
+      },
+      {
+        "file": "db_influence.db",
+        "sha256": "6c44df6588d9378b5193530890712bb0abe4748f9d01a840fddd4ddcc19c5a79"
+      },
+      {
+        "file": "db_infodisplay.db",
+        "sha256": "2484250c5a7a21145af09425a1dde98976d4d291aced122f524075af0641e941"
+      },
+      {
+        "file": "db_Infrastructure.db",
+        "sha256": "ef43842faaf0c64c7e4d6379ebb9c718a49d0cc42d5acb79fb2ce9f72e46449e"
+      },
+      {
+        "file": "db_input_settings.db",
+        "sha256": "4dfba59cb989e0f55cdae773b1976abaa5456a8f20bcc8d28040360e6cd7ffde"
+      },
+      {
+        "file": "db_instance_dungeon.db",
+        "sha256": "5d5f922f3fa82c31000af8ed3a525e1f0211d33d699114ed75d55a976c59aad2"
+      },
+      {
+        "file": "db_instance_dungeon_step.db",
+        "sha256": "f34dabaa6bbd5cba5a370aa1aecbd00dc4beac2cd230cbfcc4fb11dad8c256e6"
+      },
+      {
+        "file": "db_InteractAudioMaterial.db",
+        "sha256": "7c4a0c617b3e877fec05f059506dcbff2e346cee2addafa4282292d5e56e18e6"
+      },
+      {
+        "file": "db_InteractData.db",
+        "sha256": "158e9e620a115bcb3d6feb4873b233fad8ca2e1499fb418a2e16b8f7948115da"
+      },
+      {
+        "file": "db_item.db",
+        "sha256": "d8cc22467e8885ac587977356f36342fab598d19ca026ab5d2a2ef3534b65059"
+      },
+      {
+        "file": "db_item_exchange.db",
+        "sha256": "6fa1f85eb8ab44e2436bfae78f53d75e8063acf17cfd0a4713a6bf754239c16b"
+      },
+      {
+        "file": "db_ItemAttributeReward.db",
+        "sha256": "6b17ad84c087bb75273c43d8b1318b5ffa5adc7c76926c2e6a6c97fb0da1faf5"
+      },
+      {
+        "file": "db_key.db",
+        "sha256": "b029a9db0c0fd4b31e5cc60f184598a8a157fb5022844215e44ce4a759d4bede"
+      },
+      {
+        "file": "db_KingShip.db",
+        "sha256": "98c3f514927b4be8f10022c0e09e9979214693c4c6897254b873208f4c27fce1"
+      },
+      {
+        "file": "db_KSCDamage.db",
+        "sha256": "a6fa88203b69e459951d8c7d587a8d93fb3f15fcf0024e2a957096d53a3bf439"
+      },
+      {
+        "file": "db_KSCProperty.db",
+        "sha256": "8788297391da142022591c415b92bd5532ee67ad9214e59237ddf6e15a696b90"
+      },
+      {
+        "file": "db_Kurotato.db",
+        "sha256": "ba5d61049ef387d097b1d558148b03595bde7455cd857be91405cbe3a87acff2"
+      },
+      {
+        "file": "db_LangImage.db",
+        "sha256": "75992fb3422e468fb8f7968ea3c5c3fa55fc8191472c4f254502d4b27cf74369"
+      },
+      {
+        "file": "db_langOfLogo.db",
+        "sha256": "09dcfebd9b8552b36da7a562dec7a9878d3f563c83aa0c1cd59dd1c481a128c3"
+      },
+      {
+        "file": "db_level_entity.db",
+        "sha256": "fd678b9de11d19263b346e09e70bc27cb42dad616f4874bf21681c5818dfde01"
+      },
+      {
+        "file": "db_LevelCustomPrimitiveData.db",
+        "sha256": "20929e6baf86cb4c9ea54ef414bd830bd86ad68b72c5b52992415d5a86c0175a"
+      },
+      {
+        "file": "db_levelgameplay.db",
+        "sha256": "b9d1f05bb49ccca80064c89d5299df24c1c8274e84c1b204edec34b6f3402e3d"
+      },
+      {
+        "file": "db_LevelPlayData.db",
+        "sha256": "2aa98711194209ca36cc15eccf90f32714bbf402a8512db6e0fa6549fa682a76"
+      },
+      {
+        "file": "db_LevelPlayInfoMappingConfig.db",
+        "sha256": "7642f9840a12556e9fd4f7e452a1cdcfc6a4aba8b79046da3ef1b4f86590f99b"
+      },
+      {
+        "file": "db_LevelPlayNodeData.db",
+        "sha256": "58d5ccf29030275fd8b4b5d3c2d7df71db46c354f0b97f2dd147fa4c264fc5e9"
+      },
+      {
+        "file": "db_LifePoint.db",
+        "sha256": "191645c426e0ac52bd7529947128ee4075232459828b58ebbbe6de7775e4cd8a"
+      },
+      {
+        "file": "db_LineCross.db",
+        "sha256": "f6f1ba589e6de772508d8e39a1b7054cf247e41bd49c79b13862628df072d96c"
+      },
+      {
+        "file": "db_Link.db",
+        "sha256": "2e50939e5ac38cfb91b1d9a3dcf7725da28113005536d3bda07049bea9a8ce85"
+      },
+      {
+        "file": "db_LinkageReward.db",
+        "sha256": "1f568c8f5707b4400f05a2def3496a8bc05fd81c7a44c374fce69ca812b48a89"
+      },
+      {
+        "file": "db_loadingtips.db",
+        "sha256": "0fc25eb6197ad160d56aa40fbc59171bc07b61891fa558864fcf260c19129af2"
+      },
+      {
+        "file": "db_LockOn.db",
+        "sha256": "0d3a36baecf6328af668189ad826a041c852f90d8c9b5fb93e7b34a4dd0b2804"
+      },
+      {
+        "file": "db_longpress_config.db",
+        "sha256": "83645ad723bcd9daa7eec19958a58ac5ba443f2fe8837b76afbff83a4fac7689"
+      },
+      {
+        "file": "db_LongShanActivity.db",
+        "sha256": "ea4ad7ad8fc087702c5ee8056fd48afb60d28f1eb9250b7013df2b7bf90c71eb"
+      },
+      {
+        "file": "db_LoopTeleportVolumeFunction.db",
+        "sha256": "e75ac73a5f593f52d0d1e64cd5b82c56daf8836d35f0816bd3381a13a2832a5e"
+      },
+      {
+        "file": "db_LordGym.db",
+        "sha256": "698913563e5e8e35f17cf159b7b4d755fd04c821931c0c5c56b9fb344f338cd5"
+      },
+      {
+        "file": "db_mail.db",
+        "sha256": "62f82171c82f3d0139502f5bdbc66a24e297000fe86dd5c01564858aaaab3e6a"
+      },
+      {
+        "file": "db_main_role_change.db",
+        "sha256": "cd5a57ee1924759ecd255c6c18c635c6d9ec4f9a5cb025c87d18327c7ed4f331"
+      },
+      {
+        "file": "db_map.db",
+        "sha256": "4eb18455af59bba1f0a45b048493219a58c6b9cd4cdf49abb39d79ba49f92e7e"
+      },
+      {
+        "file": "db_map_mark.db",
+        "sha256": "a86fffec22aefe9e2df05b3376fd642630130a91a58340200dd697546b6f411e"
+      },
+      {
+        "file": "db_mapfog.db",
+        "sha256": "70abfef9fa12c1ebf6c208a9ca0f25fa82d02ba1652db41c4e7d346a92e80a3b"
+      },
+      {
+        "file": "db_mapnote.db",
+        "sha256": "690cfe1645c90e2c147da5349983e15a57965e2646b5f270b4a1ff0d8cd5a575"
+      },
+      {
+        "file": "db_mapping.db",
+        "sha256": "7462fbdea7ce69a994dd3a89dae24b8916dee99d77eb916fae5fa698b534d9f9"
+      },
+      {
+        "file": "db_MatchThree.db",
+        "sha256": "3c18ddd6e39b4c0c6609964aa2fbe90510a366a71ca485c1e3f4278d28129238"
+      },
+      {
+        "file": "db_menu.db",
+        "sha256": "e24f47927a321c81dcec1a41002cfdb6b08a1b8af98bef0dc419261f94cebbe8"
+      },
+      {
+        "file": "db_mobile_battle_ui_set.db",
+        "sha256": "242a92b511e60370454b5245de0ad9ac478dfd490fb372ad3fd5a6350aef9d63"
+      },
+      {
+        "file": "db_model_config_preload.db",
+        "sha256": "8cd7c51cbe9ba6db9cb0ad1c834ced6a6c280aa7c7dd120c65efb19a09261af0"
+      },
+      {
+        "file": "db_monster_Info.db",
+        "sha256": "5b513601e291bbdfff028497fdceb3f64d2b392d63263b8fe926d775f5a6a5d8"
+      },
+      {
+        "file": "db_MonsterCommunicationGroup.db",
+        "sha256": "b45c239389b154730a821418e98cf637fdcafa8cf68b8b9ddd7a3856532c9683"
+      },
+      {
+        "file": "db_monsterDisplay.db",
+        "sha256": "92b99f0a63d0d7c06f0b2d3eddf98e4d1788cf8f574a76f6ce9cfdab2cf9da07"
+      },
+      {
+        "file": "db_MonsterEcologyStateMachineMappingCsv.db",
+        "sha256": "93a38b116aa665b0fe2653674e5eb956f8beb3ff1faf03eabaf56f8d1361d31c"
+      },
+      {
+        "file": "db_MontageData.db",
+        "sha256": "d1ec236ae55bb7e47b6cb7f4e797d0f67c6477f670e2d5ccb284b81283894dde"
+      },
+      {
+        "file": "db_monthCardContent.db",
+        "sha256": "81b5af3e5a04a63340d0148aa578e69f7055eadb717a3e393e670a5adbfd81b8"
+      },
+      {
+        "file": "db_MoonChasing.db",
+        "sha256": "5aaf629bfe9fa3f580cb2004062722d84c775643b9f2172a47b3988918de525b"
+      },
+      {
+        "file": "db_MoonSignIn.db",
+        "sha256": "6b4095d70f20910158f6eb78cdb0f93c3c99d08f73fc127d76d85a4096e0a473"
+      },
+      {
+        "file": "db_MoralePlay.db",
+        "sha256": "e34c39f4c81fd50105346445410199de887766dafbe8816118e231f901ee6794"
+      },
+      {
+        "file": "db_motion.db",
+        "sha256": "8765791b28553ecade970a2bca5baab67f3db88c80b558952da3849577cb3e17"
+      },
+      {
+        "file": "db_Motor.db",
+        "sha256": "4def001ee7b41cdc90c77896c8f2f4a50d3150ff3f6b9ef8d2fd4defd519daf4"
+      },
+      {
+        "file": "db_MotorCommon.db",
+        "sha256": "1fc1ab5b693d4f16f03cd4e22fc684b47510c27973f7e45d75c78dfc1190a3e7"
+      },
+      {
+        "file": "db_MotorDevelopTask.db",
+        "sha256": "10e339946b2c15412d36a94dee44a68566ab96e2ccd177e14bb12b4db8f8908e"
+      },
+      {
+        "file": "db_MotorDIY.db",
+        "sha256": "31ad0709cab4fcd6b3fa3bab07f48eac1208bb01e8f3169952898d681012362d"
+      },
+      {
+        "file": "db_motorfight.db",
+        "sha256": "f5fe8fbe3f53009e79005621245907dba438f48b57c66e400d116430ec0f0871"
+      },
+      {
+        "file": "db_MotorGeneralPreview.db",
+        "sha256": "364d3338e72dabee9c4da64b4c2890f614dccdb00b9c818805d2740cd5014c60"
+      },
+      {
+        "file": "db_MotorLinkage.db",
+        "sha256": "0c654b42a07b20399b9b9942bb76241e9b647f1a8edd9d23bdf068f242068f6f"
+      },
+      {
+        "file": "db_MotorParkour.db",
+        "sha256": "9d7b93dd0f181fcea413e7daab571622c0678dc92487069af601479c8ff8632e"
+      },
+      {
+        "file": "db_MotorSkin.db",
+        "sha256": "8b9ef81ef98921b3040469b9eee590c617b1d2549f97991b21d634622d24ef59"
+      },
+      {
+        "file": "db_MotorStickerIp.db",
+        "sha256": "a04e91b3edcfdec12d82a632dbf0f7db8dac82ac2a35023f9921eac9308f6bda"
+      },
+      {
+        "file": "db_MowTower.db",
+        "sha256": "61bde0fc134a3de195dd8d23e7ad677a925dd475eebb7488c1fb1acb74103b6a"
+      },
+      {
+        "file": "db_MusicalInstrumentConfig.db",
+        "sha256": "fe9b37b657b2682f7db53aaba5ad6156db5e341d1037b2d959c1099583679028"
+      },
+      {
+        "file": "db_MusicalInstrumentQteConfig.db",
+        "sha256": "8686fdc2da0bee3402eea52b3e803a941fd4319b91886c5f61623cced05b5d4a"
+      },
+      {
+        "file": "db_MusicBeatType.db",
+        "sha256": "823c76576761583a5e16b1653b473c0ace6311760b396db3821bf586795765be"
+      },
+      {
+        "file": "db_MusicGameConfig.db",
+        "sha256": "44d52306e3a7e45ab8b1e50633cae952336100e5781bccb88356e7064004a62b"
+      },
+      {
+        "file": "db_MusicSubTitle.db",
+        "sha256": "cf2f3b89be19f03c2b71d2169052f7153598ed61002da42073c85a1a4406f638"
+      },
+      {
+        "file": "db_nearbytrace.db",
+        "sha256": "618eadb357b4f88cd95369955df122a4b7aad700d753835228d31c2b026438ef"
+      },
+      {
+        "file": "db_NetworkDetection.db",
+        "sha256": "313c223a09870ab0f29ac69aeb29858297af26deddcd58a788752be6fe96f313"
+      },
+      {
+        "file": "db_new_occupation.db",
+        "sha256": "4d924e6d3031d9f3f506e2f6333a05a5688865a7e7c2efb7d7e5056b921d623e"
+      },
+      {
+        "file": "db_NewbieCarnival.db",
+        "sha256": "57685c62bd856c6ab5b4209454de43cfd6ccbdf39fe1ebb9c76149e593b8bbda"
+      },
+      {
+        "file": "db_NewbieCourse.db",
+        "sha256": "d9bdd3bc74c36e5116c353f0b2a0fa9158d1d17443b8eda5daa7850a32f46b91"
+      },
+      {
+        "file": "db_NewPlayerSupport.db",
+        "sha256": "f4b446808a643a82511d452d02b331dad1e2831a04d1dec06dba22567e9d92aa"
+      },
+      {
+        "file": "db_NewPlayerSupportActivityV2.db",
+        "sha256": "03eeabe8a15d5ceccceecd161a48a6a3eceb041b7e102764c258e6eb7b7c93ce"
+      },
+      {
+        "file": "db_NewTower.db",
+        "sha256": "310ec723a4572b849d2c27164610167546e5f4e35bc1a2165b078e70de588b11"
+      },
+      {
+        "file": "db_npc_actions.db",
+        "sha256": "8d846c858f7dbbd61a1b28c8a5250953cc41ea78d019421b5c6022e5b556bbd0"
+      },
+      {
+        "file": "db_npc_attributes.db",
+        "sha256": "43102c6ba78f8e58a09dbd356daf3ee8befc20b14d17899702b29fb687688f6e"
+      },
+      {
+        "file": "db_npc_headinfo.db",
+        "sha256": "665f8b77fb422fe1e3f23a9d67bfad08ea6b4a951d4ef8adea86d60ae55824a7"
+      },
+      {
+        "file": "db_NpcGroupPerformConfig.db",
+        "sha256": "208d7cba822d978d46057e49342281fdf72d2deed83c77ca30498ecb1e73759b"
+      },
+      {
+        "file": "db_occupation.db",
+        "sha256": "5f28fb44e3a019c1f3d21bc6fa6f7dd6f42638d10f859e47d4c2e7af63754ed7"
+      },
+      {
+        "file": "db_once_tower_challenge.db",
+        "sha256": "a1c41b0f86e609afb46f3edf2d4964e350f1a66f27da5114b3ad1f5446d9d8b5"
+      },
+      {
+        "file": "db_Ornament.db",
+        "sha256": "c3620d2cf8705809647558c9cc7dd7523397e2ae14a1ffb8ff572cad1fc013e1"
+      },
+      {
+        "file": "db_OutAreaBorderConfig.db",
+        "sha256": "7b599363b357e07101de0aa01656fddd77e0f0d9c7564c535c413df5a6cf9b66"
+      },
+      {
+        "file": "db_OverlayAbpMontageData.db",
+        "sha256": "9383bb89faa9d9f518447d30880cb1459bdf25d5f6cb7f5e31bb9f7840cdd1be"
+      },
+      {
+        "file": "db_parkourchallenge.db",
+        "sha256": "3806647860eabb2e5d33fb3e919d206554874a633976e3e6fd335af3e0612841"
+      },
+      {
+        "file": "db_PassiveSkill.db",
+        "sha256": "79d70f2de8efe0624d3963bf0ea3a270b9e19e1a980d0ea9bc54f98bfe3b12bb"
+      },
+      {
+        "file": "db_payCurrency.db",
+        "sha256": "ac01d0b9d69d7d57078c807e1fab5ab807014b82b2f654ee60c7bced3fdcc70e"
+      },
+      {
+        "file": "db_payshop.db",
+        "sha256": "22ca92f65e05e05639a0ee8d995e51a2a10e372463a19e2dcb0051e50c8a7c1e"
+      },
+      {
+        "file": "db_pbdata_preload.db",
+        "sha256": "023cbafec292d79a3a9fd7cc8e964a7ea88d47487ffdbbd3238148beb8cd168e"
+      },
+      {
+        "file": "db_PermanentRogue.db",
+        "sha256": "93625297e47e5ea58a8ed31965d6bd60ad44fe3014b585bc04d544fdddb15efb"
+      },
+      {
+        "file": "db_personal.db",
+        "sha256": "22b90aa923dda0dc3e68d0584aaeb7d024c12068d9d375fce8ced4861574bc98"
+      },
+      {
+        "file": "db_personal_card.db",
+        "sha256": "5daaea1187a03cd2aac5575aa3f9f9b952c46f81a095867882ccd034b2ee5bd7"
+      },
+      {
+        "file": "db_PersonalTitle.db",
+        "sha256": "fcee79e1f0cc003a1e233a2f0598b3bdb2057587ae89a1de7a57cd8d04f6ebe2"
+      },
+      {
+        "file": "db_phantom.db",
+        "sha256": "11ffe6aa4f18cc9198d065175653362000c1125104baa402a9dfe6c182a5f784"
+      },
+      {
+        "file": "db_PhantomBattle.db",
+        "sha256": "0653172d89dfe19065eabfb46ccc9e8ddbd696b6286671d1d4d361829a92283c"
+      },
+      {
+        "file": "db_PhantomCollectActivity.db",
+        "sha256": "a1ef1c6a132d369d66ded0ee1e45688201f8a1e6dc81944356aecdbb2e846e94"
+      },
+      {
+        "file": "db_PhantomManagePlan.db",
+        "sha256": "cbbe1f91a6889076a55d5eff593a5f3f09b4efc09b53d71cbb30d87f19577c7e"
+      },
+      {
+        "file": "db_PhoneMessageAttachment.db",
+        "sha256": "42edfbf2e6c2e993e07c48cb4244c55805d4d3cc3ca872ea7278a517d29c5d16"
+      },
+      {
+        "file": "db_PhoneMsg.db",
+        "sha256": "47cfe1bf1a7630ff2bc6375a9c4b1be9cc964fc6a8288b9a183df612071ae48d"
+      },
+      {
+        "file": "db_Phonograph.db",
+        "sha256": "9198ad561a6245b016b62b6f9f8b97953be8750e0c15197f3bb182f8d1a3ce2c"
+      },
+      {
+        "file": "db_PhotoCollection.db",
+        "sha256": "1eba540be6ba78881a546afcc81874e8b34d51298cd9b73b2cccc819073098fc"
+      },
+      {
+        "file": "db_photograph.db",
+        "sha256": "23d09ee2ab76adf06b08e1a337605a6e2a12bffddcf5fbdddbe99fa1adbf9d01"
+      },
+      {
+        "file": "db_PhotoNew.db",
+        "sha256": "cb645a8709e5a8fd090fb950bfb7bdbf3c82b144ad1cf52509e39c4863d8bd42"
+      },
+      {
+        "file": "db_physics_asset.db",
+        "sha256": "c856f3e80f1ecdd6e9c229fe01ad8c865a64353573237f278c81b911ebc41987"
+      },
+      {
+        "file": "db_PinballBattle.db",
+        "sha256": "259c9146a9c3feadc9aa72f15b99a2601f368b0b9ff9dbfb227b8d51b1e2da17"
+      },
+      {
+        "file": "db_PlatformChannel.db",
+        "sha256": "7a0c093a45450cda9a258740aa96da3d92df0456ba054fcfadc34db3d1365c40"
+      },
+      {
+        "file": "db_PlatformIcon.db",
+        "sha256": "546d4a193a028556cd44f2d6b5e82ca00ad20fec325a4683bfc294c7dbe4e119"
+      },
+      {
+        "file": "db_player_exp.db",
+        "sha256": "0abc3f0f537cae43771e59a0d4f5edf54d4f8e3a259574a73e0593b3e579dff4"
+      },
+      {
+        "file": "db_PlayerHead.db",
+        "sha256": "26e2c32126b13ede1e675a747cf4c20687e0c0f59b53b7d2338176a1c25ec5ff"
+      },
+      {
+        "file": "db_playerStateRestriction.db",
+        "sha256": "0e55632306081d6880e0d773346211808a5cf697b80a3ce68fb942e01344a9aa"
+      },
+      {
+        "file": "db_plot_audio.db",
+        "sha256": "677b2282d7199016a5e8805242aeb95538cf49adc2de223006aa62a022fbe6ff"
+      },
+      {
+        "file": "db_PlotGuest.db",
+        "sha256": "e13db47032ec6166fcf0e2c07fd5ca5a5d960f56403d60ea8f692a656dc049be"
+      },
+      {
+        "file": "db_PlotHandBook.db",
+        "sha256": "ce76c3b33f244601dba2dcc27d429eb0d67de87c879dc4a2842f22c64cc3f0a6"
+      },
+      {
+        "file": "db_prefab.db",
+        "sha256": "917fd54e10c4910014bc296db9c719b8c7f6cf632c8082db9ec07f30cf12538a"
+      },
+      {
+        "file": "db_Preheat.db",
+        "sha256": "1e20ddc30254398b20f4014c602629dcb19cae5f468f7daad828c9d53c85414d"
+      },
+      {
+        "file": "db_PreHeatTaskActivity.db",
+        "sha256": "569274a7870b61833de6cf155a91ca50756746e6a9f2b63db93683ad6526d27a"
+      },
+      {
+        "file": "db_ProjectorPattern.db",
+        "sha256": "4679a92b335adf482829d9d2be8d88c93d28d1937016eabf8d0f69648812da67"
+      },
+      {
+        "file": "db_property.db",
+        "sha256": "1ec73e9ee83879fd9a4e19e3635e961f54c3e14eba43bdc3740fe886de824183"
+      },
+      {
+        "file": "db_protocol_monitor.db",
+        "sha256": "5243609d98430c1276bae5c40f2983e525686471cb8fd264557c017d34c559b2"
+      },
+      {
+        "file": "db_PunishReport.db",
+        "sha256": "8128286e43218f4e6f9fdce6f7659f84701ac8e3d150a96530b708089d4b1262"
+      },
+      {
+        "file": "db_quest.db",
+        "sha256": "4e064758e0317ea1e917751f983014db0aea10a1c941a63ba70ccbde742e8530"
+      },
+      {
+        "file": "db_quest_chapter.db",
+        "sha256": "87acb387fb63c5c01d62f8b0f636fc20cad6c8604d1bdebafb7a372051c8dfe7"
+      },
+      {
+        "file": "db_quest_step.db",
+        "sha256": "90d8fca03da2cff7e0aa15bce822e2b76cc34861444ebe77761c3c40034a010f"
+      },
+      {
+        "file": "db_QuestData.db",
+        "sha256": "14a03291e5598993d3db31ac3ba9df1ab23d449de4c99f69f13e81a166c94965"
+      },
+      {
+        "file": "db_QuestMultiLine.db",
+        "sha256": "afd04d3cdffba07911d71518f182979dc030002e9c82c25193d20672ed7298e1"
+      },
+      {
+        "file": "db_QuestNodeData.db",
+        "sha256": "ee7a21366c9d697b4f718e163ee23811ec14a210bc1048dc1325aac0a88150a2"
+      },
+      {
+        "file": "db_QuestReachableBlock.db",
+        "sha256": "353d97bb9329f38f8782e9f2d9a84bcd7a70203adfea590fbd573886bf1df22d"
+      },
+      {
+        "file": "db_QuestRecall.db",
+        "sha256": "b22a04290ffd11c6ff74e24388f049c56f0a6e29887a84aa0d5d9fd3d0d9fd8d"
+      },
+      {
+        "file": "db_QuestRefMapBlock.db",
+        "sha256": "2044aa9d519de71a20e550d495e267b1058fb3948374ecb20901aa02882af1d9"
+      },
+      {
+        "file": "db_QuestRefVideo.db",
+        "sha256": "bde9e8dec1a096e49a40224ba0a7387239c08bcb8fdbce1f6c7aecda7dfdccb0"
+      },
+      {
+        "file": "db_QuestReview.db",
+        "sha256": "f7fac0d8dea1cb6ea607269d12f902b199552205b5be536c65f6879e822dea36"
+      },
+      {
+        "file": "db_QuestTag.db",
+        "sha256": "89f07719b8ab32f138a1856f100db639d3008f4509675d9a689fa1ab98f1d53c"
+      },
+      {
+        "file": "db_QuestTrackingConfig.db",
+        "sha256": "6e3bd82b69bd254c723f654e2b46efbd9508c5247b5d917dcaf4385a44db4e27"
+      },
+      {
+        "file": "db_QuestTree.db",
+        "sha256": "c959a4cd55e07be60066f14431299526838ece36cb5e3971f273edab889446a9"
+      },
+      {
+        "file": "db_QuestTreeCustomJumpConfig.db",
+        "sha256": "befff62204ff710eb1b4ab1a06de2b8f32fa26be1229cfc095b07f804fd51f44"
+      },
+      {
+        "file": "db_questtype.db",
+        "sha256": "af9bc6e3d417ad798a3b04d1168e68f43adca57751a6a344e034082bf5c57013"
+      },
+      {
+        "file": "db_QuickHack.db",
+        "sha256": "48512c9966568117e4c0da2d75dcb3fbdd5c01352222ed0dbfd0c50177c1e627"
+      },
+      {
+        "file": "db_RacingBets.db",
+        "sha256": "6214d6f994b7876ae4639f2f9f7f0c847f1487e20fd75288d76f2869775168c4"
+      },
+      {
+        "file": "db_RandomPlot.db",
+        "sha256": "f88e2d24c5bd4955dccbc54f710f6299758c66be878496a978d2098bc17fdc9a"
+      },
+      {
+        "file": "db_RealmBetween.db",
+        "sha256": "1053a43babced7b660104ce9356d451a48bc1fcdd39b84ed410895a84c4ec554"
+      },
+      {
+        "file": "db_redDot.db",
+        "sha256": "0c753c76c36eb6dbf31f401fa2862ac5bf596a27cdcf44b271763639bb4e8c6e"
+      },
+      {
+        "file": "db_RefResourceQuestList.db",
+        "sha256": "13f36e45634fad3a02ec199a33c5606e11cbc240915cba402b189a230433ddd7"
+      },
+      {
+        "file": "db_RegressActivity.db",
+        "sha256": "05a6d96710e11e37ba137611b0a8b60026652e99a2a2fc5fc602738dc6567a5e"
+      },
+      {
+        "file": "db_Reigns.db",
+        "sha256": "d2a3d32c5f564e9bac29481b4b59beaced2d3e36c75ec77dbd04b29c1f101c7d"
+      },
+      {
+        "file": "db_ReignsCard.db",
+        "sha256": "d0b7f7c5f6fe036a51311515e86993b1c66ce9829cfc5b760c224f9410137767"
+      },
+      {
+        "file": "db_report.db",
+        "sha256": "c04ea7d91ac8269e0ce3d618240caa1aec8cbc7d2389a9de336ff363df581947"
+      },
+      {
+        "file": "db_resonate_chain.db",
+        "sha256": "04e02448082770ae5387cdd9320c000576c39bc90e4aa39f538f9890edfbfba9"
+      },
+      {
+        "file": "db_revive.db",
+        "sha256": "12f4d92051ed3b240955a57f04967f106f37608d7dfef90bd0b2ae516dd097b6"
+      },
+      {
+        "file": "db_RewardUi.db",
+        "sha256": "47806282739185c5145115eeccc8a08fb9c22d276af30f3e4f59cebda4c04601"
+      },
+      {
+        "file": "db_RhythmShip.db",
+        "sha256": "2ae9167ec019ac08df4558821fb7a769595a3175adc4a21b21e89c2522d07331"
+      },
+      {
+        "file": "db_RiskHarvest.db",
+        "sha256": "cceeacde52587fdf2b9a6317587cc1c32acdb8e8fe0e9917dffa6a4e7a533e98"
+      },
+      {
+        "file": "db_RoadBook.db",
+        "sha256": "891a0381c5bed57902093b1478a49e5ba6596b827d4fd0c43004eae88a7d15bc"
+      },
+      {
+        "file": "db_RoadZoneConfig.db",
+        "sha256": "1ec19a941d567a535dba21353d7ad6cbfd8cd69464851998cf97957b45fe92aa"
+      },
+      {
+        "file": "db_Rogue.db",
+        "sha256": "10018eaa584c09bbdc56472306cedbd5a7ee747ec7ae7be34a1965ebc195f212"
+      },
+      {
+        "file": "db_RogueActivity.db",
+        "sha256": "020608dd3778a25dc2b858f213ffa2accf292b0717514e7efce7cb2fd16b9af2"
+      },
+      {
+        "file": "db_role.db",
+        "sha256": "5fa3c23ace3270e847b87ba7b5ffb69d0b1e98eae27bd4c3a3b43374cdeee455"
+      },
+      {
+        "file": "db_role_battle_view.db",
+        "sha256": "d45bab0306d12dfd34e296d8d99c2a7b363f69428532ffdbb71ad4f711905efe"
+      },
+      {
+        "file": "db_role_level.db",
+        "sha256": "a9a75bd6a05eaa965752fe7f3a232824b32a4ab1240402407b072d0bcec4f20d"
+      },
+      {
+        "file": "db_RoleBeHitMap.db",
+        "sha256": "58a2fe94946b6dc3a11787c2d311a846490a5bac82c1a695c4433605d6200e15"
+      },
+      {
+        "file": "db_roleDescription.db",
+        "sha256": "ce3150ee54e213ae05797a5a0f06e9fd7a77f146be43aafb2808d21084cd7a50"
+      },
+      {
+        "file": "db_RoleDev.db",
+        "sha256": "a3ac28e770387ae31dc0b4acde2a349720b44aacd2e4c4f8499a03f3bbf9c8f5"
+      },
+      {
+        "file": "db_RoleGift.db",
+        "sha256": "82563b30ee61fd5635de1d74690b83f495e6856b12273dc2f6591cae6bd28865"
+      },
+      {
+        "file": "db_RoleGuideActivity.db",
+        "sha256": "a018c81e0f60157d2448b2ba2c90ae0bfb90771db9bd812489a1a6be951b92c8"
+      },
+      {
+        "file": "db_RoleIdle.db",
+        "sha256": "f727169999ca3ac6579955517962a371881981d2675aa8df635fafaadf374849"
+      },
+      {
+        "file": "db_roleInfluence.db",
+        "sha256": "74a2e597c771db16be8bf302bf2a8d4cc01cb905ad5ec8cfee2d4b30d544aa3c"
+      },
+      {
+        "file": "db_roleQuest.db",
+        "sha256": "f898e7bd4c30f0344f00b11fd8e707cf99749907b30e4b27e7bcf22bf97012e4"
+      },
+      {
+        "file": "db_RoleSelectPerformance.db",
+        "sha256": "8f5f533e8d948fd49e515d896ed511fff1b33a2cc454e604770fbcdb7beb33a4"
+      },
+      {
+        "file": "db_RoleSkinTrial.db",
+        "sha256": "41b95f88a6e040e722172a8a7e5a1cded970f1c316c37521950bb912dea1db5d"
+      },
+      {
+        "file": "db_RoleTower.db",
+        "sha256": "db5117f52cf99a8bc6e35f4b12228708c213476a1b183e45d191f045ed66b9ef"
+      },
+      {
+        "file": "db_roleTrainingDegree.db",
+        "sha256": "06ce1c7ba5839c8c829597f4329b73c1bc571eaf676f525361089653c0916411"
+      },
+      {
+        "file": "db_RoleTrial.db",
+        "sha256": "c7dae953701de8a66f23d789ba2322b15d12e9802e1671305aea1c483d4c795b"
+      },
+      {
+        "file": "db_RollBlock.db",
+        "sha256": "8f08c96dd0285bbed70add71f0fe2861bac3f15faf6da900a4e5d443ca0126d2"
+      },
+      {
+        "file": "db_RollBlockGroup.db",
+        "sha256": "481bde7901fdba05300a2f1824378ae89ae43291d8bfb154aab08653ffd72b84"
+      },
+      {
+        "file": "db_RollBlockTemplate.db",
+        "sha256": "b361bdaa01086db89004d9af936158fd5dfb595feb6e07fe90e002aac63a30c7"
+      },
+      {
+        "file": "db_Roulette.db",
+        "sha256": "874c178dc38edcd9b8ac9b838822a8136fb5a3b06e625e0e09d206b6244d2dc7"
+      },
+      {
+        "file": "db_Roverlike.db",
+        "sha256": "454506f35196ac3411eeca8a33a93a32eca8fd4c931068bdb35df10f4044c1b3"
+      },
+      {
+        "file": "db_scenegameplay.db",
+        "sha256": "ab592b3e2335462903fdd26d0a7a647bea3799f552bca35662ad5ef3ea5414e3"
+      },
+      {
+        "file": "db_SceneItemAttribute.db",
+        "sha256": "c4f5be6a9bb4f51428b3cf68169863af9d2143f4cdc7e3e7e271bf311a2793e6"
+      },
+      {
+        "file": "db_sceneobjects.db",
+        "sha256": "4b9ae2993607632dc9997509a216eacca470526abb542107ae2ac233814b4b0a"
+      },
+      {
+        "file": "db_scenestep.db",
+        "sha256": "4e2269a382d3ceb811304ceeb3ca10df6155dcb560c4595a13e6b4f5da8b4326"
+      },
+      {
+        "file": "db_ScratchCard.db",
+        "sha256": "4548973444b89f3f72923aa3b6e0a2efac0676abafe0b3681b55bb4b66d32d86"
+      },
+      {
+        "file": "db_ServerLimit.db",
+        "sha256": "463a8c5f588750dde29b59fee5b35732f7de40b75dd5973421b7ff4393ff806c"
+      },
+      {
+        "file": "db_SevenDaySign.db",
+        "sha256": "4e2f738e18e3d210d73e75ac85e3ce380b4e3227cefe35378be7da3bd08800f7"
+      },
+      {
+        "file": "db_ShareInfo.db",
+        "sha256": "173324231ae959dc33d7393d63afe7fa6254f75b404d2ce33c8e45225d29f239"
+      },
+      {
+        "file": "db_Sheriff.db",
+        "sha256": "fb43bf7949b8db93b925afa4e84c8233d232774cc4659af30ba07a5d1e99592f"
+      },
+      {
+        "file": "db_SheriffQuestionCsv.db",
+        "sha256": "a868b27fdda7f5dd59e3d28223a5aef109a8c4e0735acbdb1761cf902a825612"
+      },
+      {
+        "file": "db_SheriffQuestionMainCsv.db",
+        "sha256": "79bbe10105d2eca6b9f9fd77a8c2d77caf1cd47cc809d2dde2c61e8b271fb2e6"
+      },
+      {
+        "file": "db_shield.db",
+        "sha256": "4ad172f841286a684ac11786a2c97f7b546060e3eeb5e743cee8f89eda65e9d6"
+      },
+      {
+        "file": "db_ShippingHiddenMultiText.db",
+        "sha256": "52f5ad168a09ae88c4035ae12f5bb59d490c80c3b7eb40564ddabe1c956f9449"
+      },
+      {
+        "file": "db_ShipTower.db",
+        "sha256": "15b4a543191f08fb035f6a8fd519f14b8f3666ba1850feaf5706c64f89baf6f9"
+      },
+      {
+        "file": "Db_ShootTarget.db",
+        "sha256": "a4958c574016c5c5496aa506fc60e93461e2070849ee3d01fd9005a3d8913c82"
+      },
+      {
+        "file": "db_shop.db",
+        "sha256": "a68e0aef6eb0678862b636b5bb0d1f76c8fa8deebba64bd22e73a847e5b90585"
+      },
+      {
+        "file": "db_signalDecodeGamePlay.db",
+        "sha256": "8ed5ea48fea392b2026947d5b3880967bdc992fb740c60df0f808bd99526883b"
+      },
+      {
+        "file": "db_signalDecodeTabColor.db",
+        "sha256": "86eaa9eb37843ec7d42b4498824a66797e1f6b767301ca00a7c6226854d42efe"
+      },
+      {
+        "file": "db_signalDecodeWaveform.db",
+        "sha256": "d8af51b9073bae75ab0d4f231531714606e9a9a1165ddac44ba5f15cdac758e9"
+      },
+      {
+        "file": "db_SimpleCombatDetailConfig.db",
+        "sha256": "af7f0f5b313c19ce3f65b28e8c1292566f335e0aa33dc86b097e544191e68456"
+      },
+      {
+        "file": "db_skill.db",
+        "sha256": "e97f812fea8498d07cb5198a012f1b830f631e1ad79ccb9b41878a4298fb4889"
+      },
+      {
+        "file": "db_SkillAudioEvent.db",
+        "sha256": "c14b7a2e6e229cd7bd6a02926a638271f0585b999b6b156c0a687476b0b9cfc6"
+      },
+      {
+        "file": "db_skillButton.db",
+        "sha256": "2fb44f7810938149891e185b84863fd515165855a7dbdc9d5d68a4d910509c33"
+      },
+      {
+        "file": "db_skillTree.db",
+        "sha256": "6ea29259a32d5713fc1efb6c29b5e81b74433402f90f3958ce33300b1363ce05"
+      },
+      {
+        "file": "db_Skin.db",
+        "sha256": "5f37553fce6e707aad3854ebe1feb01f3261a323ed8b9da8fbf4f9e5ac2e0d95"
+      },
+      {
+        "file": "db_SkinReward.db",
+        "sha256": "19ad2626f7c4fc63adc8a1c395994527d098bbf4285fd98ee27e5e28bf897217"
+      },
+      {
+        "file": "db_skybox.db",
+        "sha256": "63b74e1cc430b4091fe916510be31f17f10e3ba71e9b8fc71ab7703c92747d3e"
+      },
+      {
+        "file": "db_slide.db",
+        "sha256": "801ec199c16dab8829f4ebfeaabeaab05da707515d1a7fb85035fc576f886486"
+      },
+      {
+        "file": "db_Sneak.db",
+        "sha256": "d81e79ea7938a0647d03173e362e0115cd54ea59753836bfc1726ba7df9d2262"
+      },
+      {
+        "file": "db_Soar.db",
+        "sha256": "4a5c7ed3c0ef8b3ffaddde9d01fd2feeabda263084e900f23bbb2e15e7537013"
+      },
+      {
+        "file": "db_SolarSchool.db",
+        "sha256": "9938fe8dfb29712874bf8993a584ff3d4b04e1e3b7a241cdcb0ab700a9e1475b"
+      },
+      {
+        "file": "db_SoundAreaPlayInfo.db",
+        "sha256": "d0c074eb43b6853db505bc0f57583c16268020736a9dbd426c67d3aa0a6cb1e2"
+      },
+      {
+        "file": "db_speaker.db",
+        "sha256": "a72974c196f46c6c2d06b252736afffd9eb282cd327fba642cf60e002868fc7e"
+      },
+      {
+        "file": "db_special_item.db",
+        "sha256": "ce93b9d77db264baacf2d34f3e8e5b33de423b760e480fb86d13753ad0e7251d"
+      },
+      {
+        "file": "db_SpecialHateAndSense.db",
+        "sha256": "042b73c5405580ddb5fb633b11c5d9e8c5061c8cbb4399fcfa07b4866a942ba6"
+      },
+      {
+        "file": "db_SpineBackground.db",
+        "sha256": "d77261422e31c6efe78d12fb183d6d19060be2e845cc88c305f1adaf8d1db559"
+      },
+      {
+        "file": "db_SplashScreen.db",
+        "sha256": "8203074262e5c9b923b88c06a281a1d36179a998aeeb6efa3bf65f6e85c9f503"
+      },
+      {
+        "file": "db_Spring26.db",
+        "sha256": "84fe894016f794fbe8af13bec1e3ed23603e62c1e2d72288f547a0450c3b319d"
+      },
+      {
+        "file": "db_SprintSign.db",
+        "sha256": "61d858cd4daa5b42107acfc8630897f39255d755389799bd6b4bdc771d750f85"
+      },
+      {
+        "file": "db_state_machine_preload.db",
+        "sha256": "6f4a1b89a3b0251317e82ecdb1813071ad8105ef4a75fc59fa84770ad5099527"
+      },
+      {
+        "file": "db_subtitle_text.db",
+        "sha256": "93da631065d877c04b1569c0653978eb45d42898b6d02d7c2e64dff44258fd71"
+      },
+      {
+        "file": "db_Summon.db",
+        "sha256": "c3bd7799b6f91c4ece52d086e8fa99c89fd2093a3ff5e535cc1356232d3621c1"
+      },
+      {
+        "file": "db_Survivors.db",
+        "sha256": "2b3210645e701a1b72e564568b22f9972102b9c9caaaff74ab83d222aa4761fe"
+      },
+      {
+        "file": "db_Swim.db",
+        "sha256": "414d6e317427f1d2d321f519ad775445b5255a1bdde67ca3141b3c2474edb0fe"
+      },
+      {
+        "file": "db_TakeWeeds.db",
+        "sha256": "ac00daed12cf60acc97a365e4a5ca59604d0a471757f404ee1b73b0873b94ed2"
+      },
+      {
+        "file": "db_talkoptionicon.db",
+        "sha256": "1c85db2c0aa781965294bb4ed2cc9b4084b26a214cbecee8c7a3e6cc0af24eec"
+      },
+      {
+        "file": "db_TDBuff.db",
+        "sha256": "905642333acdcf8a0fa81bf65b05ff961c17ee52ed6916e6e3cc1b2c1613260a"
+      },
+      {
+        "file": "db_teamconfig.db",
+        "sha256": "cbe525dfe478378375e914664340ec54b5ab12d8eb393bfdea08be2b25e0056e"
+      },
+      {
+        "file": "db_TeamParkour.db",
+        "sha256": "640a783dcdd120022d24e6445725a3d0e62930fddc348277396680d98990e427"
+      },
+      {
+        "file": "db_teleporter.db",
+        "sha256": "b8dfbad95ba26dc2ea56fcaf08edcc91ea3da7a00ffea68c1a8d514fe369e4c4"
+      },
+      {
+        "file": "db_TeleportTransitionConfig.db",
+        "sha256": "35b28adac362b22b630d3166bec4f1d8386921d4b4b5f0493b657b633ac196e5"
+      },
+      {
+        "file": "db_template.db",
+        "sha256": "250820662ee45fa1ac05ed2c1768134105a555b8890a6d297da0c2fd389eccc1"
+      },
+      {
+        "file": "db_templatedata_preload.db",
+        "sha256": "9958302ca52a9d4a08e05f2be8def5223cc5431acb32bae05e61379c7f9e1979"
+      },
+      {
+        "file": "db_Term.db",
+        "sha256": "6219e4f2f906c19df089199f5a54ebec88bd81366aeec8636bba884531027248"
+      },
+      {
+        "file": "db_TermExplanationViewStyle.db",
+        "sha256": "8b5cf714dd9693f038d81a534d9a1888b274049e6b45df73bda1a1c66a756350"
+      },
+      {
+        "file": "db_Tetris.db",
+        "sha256": "0ea8248e8d1d728cb11f4f5079f16e6c9769814e42d6b97f8d7aba92edf43e37"
+      },
+      {
+        "file": "db_TetrisShapeConfig.db",
+        "sha256": "ea9b921a50132231d715953edfcb36daeec91350372192630f66ba1380425e89"
+      },
+      {
+        "file": "db_TetrisStyleConfig.db",
+        "sha256": "c692b48cc991e21455e34d0892fe2e5aae391dbde819c5a12314cf459d328098"
+      },
+      {
+        "file": "db_text.db",
+        "sha256": "ff17f0f61312488b7d0872f610b01acf9e0ffa04557a3432ce30a2f3601efb39"
+      },
+      {
+        "file": "db_ThrowDamage.db",
+        "sha256": "291385b659892ff058e80ea7101d493ff99ca3619dad779b0e97deddc681d57d"
+      },
+      {
+        "file": "db_time_of_day.db",
+        "sha256": "23a0916b230082fcde1831f1af34b5a93711d67f3e20455808eee09f87af8450"
+      },
+      {
+        "file": "db_TimePointRewardActivity.db",
+        "sha256": "0d66404587bf3056781b8edb809bbd5b321a47b15e1cfce331cf1838cc37566e"
+      },
+      {
+        "file": "db_TimeSchedule.db",
+        "sha256": "09ee3646b5ebb0eeed27dfbd3980810e28857f5340b217adfd6235bd42c7ba3a"
+      },
+      {
+        "file": "db_TotalTopUp.db",
+        "sha256": "b8a1ad1a738cdcbdce4c7551bcefed7b3b581a418b65b86c2e6adca501c65232"
+      },
+      {
+        "file": "db_tough_modifier.db",
+        "sha256": "27909f43ad0389f1ce3962be78c804a7d49a2ab698c617ccd4c534b062e8660d"
+      },
+      {
+        "file": "db_tower.db",
+        "sha256": "a766eef58bcfe5335994ca344a1a77714317b7c8c0002288c6147b8216773970"
+      },
+      {
+        "file": "db_TowerDefense.db",
+        "sha256": "edfa2680cd955c56b6a913028d06b5488385a55c358721a9f86b5d12b34acc00"
+      },
+      {
+        "file": "db_TowerGuide.db",
+        "sha256": "cd72a44686234e8236bf50c57f954a46dcdf960d02bb000c02f8436662370e3c"
+      },
+      {
+        "file": "db_TrackMoonActivity.db",
+        "sha256": "0a8ec35f8d068363e3c1459899496e07bbebbe63c989f4b72c95c00fc7a795b5"
+      },
+      {
+        "file": "db_TrackMoonPhase.db",
+        "sha256": "b8f56b21e5a42270a40c825b7b8d921a5bf6547caccb784a121e01573eb4e9ab"
+      },
+      {
+        "file": "db_TransitionPopup.db",
+        "sha256": "b46ad06cdbf77066668256a448d652f2fe5eac3dc29f52f2168ab3432f8635e2"
+      },
+      {
+        "file": "db_TrapDefense.db",
+        "sha256": "a7f09c30cd957544b337ac15e4dead3b731a9cbaeeff3759d25d74ea41a3efd1"
+      },
+      {
+        "file": "db_TrapDefenseBatchConfig.db",
+        "sha256": "5f0bc59e175555b51ba266178a0627f065969d288e422ee662d2859287539e19"
+      },
+      {
+        "file": "db_TrapDefenseCsvConfig.db",
+        "sha256": "8a9d2f4fd91112ae98339c507147391adadfda49d037aabefa0decf61535ddae"
+      },
+      {
+        "file": "db_TrapDefenseMonsterGroupConfig.db",
+        "sha256": "6e2435dcc997aa617587bf785e10c9adccd5957240ee9d0eaf32826563efbaf0"
+      },
+      {
+        "file": "db_Treasure.db",
+        "sha256": "cae92b6c0a45aada08bc37d7f5b4ce5e20ed90934aeaeed64d6acd40d93f1af9"
+      },
+      {
+        "file": "db_trial_role.db",
+        "sha256": "281d6b98bf378760eb07844639f85f828002c768e12178d77aae4217b066f9d9"
+      },
+      {
+        "file": "db_TuningNode.db",
+        "sha256": "7274651c254841f27f904e08c09ab8c6f8f81495fed3c285cc9cb653aa948b1d"
+      },
+      {
+        "file": "db_TurntableActivity.db",
+        "sha256": "ab75731e6121b61ad18ce04241068381d0330335b465ab7e538e5fed0c6eab68"
+      },
+      {
+        "file": "db_ui.db",
+        "sha256": "6a5e7b053349d1ffec0acf5739568a0857ed93d0e4459cb2ae78b98f6ac460a3"
+      },
+      {
+        "file": "db_ui_prefabRichTextData.db",
+        "sha256": "3eb2ec3a45d15eaf4c8d82afff228f28035d550d6ef0fd4137a7f305e8f681d7"
+      },
+      {
+        "file": "db_ui_prefabTextItem.db",
+        "sha256": "21d382b6f0fdb5f09d2105aca302097de43f6b180e14ab139b1d2f270f15a4c6"
+      },
+      {
+        "file": "db_ui_resource.db",
+        "sha256": "e616d14db75e9c41f45c20ee74f2ee870eb451c9f04dec1e6b45dcbc5b5eed24"
+      },
+      {
+        "file": "db_UiCamera.db",
+        "sha256": "6df8612ffa5fa52a0e2271bbc839f8276e61647fbe53f6a7b31086530ba0a135"
+      },
+      {
+        "file": "db_UiExtraBehavior.db",
+        "sha256": "6dfa1415eaacbae82a19db128b9d5249070f39a7eef76514a7b02e903e265805"
+      },
+      {
+        "file": "db_UiHotKot.db",
+        "sha256": "d0e7eeb08f0d6dce88388a2916f0fed6341915134c32218460a5fe158527d1dd"
+      },
+      {
+        "file": "db_UiPlayItem.db",
+        "sha256": "12c9100642300416d16baf9151eeb016c7e2bf3be956253c54562f6ca42c2cac"
+      },
+      {
+        "file": "db_UiScene.db",
+        "sha256": "7b97cbb670669b8cb1173b207044f6c8bd959c7b649e0b6a1025a55d298c6c40"
+      },
+      {
+        "file": "db_VehicleRidingRoles.db",
+        "sha256": "1f6fb183354c937e452dc2c8222c137301afa9bfe98d6dfe9b7f9f9dfe9b5271"
+      },
+      {
+        "file": "db_VehicleTeam.db",
+        "sha256": "def2bc2790a5b23809d3865ae3a442011da70ad3448e441e9ffb543d5c9f92ff"
+      },
+      {
+        "file": "db_VillageInfr.db",
+        "sha256": "3114fd92513f9167bcbd27b9c1de2a79d113e7748c54ef923d1829fac8fdde45"
+      },
+      {
+        "file": "db_VisionRecommend.db",
+        "sha256": "a0fec38204f8ebfca9973add39416d1ba36e27b765d09343684ae2d9dccf20b6"
+      },
+      {
+        "file": "db_weapon.db",
+        "sha256": "460cb58d12be62ca1bd2dae6250cf63313349da4aa7bec44239dedddbccdeb45"
+      },
+      {
+        "file": "db_weapon_visible.db",
+        "sha256": "f183d3434db77fd599393a45edcf978f6ea70c8d0f06619e52be667cd18ec6bd"
+      },
+      {
+        "file": "db_weather.db",
+        "sha256": "79c0f409650aa36de164c86179b0093c417309f37fbd6aad5d14ac25cb3275cc"
+      },
+      {
+        "file": "db_WeekCard.db",
+        "sha256": "293648229d0aab938e8f65193f821f634addfd717905b278d512053153ba5ac9"
+      },
+      {
+        "file": "db_WeeklyChallenge.db",
+        "sha256": "b13bd3e9a30be3aeaff5abe6cb79f03ed2fb4f18c55c62c9603846abe9a14512"
+      },
+      {
+        "file": "db_WeeklyRogue.db",
+        "sha256": "acffe298203229735f71a9073a1a2c2d3f998c42690e5cc4e804f0f41962e806"
+      },
+      {
+        "file": "db_worldlevel.db",
+        "sha256": "d5eeae22ae4ba0ffe40b0dcdc8b60c0ca2f1b249f24415047718796b6a49341e"
+      },
+      {
+        "file": "db_WorldNewJourney.db",
+        "sha256": "952bf1a77e6316c65b3cb7450efd8e9ee1709a1ceca6db3a2dab086771dd773e"
+      },
+      {
+        "file": "db_WriteLetter.db",
+        "sha256": "94b7bfdafb07c52522ec762273a1300bc118e766541dd995c059962dd89b1b97"
+      },
+      {
+        "file": "db_WuWaGoLevelCsv.db",
+        "sha256": "f99226201ce09d5c13bf6b8e3bd9844396f04a2fd2d7deac330215dbc435f0f7"
+      },
+      {
+        "file": "db_WuWuKuji.db",
+        "sha256": "9f62ed467c405bb90f45b0a925c7b2bb0ec9f0cbccdf12717fe0404aa9c4016d"
+      },
+      {
+        "file": "db_WuWuTask.db",
+        "sha256": "863c79e47ec635fe820ad943ff133f4258b6ab6b1d64d409e1bb602cc87cad5a"
+      }
+    ]
+  },
+  "confirmed_parser_omission": {
+    "module": "src/wuwa_story/declared_levelplay.py",
+    "previous_scan": [
+      "Actions",
+      "EnterActions",
+      "FinishActions"
+    ],
+    "missed_path": [
+      "Condition",
+      "Flow"
+    ],
+    "new_links": [
+      {
+        "link": {
+          "state_key": "剧情_1_3_世界_黑海岸_去除污染_16_1",
+          "declaration": "l_8_134000034",
+          "levelplay_id": 134000034,
+          "map_id": 8,
+          "node_id": 15,
+          "phase": "Condition",
+          "source_path": [
+            "Condition",
+            "Flow"
+          ],
+          "source_condition": {
+            "Type": "PlayFlow",
+            "Flow": {
+              "FlowListName": "剧情_1_3_世界_黑海岸_去除污染",
+              "FlowId": 16,
+              "StateId": 1
+            }
+          },
+          "reference_kind": "flow_completion_condition",
+          "ancestor_ids": [
+            1
+          ],
+          "ancestor_types": [
+            "Sequence"
+          ],
+          "failure_ancestor": false,
+          "source_row_key": "134000034_15",
+          "source_sha256": "c66d23297102f0c76caaa24e80237ff53c4ecf88f74444c371e89535a8d9783a",
+          "ownership_basis": "QuestData.Children exact map/levelplay pair",
+          "order_verified": false,
+          "runtime_trigger_verified": false
+        },
+        "texts": [
+          {
+            "text_id": "Heihaian_main_1_3_2403_1",
+            "speaker": "无署名",
+            "text": "这座岛上的情况似乎得到了缓解……"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_2",
+            "speaker": "？？？",
+            "text": "我在记录。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_3",
+            "speaker": "？？？",
+            "text": "……地理坐标仍然没有改变。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_4",
+            "speaker": "？？？",
+            "text": "一切都和它原本的样子一样，即便是时间也难以磨损黑石。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_5",
+            "speaker": "？？？",
+            "text": "只是这个世界还未开始，我们却已经见过了终点。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_6",
+            "speaker": "？？？",
+            "text": "他们……也还是会像我们以前一样脆弱，迷茫。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_7",
+            "speaker": "？？？",
+            "text": "但我们会教会他们我们的信仰。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_8",
+            "speaker": "漂泊者",
+            "text": "刚才那是什么……"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_9",
+            "speaker": "漂泊者",
+            "text": "是受了那些频率影响而看到的幻影吗？"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_10",
+            "speaker": "漂泊者",
+            "text": "但为什么有点熟悉……"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_11",
+            "speaker": "莫妮卡（通讯中）",
+            "text": "……喂？能听到吗？"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_12",
+            "speaker": "莫妮卡（通讯中）",
+            "text": "多亏了你，现在新枝地的异常频率指数已经降下来了。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_13",
+            "speaker": "莫妮卡（通讯中）",
+            "text": "前面那座小岛——阿斯特莉亚之眼——就是黑海岸的制高点。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_14",
+            "speaker": "莫妮卡（通讯中）",
+            "text": "由于承担着对整个索拉里斯天空海的观测任务，所以那里的黑石功率更大，也没有安排什么人造设施。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2403_15",
+            "speaker": "莫妮卡（通讯中）",
+            "text": "从新枝地应该可以很快抵达那里，库可可已经在那里等你了。"
+          }
+        ]
+      },
+      {
+        "link": {
+          "state_key": "剧情_1_3_世界_黑海岸_去除污染_9_2",
+          "declaration": "l_8_134000035",
+          "levelplay_id": 134000035,
+          "map_id": 8,
+          "node_id": 10,
+          "phase": "Condition",
+          "source_path": [
+            "Condition",
+            "Flow"
+          ],
+          "source_condition": {
+            "Type": "PlayFlow",
+            "Flow": {
+              "FlowListName": "剧情_1_3_世界_黑海岸_去除污染",
+              "FlowId": 9,
+              "StateId": 2
+            }
+          },
+          "reference_kind": "flow_completion_condition",
+          "ancestor_ids": [
+            1
+          ],
+          "ancestor_types": [
+            "Sequence"
+          ],
+          "failure_ancestor": false,
+          "source_row_key": "134000035_10",
+          "source_sha256": "ee5bda0ee9eb4c8651608b1f62b8d0b67a2594d54d299d13f620244ce3a1f646",
+          "ownership_basis": "QuestData.Children exact map/levelplay pair",
+          "order_verified": false,
+          "runtime_trigger_verified": false
+        },
+        "texts": [
+          {
+            "text_id": "Heihaian_main_1_3_2609_1",
+            "speaker": "稹坚",
+            "text": "趁着你遏制污染数据的这段时间，我们通过新枝地重新联系上了泰缇斯系统。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2609_2",
+            "speaker": "稹坚",
+            "text": "现如今既然污染和残象的数据可以被现实化，那我们也应该可以利用这个原理。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2609_3",
+            "speaker": "稹坚",
+            "text": "所以，我们尝试着在稳定锚附近利用我们输入的数据，构建出了可以攀援通行的平台。"
+          },
+          {
+            "text_id": "Heihaian_main_1_3_2609_4",
+            "speaker": "稹坚",
+            "text": "让我们把那些家伙赶回它们该在的地方吧。"
+          }
+        ]
+      }
+    ],
+    "added_text_records": 19,
+    "implementation_note": "Completion-condition discovery shared by directly declared gameplay and dungeon gameplay; duplicate dungeon-only scan removed."
+  },
+  "uncertainties": [
+    "No exact definition or alias mapping found for the two recap states",
+    "No proof that the recovered gameplay texts replace either missing recap segment",
+    "Recovered texts have ownership evidence; their mainline placement remains unverified"
+  ],
+  "source_hashes": {
+    "db_PlotHandBook.db": "ce76c3b33f244601dba2dcc27d429eb0d67de87c879dc4a2842f22c64cc3f0a6",
+    "db_flowState.db": "f6b8a427029f97f8d8d96910c34e2e2e33e8b0e61e5269b49e45b2e361f20516",
+    "db_LevelPlayData.db": "2aa98711194209ca36cc15eccf90f32714bbf402a8512db6e0fa6549fa682a76",
+    "db_LevelPlayNodeData.db": "58d5ccf29030275fd8b4b5d3c2d7df71db46c354f0b97f2dd147fa4c264fc5e9"
+  }
+}

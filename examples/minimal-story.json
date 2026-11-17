@@ -1,0 +1,12 @@
+{
+  "example_only": true,
+  "description": "虚构的格式示意，不是游戏文本，也不是解析器的完整输出模式。",
+  "quest_id": 1,
+  "title": "示例：寻找灯塔",
+  "route": {"gender": "female", "choices": []},
+  "events": [
+    {"kind": "dialogue", "display_name": "守望人", "text": "灯塔就在前方。"},
+    {"kind": "choice", "display_name": "漂泊者", "text": "我去看看。"},
+    {"kind": "narration", "display_name": "旁白", "text": "她沿着石阶走向灯塔。"}
+  ]
+}

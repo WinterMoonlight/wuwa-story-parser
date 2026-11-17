@@ -1,0 +1,1207 @@
+{
+  "batch": "outputs\\主线批量\\20261117_200726_855297\\覆盖阅读版",
+  "scope": "Parser capability review; placement, missing resource definitions and media internals are parked. Route errors record only the first failure in each complete-route attempt. Stage counts overlap.",
+  "summary": {
+    "tasks": 135,
+    "strict_pass": 2,
+    "status": {
+      "selected_route": 12,
+      "recap_draft": 60,
+      "inventory_only": 62,
+      "partial_order": 1
+    },
+    "tasks_with_readable_text": 132,
+    "gap_task_counts": {
+      "external_timing_or_content": 90,
+      "parser_unverified": 64,
+      "flow_external_calls_require_review": 61,
+      "runtime_and_cross_task_order_not_simulated": 135,
+      "task_only_bubbles_separated": 1,
+      "declared_levelplay_content": 31,
+      "unsupported_flow_action": 55,
+      "parallel_guidance_separated": 1,
+      "dungeon_return_reading": 1,
+      "declared_entity_content": 52,
+      "route_blocked": 122,
+      "recap_dependency_unresolved": 22,
+      "unsupported_task_action": 83,
+      "recap_reference_difference": 110,
+      "external_extraction_blocked": 57,
+      "recap_backbone_only": 60,
+      "declared_levelplay_unresolved": 36,
+      "entity_trigger_content": 11,
+      "missing_recap_order": 62,
+      "sequence_task_order_unresolved": 5,
+      "nested_external_calls": 37,
+      "missing_flow_state": 7,
+      "recap_segment_blocked": 7,
+      "qte_runtime_unverified": 6,
+      "recap_dependency_corrected": 1,
+      "conditional_recap_scenario": 1,
+      "missing_text": 1,
+      "task_finish_supplement_inserted": 1,
+      "declared_entity_unresolved": 1,
+      "task_flow_inserted_at_tip": 2,
+      "phone_tip_anchored": 3,
+      "recap_difference_resolved_by_levelplay": 1,
+      "levelplay_local_order_only": 1,
+      "task_parallel_flow_separated": 1,
+      "recap_difference_resolved_by_entity": 2,
+      "normal_task_flows_unplaced": 1
+    }
+  },
+  "first_failure_groups": {
+    "route_blocked": [
+      {
+        "error": "No unique PlotHandBook order for this quest",
+        "occurrences": 16,
+        "task_count": 16,
+        "examples": [
+          {
+            "quest_id": 125000120,
+            "title": "梦境遗尘",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000120_梦境遗尘.json",
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000120_梦境遗尘.txt"
+            ]
+          },
+          {
+            "quest_id": 880000017,
+            "title": "解析被异常代码污染的心愿（一）",
+            "node_id": null,
+            "files": [
+              "Type1/追月节/3001_月华如愿_祈愿月树屋/880000017_解析被异常代码污染的心愿（一）.json",
+              "Type1/追月节/3001_月华如愿_祈愿月树屋/880000017_解析被异常代码污染的心愿（一）.txt"
+            ]
+          },
+          {
+            "quest_id": 121800000,
+            "title": "梦境遗尘",
+            "node_id": null,
+            "files": [
+              "Type15/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/121800000_梦境遗尘.json",
+              "Type15/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/121800000_梦境遗尘.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: ToggleMapMarkState",
+        "occurrences": 15,
+        "task_count": 15,
+        "examples": [
+          {
+            "quest_id": 125000123,
+            "title": "时序之主",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000123_时序之主.json",
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000123_时序之主.txt"
+            ]
+          },
+          {
+            "quest_id": 114000030,
+            "title": "夜与昼，均请摘下面纱",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0013_第二幕_夜与昼，均请摘下面纱/114000030_夜与昼，均请摘下面纱.json",
+              "Type1/黎那汐塔 第二章/0013_第二幕_夜与昼，均请摘下面纱/114000030_夜与昼，均请摘下面纱.txt"
+            ]
+          },
+          {
+            "quest_id": 150000000,
+            "title": "捕梦于神秘园中",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0018_第七幕_捕梦于神秘园中/150000000_捕梦于神秘园中.json",
+              "Type1/黎那汐塔 第二章/0018_第七幕_捕梦于神秘园中/150000000_捕梦于神秘园中.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported world effect parameters: SetPlayerOperationRestriction",
+        "occurrences": 12,
+        "task_count": 12,
+        "examples": [
+          {
+            "quest_id": 140000004,
+            "title": "千里卷戎旌",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/140000004_千里卷戎旌.json",
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/140000004_千里卷戎旌.txt"
+            ]
+          },
+          {
+            "quest_id": 146000002,
+            "title": "眠龙庭",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/146000002_眠龙庭.json",
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/146000002_眠龙庭.txt"
+            ]
+          },
+          {
+            "quest_id": 140000011,
+            "title": "昔我悲伤，今却歌唱",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0014_第三幕_昔我悲伤，今却歌唱/140000011_昔我悲伤，今却歌唱.json",
+              "Type1/黎那汐塔 第二章/0014_第三幕_昔我悲伤，今却歌唱/140000011_昔我悲伤，今却歌唱.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task step",
+        "occurrences": 10,
+        "task_count": 10,
+        "examples": [
+          {
+            "quest_id": 32700004,
+            "title": "如一叶小舟穿行于茫茫海洋",
+            "node_id": null,
+            "files": [
+              "Type15/未关联章节_None/32700004_如一叶小舟穿行于茫茫海洋.json",
+              "Type15/未关联章节_None/32700004_如一叶小舟穿行于茫茫海洋.txt"
+            ]
+          },
+          {
+            "quest_id": 32700005,
+            "title": "那神圣微风时常吹入",
+            "node_id": null,
+            "files": [
+              "Type15/未关联章节_None/32700005_那神圣微风时常吹入.json",
+              "Type15/未关联章节_None/32700005_那神圣微风时常吹入.txt"
+            ]
+          },
+          {
+            "quest_id": 32700006,
+            "title": "夜与昼，均请摘下面纱",
+            "node_id": null,
+            "files": [
+              "Type15/未关联章节_None/32700006_夜与昼，均请摘下面纱.json",
+              "Type15/未关联章节_None/32700006_夜与昼，均请摘下面纱.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: EnableLevelPlay",
+        "occurrences": 6,
+        "task_count": 6,
+        "examples": [
+          {
+            "quest_id": 139000030,
+            "title": "奔策候残星",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0004_第三幕_奔策候残星/139000030_奔策候残星.json",
+              "Type1/瑝珑 第一章/0004_第三幕_奔策候残星/139000030_奔策候残星.txt"
+            ]
+          },
+          {
+            "quest_id": 125000124,
+            "title": "风消雪霁",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000124_风消雪霁.json",
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000124_风消雪霁.txt"
+            ]
+          },
+          {
+            "quest_id": 147000002,
+            "title": "捕梦于神秘园中",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0018_第七幕_捕梦于神秘园中/147000002_捕梦于神秘园中.json",
+              "Type1/黎那汐塔 第二章/0018_第七幕_捕梦于神秘园中/147000002_捕梦于神秘园中.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: AddFlowInteractOption",
+        "occurrences": 5,
+        "task_count": 5,
+        "examples": [
+          {
+            "quest_id": 114000020,
+            "title": "欲知天将雨",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0006_第五幕_欲知天将雨/114000020_欲知天将雨.json",
+              "Type1/瑝珑 第一章/0006_第五幕_欲知天将雨/114000020_欲知天将雨.txt"
+            ]
+          },
+          {
+            "quest_id": 114000027,
+            "title": "那神圣微风时常吹入",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0012_第一幕_那神圣微风时常吹入/114000027_那神圣微风时常吹入.json",
+              "Type1/黎那汐塔 第二章/0012_第一幕_那神圣微风时常吹入/114000027_那神圣微风时常吹入.txt"
+            ]
+          },
+          {
+            "quest_id": 880000021,
+            "title": "月下祈愿其二·筹备",
+            "node_id": null,
+            "files": [
+              "Type1/追月节/3001_月华如愿_祈愿月树屋/880000021_月下祈愿其二·筹备.json",
+              "Type1/追月节/3001_月华如愿_祈愿月树屋/880000021_月下祈愿其二·筹备.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: ClearPlayBubble",
+        "occurrences": 5,
+        "task_count": 5,
+        "examples": [
+          {
+            "quest_id": 114000028,
+            "title": "夜与昼，均请摘下面纱",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0013_第二幕_夜与昼，均请摘下面纱/114000028_夜与昼，均请摘下面纱.json",
+              "Type1/黎那汐塔 第二章/0013_第二幕_夜与昼，均请摘下面纱/114000028_夜与昼，均请摘下面纱.txt"
+            ]
+          },
+          {
+            "quest_id": 915000001,
+            "title": "冰原下的星炬",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0027_第一幕_冰原下的星炬/915000001_冰原下的星炬.json",
+              "Type1/拉海洛 第三章/0027_第一幕_冰原下的星炬/915000001_冰原下的星炬.txt"
+            ]
+          },
+          {
+            "quest_id": 155000002,
+            "title": "致第二次日出",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0028_第二幕_致第二次日出/155000002_致第二次日出.json",
+              "Type1/拉海洛 第三章/0028_第二幕_致第二次日出/155000002_致第二次日出.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: SetAreaTimeState",
+        "occurrences": 5,
+        "task_count": 5,
+        "examples": [
+          {
+            "quest_id": 145000005,
+            "title": "圣者，忤逆者，告死者",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0015_第四幕_圣者，忤逆者，告死者/145000005_圣者，忤逆者，告死者.json",
+              "Type1/黎那汐塔 第二章/0015_第四幕_圣者，忤逆者，告死者/145000005_圣者，忤逆者，告死者.txt"
+            ]
+          },
+          {
+            "quest_id": 125000126,
+            "title": "荣耀暗面",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0016_第五幕_荣耀暗面/125000126_荣耀暗面.json",
+              "Type1/黎那汐塔 第二章/0016_第五幕_荣耀暗面/125000126_荣耀暗面.txt"
+            ]
+          },
+          {
+            "quest_id": 121000038,
+            "title": "燃烧的心",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0017_第六幕_燃烧的心/121000038_燃烧的心.json",
+              "Type1/黎那汐塔 第二章/0017_第六幕_燃烧的心/121000038_燃烧的心.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: MoveWithSpline",
+        "occurrences": 4,
+        "task_count": 4,
+        "examples": [
+          {
+            "quest_id": 125000122,
+            "title": "朝觐之路",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000122_朝觐之路.json",
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000122_朝觐之路.txt"
+            ]
+          },
+          {
+            "quest_id": 114000029,
+            "title": "昔我悲伤，今却歌唱",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0014_第三幕_昔我悲伤，今却歌唱/114000029_昔我悲伤，今却歌唱.json",
+              "Type1/黎那汐塔 第二章/0014_第三幕_昔我悲伤，今却歌唱/114000029_昔我悲伤，今却歌唱.txt"
+            ]
+          },
+          {
+            "quest_id": 121800003,
+            "title": "朝觐之路",
+            "node_id": null,
+            "files": [
+              "Type15/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/121800003_朝觐之路.json",
+              "Type15/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/121800003_朝觐之路.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported reading effect parameters: HideGroup",
+        "occurrences": 4,
+        "task_count": 4,
+        "examples": [
+          {
+            "quest_id": 311000002,
+            "title": "灼我以烈阳",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0020_第八幕_灼我以烈阳/311000002_灼我以烈阳.json",
+              "Type1/黎那汐塔 第二章/0020_第八幕_灼我以烈阳/311000002_灼我以烈阳.txt"
+            ]
+          },
+          {
+            "quest_id": 915000003,
+            "title": "冰原下的星炬",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0027_第一幕_冰原下的星炬/915000003_冰原下的星炬.json",
+              "Type1/拉海洛 第三章/0027_第一幕_冰原下的星炬/915000003_冰原下的星炬.txt"
+            ]
+          },
+          {
+            "quest_id": 690000001,
+            "title": "远航星",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0030_第三幕_远航星/690000001_远航星.json",
+              "Type1/拉海洛 第三章/0030_第三幕_远航星/690000001_远航星.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported variable assignment",
+        "occurrences": 4,
+        "task_count": 4,
+        "examples": [
+          {
+            "quest_id": 119000001,
+            "title": "予以明日的花束",
+            "node_id": null,
+            "files": [
+              "Type1/梦州 第四章/0046_第五幕_予以明日的花束/119000001_予以明日的花束.json",
+              "Type1/梦州 第四章/0046_第五幕_予以明日的花束/119000001_予以明日的花束.txt"
+            ]
+          },
+          {
+            "quest_id": 880000032,
+            "title": "月下祈愿其四·筹备",
+            "node_id": null,
+            "files": [
+              "Type1/追月节/3001_月华如愿_祈愿月树屋/880000032_月下祈愿其四·筹备.json",
+              "Type1/追月节/3001_月华如愿_祈愿月树屋/880000032_月下祈愿其四·筹备.txt"
+            ]
+          },
+          {
+            "quest_id": 121800005,
+            "title": "时序之主",
+            "node_id": null,
+            "files": [
+              "Type15/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/121800005_时序之主.json",
+              "Type15/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/121800005_时序之主.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: ToggleScanSplineEffect",
+        "occurrences": 3,
+        "task_count": 3,
+        "examples": [
+          {
+            "quest_id": 880000025,
+            "title": "月下祈愿其三·筹备",
+            "node_id": null,
+            "files": [
+              "Type1/追月节/3001_月华如愿_祈愿月树屋/880000025_月下祈愿其三·筹备.json",
+              "Type1/追月节/3001_月华如愿_祈愿月树屋/880000025_月下祈愿其三·筹备.txt"
+            ]
+          },
+          {
+            "quest_id": 32750006,
+            "title": "月下祈愿其三·筹备",
+            "node_id": null,
+            "files": [
+              "Type15/追月节/3001_月华如愿_祈愿月树屋/32750006_月下祈愿其三·筹备.json",
+              "Type15/追月节/3001_月华如愿_祈愿月树屋/32750006_月下祈愿其三·筹备.txt"
+            ]
+          },
+          {
+            "quest_id": 32750003,
+            "title": "月从今夜满",
+            "node_id": null,
+            "files": [
+              "Type15/未关联章节_None/32750003_月从今夜满.json",
+              "Type15/未关联章节_None/32750003_月从今夜满.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: TriggerCameraShake",
+        "occurrences": 2,
+        "task_count": 2,
+        "examples": [
+          {
+            "quest_id": 102000000,
+            "title": "千里卷戎旌",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/102000000_千里卷戎旌.json",
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/102000000_千里卷戎旌.txt"
+            ]
+          },
+          {
+            "quest_id": 172000003,
+            "title": "捕梦于神秘园中",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0018_第七幕_捕梦于神秘园中/172000003_捕梦于神秘园中.json",
+              "Type1/黎那汐塔 第二章/0018_第七幕_捕梦于神秘园中/172000003_捕梦于神秘园中.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: EnableHostility",
+        "occurrences": 2,
+        "task_count": 2,
+        "examples": [
+          {
+            "quest_id": 145000004,
+            "title": "来自毁灭的回声",
+            "node_id": null,
+            "files": [
+              "Type1/黑海岸 第一章/0010_第八幕_行至海岸尽头/145000004_来自毁灭的回声.json",
+              "Type1/黑海岸 第一章/0010_第八幕_行至海岸尽头/145000004_来自毁灭的回声.txt"
+            ]
+          },
+          {
+            "quest_id": 121800002,
+            "title": "叩天关",
+            "node_id": null,
+            "files": [
+              "Type15/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/121800002_叩天关.json",
+              "Type15/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/121800002_叩天关.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported world effect parameters: AddBuffToEntity",
+        "occurrences": 2,
+        "task_count": 2,
+        "examples": [
+          {
+            "quest_id": 114000026,
+            "title": "如一叶小舟穿行于茫茫海洋",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0011_序幕_如一叶小舟穿行于茫茫海洋/114000026_如一叶小舟穿行于茫茫海洋.json",
+              "Type1/黎那汐塔 第二章/0011_序幕_如一叶小舟穿行于茫茫海洋/114000026_如一叶小舟穿行于茫茫海洋.txt"
+            ]
+          },
+          {
+            "quest_id": 32750023,
+            "title": "难解谜题",
+            "node_id": null,
+            "files": [
+              "Type15/追月节/3002_月华如愿_经营轶事/32750023_难解谜题.json",
+              "Type15/追月节/3002_月华如愿_经营轶事/32750023_难解谜题.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: EnableFunction",
+        "occurrences": 2,
+        "task_count": 2,
+        "examples": [
+          {
+            "quest_id": 125000125,
+            "title": "荣耀暗面",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0016_第五幕_荣耀暗面/125000125_荣耀暗面.json",
+              "Type1/黎那汐塔 第二章/0016_第五幕_荣耀暗面/125000125_荣耀暗面.txt"
+            ]
+          },
+          {
+            "quest_id": 880000045,
+            "title": "玄翎振壑定澜音",
+            "node_id": null,
+            "files": [
+              "Type1/梦州 第四章/0041_第二幕_玄翎振壑定澜音/880000045_玄翎振壑定澜音.json",
+              "Type1/梦州 第四章/0041_第二幕_玄翎振壑定澜音/880000045_玄翎振壑定澜音.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: ToggleHighlightExploreUi",
+        "occurrences": 2,
+        "task_count": 2,
+        "examples": [
+          {
+            "quest_id": 172000000,
+            "title": "捕梦于神秘园中",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0018_第七幕_捕梦于神秘园中/172000000_捕梦于神秘园中.json",
+              "Type1/黎那汐塔 第二章/0018_第七幕_捕梦于神秘园中/172000000_捕梦于神秘园中.txt"
+            ]
+          },
+          {
+            "quest_id": 172000001,
+            "title": "捕梦于神秘园中",
+            "node_id": null,
+            "files": [
+              "Type1/黎那汐塔 第二章/0018_第七幕_捕梦于神秘园中/172000001_捕梦于神秘园中.json",
+              "Type1/黎那汐塔 第二章/0018_第七幕_捕梦于神秘园中/172000001_捕梦于神秘园中.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: FocusOnMapMark",
+        "occurrences": 2,
+        "task_count": 2,
+        "examples": [
+          {
+            "quest_id": 915700000,
+            "title": "未知的既感",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0029_序幕_未知的既感/915700000_未知的既感.json",
+              "Type1/拉海洛 第三章/0029_序幕_未知的既感/915700000_未知的既感.txt"
+            ]
+          },
+          {
+            "quest_id": 173000000,
+            "title": "烟云幽远心剑鸣",
+            "node_id": null,
+            "files": [
+              "Type1/梦州 第四章/0043_第三幕_烟云幽远心剑鸣/173000000_烟云幽远心剑鸣.json",
+              "Type1/梦州 第四章/0043_第三幕_烟云幽远心剑鸣/173000000_烟云幽远心剑鸣.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: AddGuestCharacter",
+        "occurrences": 2,
+        "task_count": 2,
+        "examples": [
+          {
+            "quest_id": 189000006,
+            "title": "玄翎振壑定澜音",
+            "node_id": null,
+            "files": [
+              "Type1/梦州 第四章/0041_第二幕_玄翎振壑定澜音/189000006_玄翎振壑定澜音.json",
+              "Type1/梦州 第四章/0041_第二幕_玄翎振壑定澜音/189000006_玄翎振壑定澜音.txt"
+            ]
+          },
+          {
+            "quest_id": 936000005,
+            "title": "烟云幽远心剑鸣",
+            "node_id": null,
+            "files": [
+              "Type1/梦州 第四章/0043_第三幕_烟云幽远心剑鸣/936000005_烟云幽远心剑鸣.json",
+              "Type1/梦州 第四章/0043_第三幕_烟云幽远心剑鸣/936000005_烟云幽远心剑鸣.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Additional task entry/exit behavior is unsupported",
+        "occurrences": 2,
+        "task_count": 2,
+        "examples": [
+          {
+            "quest_id": 32750007,
+            "title": "我邀朗月",
+            "node_id": null,
+            "files": [
+              "Type15/追月节/3001_月华如愿_祈愿月树屋/32750007_我邀朗月.json",
+              "Type15/追月节/3001_月华如愿_祈愿月树屋/32750007_我邀朗月.txt"
+            ]
+          },
+          {
+            "quest_id": 32750008,
+            "title": "愿逐月华",
+            "node_id": null,
+            "files": [
+              "Type15/追月节/3001_月华如愿_祈愿月树屋/32750008_愿逐月华.json",
+              "Type15/追月节/3001_月华如愿_祈愿月树屋/32750008_愿逐月华.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: TeleportDungeonPos",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 139000031,
+            "title": "庭际刀刃鸣",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0005_第四幕_庭际刀刃鸣/139000031_庭际刀刃鸣.json",
+              "Type1/瑝珑 第一章/0005_第四幕_庭际刀刃鸣/139000031_庭际刀刃鸣.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Flow reference has no explicit StateId",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 140800000,
+            "title": "千里卷戎旌",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/140800000_千里卷戎旌.json",
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/140800000_千里卷戎旌.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: HideSpecificEntities",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 125000121,
+            "title": "远赴乘霄",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000121_远赴乘霄.json",
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000121_远赴乘霄.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: ShowSpecificEntities",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 133000009,
+            "title": "叩天关",
+            "node_id": null,
+            "files": [
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/133000009_叩天关.json",
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/133000009_叩天关.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: RestorePlayerCameraAdjustment",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 915000004,
+            "title": "冰原下的星炬",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0027_第一幕_冰原下的星炬/915000004_冰原下的星炬.json",
+              "Type1/拉海洛 第三章/0027_第一幕_冰原下的星炬/915000004_冰原下的星炬.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: VehicleExitPlayer",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 189000000,
+            "title": "日光落处",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0031_幕间_日光落处/189000000_日光落处.json",
+              "Type1/拉海洛 第三章/0031_幕间_日光落处/189000000_日光落处.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: CharacterLookAt",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 168800009,
+            "title": "影下不落的黄金",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0032_第四幕_影下不落的黄金/168800009_影下不落的黄金.json",
+              "Type1/拉海洛 第三章/0032_第四幕_影下不落的黄金/168800009_影下不落的黄金.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: EnterMovieMode",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 165800000,
+            "title": "影面颠倒的兔影",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0033_幕间_影面颠倒的兔影/165800000_影面颠倒的兔影.json",
+              "Type1/拉海洛 第三章/0033_幕间_影面颠倒的兔影/165800000_影面颠倒的兔影.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: VehicleMoveWithPathLine",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 121000040,
+            "title": "昨夜群星",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0035_第五幕_昨夜群星/121000040_昨夜群星.json",
+              "Type1/拉海洛 第三章/0035_第五幕_昨夜群星/121000040_昨夜群星.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: UpdateTrialCharacter",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 119000000,
+            "title": "在熔解的夜空下",
+            "node_id": null,
+            "files": [
+              "Type1/拉海洛 第三章/0037_幕间_在熔解的夜空下/119000000_在熔解的夜空下.json",
+              "Type1/拉海洛 第三章/0037_幕间_在熔解的夜空下/119000000_在熔解的夜空下.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported world effect parameters: SetWeather",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 189000005,
+            "title": "山雨欲来风满楼",
+            "node_id": null,
+            "files": [
+              "Type1/梦州 第四章/0040_第一幕_山雨欲来风满楼/189000005_山雨欲来风满楼.json",
+              "Type1/梦州 第四章/0040_第一幕_山雨欲来风满楼/189000005_山雨欲来风满楼.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: LeisureInteract",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 192000007,
+            "title": "灵籁之契冥相因",
+            "node_id": null,
+            "files": [
+              "Type1/梦州 第四章/0042_幕间_灵籁之契冥相因/192000007_灵籁之契冥相因.json",
+              "Type1/梦州 第四章/0042_幕间_灵籁之契冥相因/192000007_灵籁之契冥相因.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Handbook order does not uniquely cover task flow references",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 125900000,
+            "title": "往岁乘霄醒惊蛰",
+            "node_id": null,
+            "files": [
+              "Type1/未关联章节_None/125900000_往岁乘霄醒惊蛰.json",
+              "Type1/未关联章节_None/125900000_往岁乘霄醒惊蛰.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: Log",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 121700001,
+            "title": "那神圣微风时常吹入",
+            "node_id": null,
+            "files": [
+              "Type15/黎那汐塔 第二章/0012_第一幕_那神圣微风时常吹入/121700001_那神圣微风时常吹入.json",
+              "Type15/黎那汐塔 第二章/0012_第一幕_那神圣微风时常吹入/121700001_那神圣微风时常吹入.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported task action: ManualOccupations",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 32750019,
+            "title": "愿此景永留你心",
+            "node_id": null,
+            "files": [
+              "Type15/追月节/3002_月华如愿_经营轶事/32750019_愿此景永留你心.json",
+              "Type15/追月节/3002_月华如愿_经营轶事/32750019_愿此景永留你心.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported bubble entities",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 32750024,
+            "title": "待得团圆时",
+            "node_id": null,
+            "files": [
+              "Type15/追月节/3002_月华如愿_经营轶事/32750024_待得团圆时.json",
+              "Type15/追月节/3002_月华如愿_经营轶事/32750024_待得团圆时.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Nested external task content needs placement support",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 32750013,
+            "title": "折枝邀约任务后日谈·一",
+            "node_id": null,
+            "files": [
+              "Type15/未关联章节_None/32750013_折枝邀约任务后日谈·一.json",
+              "Type15/未关联章节_None/32750013_折枝邀约任务后日谈·一.txt"
+            ]
+          }
+        ]
+      }
+    ],
+    "external_extraction_blocked": [
+      {
+        "error": "Unsupported variable assignment",
+        "occurrences": 168,
+        "task_count": 45,
+        "examples": [
+          {
+            "quest_id": 125000123,
+            "title": "时序之主",
+            "node_id": 78,
+            "files": [
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000123_时序之主.json",
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/125000123_时序之主.txt"
+            ]
+          },
+          {
+            "quest_id": 114000027,
+            "title": "那神圣微风时常吹入",
+            "node_id": 84,
+            "files": [
+              "Type1/黎那汐塔 第二章/0012_第一幕_那神圣微风时常吹入/114000027_那神圣微风时常吹入.json",
+              "Type1/黎那汐塔 第二章/0012_第一幕_那神圣微风时常吹入/114000027_那神圣微风时常吹入.txt"
+            ]
+          },
+          {
+            "quest_id": 114000027,
+            "title": "那神圣微风时常吹入",
+            "node_id": 112,
+            "files": [
+              "Type1/黎那汐塔 第二章/0012_第一幕_那神圣微风时常吹入/114000027_那神圣微风时常吹入.json",
+              "Type1/黎那汐塔 第二章/0012_第一幕_那神圣微风时常吹入/114000027_那神圣微风时常吹入.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported external content shape: OpenSystemBoard",
+        "occurrences": 58,
+        "task_count": 17,
+        "examples": [
+          {
+            "quest_id": 140000004,
+            "title": "千里卷戎旌",
+            "node_id": 18,
+            "files": [
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/140000004_千里卷戎旌.json",
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/140000004_千里卷戎旌.txt"
+            ]
+          },
+          {
+            "quest_id": 133000009,
+            "title": "叩天关",
+            "node_id": 140,
+            "files": [
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/133000009_叩天关.json",
+              "Type1/瑝珑 第一章/0008_第七幕_往岁乘霄醒惊蛰/133000009_叩天关.txt"
+            ]
+          },
+          {
+            "quest_id": 125000126,
+            "title": "荣耀暗面",
+            "node_id": 42,
+            "files": [
+              "Type1/黎那汐塔 第二章/0016_第五幕_荣耀暗面/125000126_荣耀暗面.json",
+              "Type1/黎那汐塔 第二章/0016_第五幕_荣耀暗面/125000126_荣耀暗面.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported dungeon teleport parameters",
+        "occurrences": 7,
+        "task_count": 3,
+        "examples": [
+          {
+            "quest_id": 175000000,
+            "title": "独在异乡为异客",
+            "node_id": 94,
+            "files": [
+              "Type1/黎那汐塔 第二章/0024_幕间_独在异乡为异客/175000000_独在异乡为异客.json",
+              "Type1/黎那汐塔 第二章/0024_幕间_独在异乡为异客/175000000_独在异乡为异客.txt"
+            ]
+          },
+          {
+            "quest_id": 175000000,
+            "title": "独在异乡为异客",
+            "node_id": 103,
+            "files": [
+              "Type1/黎那汐塔 第二章/0024_幕间_独在异乡为异客/175000000_独在异乡为异客.json",
+              "Type1/黎那汐塔 第二章/0024_幕间_独在异乡为异客/175000000_独在异乡为异客.txt"
+            ]
+          },
+          {
+            "quest_id": 175000000,
+            "title": "独在异乡为异客",
+            "node_id": 109,
+            "files": [
+              "Type1/黎那汐塔 第二章/0024_幕间_独在异乡为异客/175000000_独在异乡为异客.json",
+              "Type1/黎那汐塔 第二章/0024_幕间_独在异乡为异客/175000000_独在异乡为异客.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported phone record configuration",
+        "occurrences": 6,
+        "task_count": 3,
+        "examples": [
+          {
+            "quest_id": 155000002,
+            "title": "致第二次日出",
+            "node_id": 54,
+            "files": [
+              "Type1/拉海洛 第三章/0028_第二幕_致第二次日出/155000002_致第二次日出.json",
+              "Type1/拉海洛 第三章/0028_第二幕_致第二次日出/155000002_致第二次日出.txt"
+            ]
+          },
+          {
+            "quest_id": 114000032,
+            "title": "远航星",
+            "node_id": 20,
+            "files": [
+              "Type1/拉海洛 第三章/0030_第三幕_远航星/114000032_远航星.json",
+              "Type1/拉海洛 第三章/0030_第三幕_远航星/114000032_远航星.txt"
+            ]
+          },
+          {
+            "quest_id": 886000002,
+            "title": "梦枢心相由心生",
+            "node_id": 2,
+            "files": [
+              "Type1/梦州 第四章/0045_第四幕_梦枢心相由心生/886000002_梦枢心相由心生.json",
+              "Type1/梦州 第四章/0045_第四幕_梦枢心相由心生/886000002_梦枢心相由心生.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported chapter UI parameters",
+        "occurrences": 4,
+        "task_count": 4,
+        "examples": [
+          {
+            "quest_id": 139000030,
+            "title": "奔策候残星",
+            "node_id": 124,
+            "files": [
+              "Type1/瑝珑 第一章/0004_第三幕_奔策候残星/139000030_奔策候残星.json",
+              "Type1/瑝珑 第一章/0004_第三幕_奔策候残星/139000030_奔策候残星.txt"
+            ]
+          },
+          {
+            "quest_id": 139000031,
+            "title": "庭际刀刃鸣",
+            "node_id": 150,
+            "files": [
+              "Type1/瑝珑 第一章/0005_第四幕_庭际刀刃鸣/139000031_庭际刀刃鸣.json",
+              "Type1/瑝珑 第一章/0005_第四幕_庭际刀刃鸣/139000031_庭际刀刃鸣.txt"
+            ]
+          },
+          {
+            "quest_id": 158800019,
+            "title": "暗潮将映的黎明",
+            "node_id": 139,
+            "files": [
+              "Type1/黎那汐塔 第二章/0023_第十一幕_暗潮将映的黎明/158800019_暗潮将映的黎明.json",
+              "Type1/黎那汐塔 第二章/0023_第十一幕_暗潮将映的黎明/158800019_暗潮将映的黎明.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported bubble flow",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 140800000,
+            "title": "千里卷戎旌",
+            "node_id": 2,
+            "files": [
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/140800000_千里卷戎旌.json",
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/140800000_千里卷戎旌.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Missing or ambiguous guide reference: guidefocusnew/466",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 140800000,
+            "title": "千里卷戎旌",
+            "node_id": 328,
+            "files": [
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/140800000_千里卷戎旌.json",
+              "Type1/瑝珑 第一章/0007_第六幕_千里卷戎旌/140800000_千里卷戎旌.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported phone attachment type",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 915000004,
+            "title": "冰原下的星炬",
+            "node_id": 156,
+            "files": [
+              "Type1/拉海洛 第三章/0027_第一幕_冰原下的星炬/915000004_冰原下的星炬.json",
+              "Type1/拉海洛 第三章/0027_第一幕_冰原下的星炬/915000004_冰原下的星炬.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported sublevel switch",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 690000001,
+            "title": "远航星",
+            "node_id": 223,
+            "files": [
+              "Type1/拉海洛 第三章/0030_第三幕_远航星/690000001_远航星.json",
+              "Type1/拉海洛 第三章/0030_第三幕_远航星/690000001_远航星.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported simple gameplay configuration",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 189000005,
+            "title": "山雨欲来风满楼",
+            "node_id": 28,
+            "files": [
+              "Type1/梦州 第四章/0040_第一幕_山雨欲来风满楼/189000005_山雨欲来风满楼.json",
+              "Type1/梦州 第四章/0040_第一幕_山雨欲来风满楼/189000005_山雨欲来风满楼.txt"
+            ]
+          }
+        ]
+      },
+      {
+        "error": "Unsupported bubble entities",
+        "occurrences": 1,
+        "task_count": 1,
+        "examples": [
+          {
+            "quest_id": 32750024,
+            "title": "待得团圆时",
+            "node_id": 2,
+            "files": [
+              "Type15/追月节/3002_月华如愿_经营轶事/32750024_待得团圆时.json",
+              "Type15/追月节/3002_月华如愿_经营轶事/32750024_待得团圆时.txt"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ordinary_flow_decode_failures": 0,
+  "functional_code_changed": false
+}

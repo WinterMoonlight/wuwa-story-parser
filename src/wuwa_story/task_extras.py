@@ -55,7 +55,7 @@ def interaction_evidence(owner, nodes, entries):
             'reason': 'branch conditions and shared recap region do not establish a unique playback position'}
 
 
-def review_extras(quest, nodes, backbone, states, source):
+def review_extras(quest, nodes, backbone, states, source, choices=None):
     recap = {s['state_key'] for s in backbone['segments']}
     extras = {flow_key(o) for o in walk([quest, nodes])
               if o.get('FlowListName') and 'FlowId' in o and 'StateId' in o} - recap
@@ -172,5 +172,7 @@ def review_extras(quest, nodes, backbone, states, source):
                         review.update(classification='placed_transition_text' if visible else 'placed_empty_transition',
                                       placement_verified=True, proof=proof,
                                       text_evidence=rendered['events'], visible_event_count=len(visible))
+        from .sync_prefix import insert_sync_dialogue_prefix
+        insert_sync_dialogue_prefix(review, quest, nodes, backbone, states, source, choices)
         reviews.append(review)
     return reviews

@@ -1,5 +1,57 @@
 # 单任务语料格式
 
+## 主线阅读投影
+
+局部片段的`order_scope=condition_completion_to_async_call`表示节点的直接条件对白完成后调用另一段异步对白。分组保留两个原流程，`proof`保存并行祖先、条件、调用前动作及异步标记。该范围确认前段完成先于后段调用，跨节点时序继续由`mainline_placement_verified=false`标明。详见[远赴乘霄局部推进](research/departure-condition-followup.md)。
+
+`sequence_dependency_review.flow_progression`保存所选流程的调用阶段、FinishActions前的直接流程完成条件、玩法启停以及共享状态写入来源。`waits_for_flow_completion`表明动作是否配置为同步等待，`enable_disable_pair_establishes_order=false`明确启停配对尚未证明跨节点顺序。该核查结果用于追溯顺序证据，TXT仍按已经确认的片段范围输出。见[风消雪霁推进关系核查](research/wind-task-progression.md)。
+
+无整体主干的复杂任务可使用`condition_flow_review`记录直接Condition.PlayFlow与纯性别选择器的提取证据。`gender_selections`保存原选择器、经核对一致的内嵌副本路径及所选女性分支；`rejected_selectors`与`flow_failures`保存未确认原因。新正文进入`task_local_sequences`，保留`single_flow_without_task_order`范围。该字段只补充段内可读文字，全局顺序状态见原阅读报告。详见[条件流程恢复](research/task-condition-flow-recovery.md)。
+
+任务同步前置对白保存在锚点段的`events`开头，`inserted_task_flows`记录源流程、动作、哈希与选择路线。其事件`task_placement.kind=task_sync_prefix`保存节点、调用阶段、动作索引及`before_state`；覆盖记录使用`order_scope=task_sync_prefix_order`。`relative_order_verified`限定于两次同步调用的相对顺序，实际运行状态仍单独记录。见[数据库同步前置对白](research/database-sync-prefix.md)。
+
+缺少主干的任务新增可选字段`sequence_dependency_review`。其中`completion_requirements`表示完成条件的必要前提，`controller_dependencies`表示指定初始状态和控制器路径中的关联。`flow_before_unlock_verified`只描述同步流程在解锁调用之前，`target_node_order_verified=false`保留其他状态写入与整体调度的未知范围。该字段用于审核依赖，详见[眠龙庭跨分支核查](research/mianlong-sequence-dependencies.md)。
+
+复杂任务也可生成`order_scope=single_flow_without_task_order`的独立片段，来源为节点的唯一直接PlayFlow调用。`proof`保存调用阶段、动作位置、原条件、祖先节点及Async，片段间顺序保持未确认。
+
+`batch_coverage.levelplay_local_sequences`新增`order_scope=increasing_counter_invocations`。其`proof.thresholds`保存递增数值、门槛节点、原条件和调用；`positive_writes`保存同一玩法作用域的递增动作。`relative_invocation_order_verified=true`与`placement_verified=false`同时保留，`dialogue_completion_order_verified=false`表明异步结束顺序尚未确认。初始值及所有阈值实际到达情况保持未知。详见[复杂案例验证](research/hardest-mainline-case.md)。
+
+默认导出的TXT使用`mainline_reading`。原有`events`、`recap_backbone`、`external_content`及`batch_coverage`继续保存完整已提取材料，阅读投影为追加字段。每个`blocks[].parts[]`保存`kind`、显示`text`与`source_pointers`，可回溯原事件及原始文本。
+
+`status`支持`ordered_draft`、`ordered_draft_with_gaps`、`local_fragments_only`、`no_ordered_body`。`ordering_basis`记录回顾与任务依赖修正、所选配置路线或局部流程来源。`runtime_verified=false`继续明确运行时顺序未核验。`retained_text_events`统计显示事件，`omission_markers`统计短说明；均不代表全任务完整率。
+
+TXT省略未定位附录和复杂小游戏细节，原位保留演出、交互和缺失流程的简短说明。`refresh-reading`对旧JSON临时生成投影以更新TXT，保持JSON文件字节不变。下文附录相关描述记录原始材料的组织方式，当前TXT展示以本节为准。详见[本轮验证](research/mainline-reading-projection.md)。
+
+无回顾的简单Sequence任务可以生成`task_local_sequences`独立流程分段，使用`order_scope=single_flow_without_task_order`。`sequence_execution_review`保存Sequence子节点分组、副本进入与完成关系、可见状态候选及未解析流程。`display_order_is_execution_order=false`与`whole_task_order_verified=false`明确保留，分段列表顺序仅供展示。原有跨流程局部调用片段按原order_scope读取。详见[时序之主节点核查](research/master-of-time-sequence.md)。
+
+`batch_coverage.order.source_priority`依次为`task_call_dependencies`、`entity_or_gameplay_trigger_dependencies`、`recap_fallback`。`recap_backbone.task_finish_supplements`记录本次恢复的直接任务后继调用，段落中的`inserted_task_flows`保留流程、源动作与选择，正文事件使用`order_scope=task_finish_call_order`。异步结束与外部回调的未核验标志继续保留。详见[任务调用与补充片段](research/task-finish-supplement.md)。
+
+`recap_backbone.dependency_order_corrections`保存依据唯一任务完成调用修正回顾顺序的记录。`original_segment_keys`与`ordered_segment_keys`分别保留原顺序和本版阅读顺序，源条目的`entry_index`仍对应原始回顾。异步目标只确认前段完成早于后段调用，`completion_order_verified=false`保留其他结束时序未核验。当前修正通过`recap_dependency_corrected`记录，原始依赖比较继续保存在`batch_coverage.order.dependencies`。详见[荣耀暗面顺序核查](research/glory-dependency-order.md)。
+
+通过唯一回顾提示补入的任务段使用`order_origin=task_finish_tip`，如果相邻回顾交互以该任务节点完成为前提，则使用`task_finish_before_interaction`并排在该交互之前。`source_entry`保存原始提示，`placement_proof.tip_entry_index`保存提示位置，`entry_index`保存实际插入锚点。原始`order_source.entries`保持，`tip_flow_insertions`保存所有放置依据。`source_counts.task_tip_inserted_segments/events`单独统计新增正文段和事件，`recap_parsed_segments`只计原始回顾段。详见[提示与完成条件核查](research/tip-finish-flow-validation.md)。
+
+`batch_coverage.entity_trigger_timing`保存地图触发对白的任务节点生命周期核查。节点的`DungeonId`按副本配置映射为地图，匹配同地图实体，另外保留同编号在其他地图的调用。`common_task_region`是共同任务祖先及其阶段名，TXT据此添加阶段标签。`matching_map_lifecycle`保存原始动作、条件和回顾索引，`trigger_range`保存触发范围。`placement_verified=false`与`runtime_verified=false`表示仍未定位实际播放，所有对白继续在附录保留。此字段为可选追加字段，旧JSON仍可按原规则渲染。详见[实体触发核查](research/avinuolin-trigger-review.md)。
+
+阅读版按来源排除操作标签。覆盖记录中`reading_exclusion_reason`取值为`task_objective_label`、`quest_occupation_notice`或`system_option_label`时，该条仍保留在JSON中，TXT省略其显示。`source_counts.reading_excluded_labels`给出排除数量。过滤基于TidTip、OccupationConfig及明确的system_option类型，正文与剧情选择按原规则保留。旧JSON可从原指针和source_path获得相同的阅读结果。见[标签与对白核查](research/reading-labels-validation.md)。
+
+无回顾且尚无已解析整任务路线时，顶层`task_local_sequences`可保存同节点连续同步调用的局部有序片段。其字段与`recap_backbone.task_local_sequences`相同，`order_scope=adjacent_synchronous_finish_calls`表示连续同步完成动作的相对顺序。片段保留媒体调用占位和所选分支，`mainline_placement_verified=false`表示任务内整体位置仍需核查。TXT将片段集中展示，覆盖记录指向`/task_local_sequences/…`，所选文字从零散清单中去重。详见[连续调用验证](research/adjacent-task-order-validation.md)。
+
+连续调用段支持三个及更多同步调用，`proof.action_indices`保存原数组位置，`run_dependencies`逐条保存邻接边。其他动作将连续段隔开。祖先为ParallelSelect时保留`parallel_ancestors`和`cross_branch_order_verified=false`，TXT显示简短条件说明，任务内整体位置仍待确认。详见[并行上下文规则](research/parallel-task-order-validation.md)。
+
+## 现有文本顺序范围
+
+阅读版新增`batch_coverage.text_order_review`，分别记录条件路线已排序、媒体内部内容后置、缺失流程定义及局部顺序待确认。范围为回顾片段，其他附录的未定位内容仍保留在原coverage.gaps。`whole_task_text_order_verified=false`，原任务级状态继续按既有规则计算。
+
+条件路线证据在`recap_backbone.segments[].unverified_content`中以`kind=conditional_text_route`保存。入口前提、实体作用域、可满足性见证、符号副作用及原选项索引完整保留，实际运行状态与跨段变量传播均未确认。正文覆盖记录使用`order_scope=conditional_recap_segment`。
+
+界面返回路线证据使用`kind=panel_return_text_route`，记录`conditional_on_panel_return=true`、原控制边界和局部文本顺序。`runtime_return_verified`与`panel_display_timing_verified`均为false，正文覆盖范围为`panel_return_recap_segment`。原位`ui_reference`保存界面调用，`content_deferred=true`的说明不计正文数量。相关规则见[界面返回文本核查](research/panel-return-text-validation.md)。
+
+单线QTE阅读投影使用`kind=configured_qte_text_order`证据，保存完整声明顺序、普通文本节点和QTE编号。`runtime_return_verified`、`qte_result_selected`、`all_runtime_outcomes_verified`均为false。`qte_reference`事件保留原位控制节点，其`content_deferred=true`，不计正文数。正文记录的范围为`configured_qte_recap_segment`，缺失普通文字继续记录在missing_text_ids。见[单线QTE规则](research/qte-configured-text-order.md)。
+
+`recap_backbone.task_local_sequences`保存同一节点条件流程到同步完成调用的局部有序片段。`local_order_verified=true`与`mainline_placement_verified=false`同时保留，文本记录范围为`same_node_condition_to_finish`。JSON保留中间场景动作及回调内容未核验标记，TXT在附录中连续展示已确认顺序的两段。对应所选静态文本从散列显示中去重，未选分支仍保留。见[局部调用顺序](research/task-local-sequence-validation.md)。
+
+独立演出后置证据使用`kind=deferred_sequence_content`，原位事件为`media_reference`且`content_deferred=true`。覆盖记录将它计为占位，正文数量不增加。原始帧动作保留，帧时序和回调未执行。规则范围见[验证报告](research/known-text-order-validation.md)。
+
 ## 当前输出
 
 `outputs/任务样本/<任务ID>_<任务名>.json` 与同名 `.txt`。JSON 是结构化主数据，TXT 从相同事件列表生成。
@@ -165,3 +217,50 @@ OpenSystemBoard.InformationView的BoardId精确关联db_infodisplay.infodisplay.
 ## 任务额外流程证据
 
 recap_backbone.task_only_review保存额外流程源节点、祖先、性别/异步证据和placement_verified。仅受限同步转场可用task_placement标记插入事件；空文本只留text_evidence，visible_event_count=0，不生成缺失或空白台词。来源分类不能当成确定的实际执行路线。详见[额外流程规则](research/echoes-task-extras.md)。
+## 未解决调用附近的局部正文
+
+回顾段落仍为blocked时，可以包含prefix_event_count和control_boundary，明确哪些文字位于未知控制之前。条件菜单的可用性不会由默认变量值推断。
+
+Enrollment局部后续保存在recap_backbone.segments[].local_fragments，其order_scope为configuration_after_unresolved_ui，runtime_return_verified及whole_segment_complete均为false。这些事件在覆盖报告归unverified，TXT在缺口之后另起标题显示，不计完整区段。原始source_actions和source_item保留。
+
+## 无条件备选路线
+
+回顾段route.policy为first_fully_parsed_unconditional_alternative时，表示初选路径在直接SetVar处中断，解析器采用同一菜单完整可解析的无条件跳转选项。unverified_content中的implicit_choice_retry保存原始错误、控制边界、前缀和新旧选择。用户显式指定的choices始终优先。
+
+剩余阻塞报告的unresolved_original_choices记录原选项仍未实现的控制，不能仅凭所选路线不再阻塞推断全部分支已支持。
+
+
+## 资源引用与阅读标签清理（2026-11-17）
+
+TXT统一去除颜色、术语链接、加粗、斜体等尖括号标签，保留包裹的文字。显式br标签转换为换行，ano注音沿用正文加注音说明的形式。普通比较符号和动态占位符继续保留。该转换只作用于阅读输出，JSON中的raw_text和source_item保留原始依据。
+
+PhoneMessage中的规范Emoji与Attachment引用以图片消息处理，保留消息位置、资源编号与未核验占位。对应TidTalk没有文字时不再计作正文缺失，语音、普通文字与未知参数形状继续使用正文查找。当前《我们选择天空》的三个缺失文字误报已消除。
+
+资源核查仍有10个精确流程键未找到定义，对应7份任务记录、12个回顾位置。用户确认的阿维纽林4/11过程动画已附人工反馈，其源定义缺失事实保留。《灼我以烈阳》仍有1个正文键待确认。
+
+逐处上下文和复现方法见[资源引用核查](research/resource-reference-cleanup.md)。
+
+
+## 阅读版动态模板显示
+
+TXT使用教学参数数组中的动作名称展开数字占位符，未知输入保留【操作键】等可读提示。当前任务内所选全局字符串赋值可提供后续片段的名称显示，缺少记录时保留描述性标记。原始模板、选项、赋值审计和输入参数留在JSON。该显示处理不替代条件求值和运行时变量状态。
+
+## 同节点多阶段调用
+
+无整体主干的任务可以将同节点的多个唯一直接PlayFlow分别提取到`task_local_sequences`。`proof.phase`和`action_index`保留调用位置，`multiple_direct_calls`表示需区分多个调用。它们仍是独立片段，不能直接按输出列表推断整任务顺序。
+
+`sequence_dependency_review.flow_progression.phase_relations`记录同次执行中EnterActions到FinishActions的调用阶段关系；异步入口的`flow_completion_before_followup_verified=false`。TXT注明“进入步骤时调用”或“完成步骤时调用”，不把阶段先后扩大为对白完成顺序。规则与例子见[远赴乘霄阶段核查](research/departure-phase-progression.md)。
+
+## 局部对白之间的InformationView
+
+`task_local_sequences`的`order_scope=condition_completion_via_information_board`表示条件对白完成后，按完成动作数组先调用资料面板，再调用后续对白。`segments`保留原流程；`intermediate_content`另存资料事件、原动作下标及插入位置，不伪造FlowState。
+
+资料来自唯一BoardId和明确语言键。原始`external_content`继续保留，对应重复统计记录使用`counted_elsewhere`和`text_duplicate_of`标记；TXT在局部两段之间显示一次正文。面板关闭时机、与其他任务节点的先后仍未验证。详见[心愿纸条调用顺序](research/wish-note-call-order.md)。
+
+## 关联回顾区段
+
+`linked_recap_sections`保存由其他回顾条目补充的正常任务流程。仅当条目有明确前置与任务引用、精确任务提示、完整且唯一的流程归属，并通过占位节点及调用依赖检查时接入。
+
+原`events`、`source`、`external_content`保留；阅读版使用关联区段的`segments[].events`与`route.choices`，原外部文字统计以来源指针标注重复。`validation.reading_unplaced_flow_count`记录阅读版剩余缺口，原`unplaced_flow_count`保留底层解析结果，二者口径不同。
+
+该输出的`ordering_basis=linked_recap_sections`表示回顾区段关系已核查，实机节点执行及可选交互必经性仍未验证。详见[后日谈恢复证据](research/epilogue-linked-recap.md)。

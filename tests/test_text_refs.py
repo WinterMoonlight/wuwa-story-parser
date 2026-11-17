@@ -5,6 +5,7 @@ from wuwa_story.database import rows, texts
 from wuwa_story.export_task import Exporter, flow_actions
 from wuwa_story.reading_batch import inventory
 from wuwa_story.text_refs import control_references, non_dialogue_reason
+from wuwa_story.rendering import render_result
 
 
 class TextReferenceTests(unittest.TestCase):
@@ -39,6 +40,38 @@ class TextReferenceTests(unittest.TestCase):
         for kind in ('Talk', 'Unknown'):
             item = {'Type': kind, 'Id': 0, 'TidTalk': 'missing-body', 'PlotLineKey': ''}
             self.assertIsNone(non_dialogue_reason(item))
+            self.assertTrue(inventory([item], 'test')[0]['missing'])
+
+    def test_phone_visuals_keep_their_position_without_missing_speech(self):
+        for message in ({'Type': 'Emoji', 'EmojiId': 172},
+                        {'Type': 'Attachment', 'AttachmentId': 700022}):
+            with self.subTest(message=message):
+                item = {'Type': 'PhoneMessage', 'Id': 1, 'WhoId': 750088,
+                        'TidTalk': 'absent-visual-label', 'MessageType': message}
+                parser = Exporter()
+                parser.state_key = 'test'
+                parser.talk([item])
+                result = render_result({'title': 'test', 'events': parser.events,
+                                        'route': {'choices': []}})
+                self.assertEqual(parser.missing, [])
+                self.assertEqual(len(result['events']), 1)
+                self.assertEqual(result['events'][0]['source_item'], item)
+                self.assertEqual(result['events'][0]['phone_media']['type'], message['Type'])
+                record = inventory([item], 'test')[0]
+                self.assertFalse(record['missing'])
+                self.assertEqual(record['text'], result['events'][0]['text'])
+
+    def test_phone_text_and_unknown_shapes_still_report_missing_body(self):
+        for message in ({'Type': 'Voice'}, {'Type': 'Text'},
+                        {'Type': 'Emoji', 'EmojiId': True},
+                        {'Type': 'Attachment', 'AttachmentId': 0},
+                        {'Type': 'Emoji', 'EmojiId': 172, 'Extra': 'unknown'}):
+            item = {'Type': 'PhoneMessage', 'Id': 1, 'TidTalk': 'absent-body',
+                    'MessageType': message}
+            parser = Exporter()
+            parser.state_key = 'test'
+            parser.talk([item])
+            self.assertIn('absent-body', parser.missing)
             self.assertTrue(inventory([item], 'test')[0]['missing'])
 
     def test_real_seven_task_sources(self):

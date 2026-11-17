@@ -1,7 +1,9 @@
 """Read guide configuration references; never simulate display eligibility."""
 import base64
 import hashlib
+import struct
 from .database import integer, string, vec, texts
+from .phone import string_vector
 
 
 def inspect_guide(params, read_rows):
@@ -27,9 +29,18 @@ def inspect_guide(params, read_rows):
         key = string(r['BinData'], field)
         if not key:
             return
+        candidates = {}
+        for index in {'guidetips': (2, 3, 4), 'guidefocusnew': (14, 15, 16)}.get(table, ()):
+            try:
+                values = string_vector(r['BinData'], index)
+            except (ValueError, UnicodeError, struct.error):
+                continue
+            if values and all(all(character.isprintable() for character in value) for value in values):
+                candidates[str(index)] = values
         found.append({'text_id': key, 'raw_text': texts.get(key), 'missing': key not in texts,
                       'source_table': table, 'source_field': field, 'step_id': step_id,
-                      'source_id': r.get('Id', r.get('GuideId')), 'purpose': purpose})
+                      'source_id': r.get('Id', r.get('GuideId')), 'purpose': purpose,
+                      'format_argument_candidates': candidates})
     group = row('guidegroup', 'Id', params['GuideId'])
     step_ids = vec(group['BinData'], 1)
     steps = []
@@ -61,5 +72,5 @@ def inspect_guide(params, read_rows):
             'display_verified': False,
             'limitations': ['Platform masks retained without assigning platform names',
                             'Node, trigger and internal guide eligibility are not evaluated',
-                            'Input placeholders and rich text retained; image text not transcribed',
+                            'Input argument vectors retained without choosing a platform or physical key',
                             'Undecoded display fields retained in source blobs']}

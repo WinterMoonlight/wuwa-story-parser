@@ -1,8 +1,69 @@
-"""Conservative ordered speech prefix before unresolved QTE execution."""
+"""Place dialogue prefixes using unique synchronous task calls."""
 from copy import deepcopy
 import struct
 from .export_task import Exporter, flow_actions, flow_key, walk
 from .rendering import render_result
+
+
+def insert_sync_dialogue_prefix(review, quest, nodes, backbone, states, source, choices=None):
+    """Place a complete first call immediately before its unique recap anchor."""
+    from .dependency_positions import _sync_flow
+    from .levelplay_completion import ancestry
+    from .task_flows import classify_task_flows
+    from .task_local_order import _flow_segment
+
+    key = review['state_key']
+    if review.get('placement_verified') or len(review['owner_nodes']) != 1 or key not in states:
+        return
+    node = review['owner_nodes'][0]
+    phases = {'Action': 'Actions', 'ChildQuest': 'FinishActions'}
+    phase = phases.get(node.get('Type'))
+    if phase is None or any(node.get(k) for k in ('ExitCondition', 'FailedCondition', 'Slots')):
+        return
+    if phase == 'Actions' and node.get('Condition'):
+        return
+    if len({n['Id'] for n in nodes}) != len(nodes):
+        return
+    chain, error = ancestry(node['Id'], nodes)
+    if (error or len(chain) < 2 or any(n.get('Type') != 'Sequence' for n in chain[1:])
+            or any(n.get(k) for n in chain[1:] for k in ('Condition', 'ExitCondition', 'FailedCondition', 'Slots'))):
+        return
+    actions = node.get(phase, [])
+    if not isinstance(actions, list) or len(actions) < 2 or _sync_flow(actions[0]) != key:
+        return
+    anchor = _sync_flow(actions[1])
+    if anchor is None or anchor == key:
+        return
+    occurrences = classify_task_flows(quest, nodes)
+    if any(len(occurrences.get(k, [])) != 1 for k in (key, anchor)):
+        return
+    targets = [s for s in backbone['segments'] if s['state_key'] == anchor]
+    used = {s['state_key'] for s in backbone['segments']}
+    used.update(f['state_key'] for s in backbone['segments'] for f in s.get('inserted_task_flows', []))
+    if (key in used or len(targets) != 1 or targets[0]['status'] != 'parsed'
+            or targets[0].get('prefix_event_count') or targets[0].get('inserted_task_flows')):
+        return
+    try:
+        parsed = _flow_segment(key, states, source, choices)
+    except struct.error:
+        return
+    if (parsed is None or not parsed['events'] or parsed['missing_text_ids'] or parsed['unverified_content']
+            or any(e['kind'] not in {'dialogue', 'choice', 'narration', 'center_text'} for e in parsed['events'])):
+        return
+    proof = {'kind': 'task_sync_prefix', 'node_id': node['Id'], 'phase': phase,
+             'action_indices': [0, 1], 'state_key': key, 'before_state': anchor,
+             'source_actions': deepcopy(actions[:2]), 'ancestor_ids': [n['Id'] for n in chain[1:]],
+             'basis': 'first two adjacent synchronous calls; unique task occurrences and recap anchor',
+             'relative_order_verified': True, 'runtime_verified': False}
+    events = deepcopy(parsed['events'])
+    for event in events:
+        event['task_placement'] = deepcopy(proof)
+    targets[0]['events'][0:0] = events
+    targets[0].setdefault('inserted_task_flows', []).append({
+        'state_key': key, 'proof': proof, 'source_actions': parsed['source_actions'],
+        'action_fields': parsed['action_fields'], 'sha256': parsed['sha256'], 'route': parsed['route']})
+    review.update(classification='placed_sync_dialogue_prefix', placement_verified=True,
+                  proof=proof, text_evidence=events, visible_event_count=len(events), complete=True)
 
 
 def bridge_action(action):

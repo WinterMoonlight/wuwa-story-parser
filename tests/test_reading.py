@@ -4,6 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from wuwa_story.paths import DATABASE_DIR
+from wuwa_story.reading_markup import reading_markup
 
 
 class ReadingTests(unittest.TestCase):
@@ -27,18 +28,14 @@ class ReadingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             paths = write_result(d, Path(temp), quiet=True)
             text = paths[1].read_text(encoding='utf-8-sig')
-            self.assertEqual(json.loads(paths[0].read_text(encoding='utf-8')), before)
+            document = json.loads(paths[0].read_text(encoding='utf-8'))
+            self.assertEqual(document.pop('mainline_reading')['policy'], 'mainline_first')
+            self.assertEqual(document, before)
         self.assertEqual(d, before)
         for token in ('FinishActions', 'SetVar', '祖先链', '同阶段前序', 'ReignsAddBuff', '/Game/', 'source_path'):
             self.assertNotIn(token, text)
-        self.assertEqual(text.count('【小游戏·第'), 4)
-        self.assertIn('可选回应：', text)
-        self.assertIn('部分结局卡文本尚未找到', text)
+        self.assertNotIn('【小游戏·第', text)
+        self.assertNotIn('【卡牌文本】', text)
         for event in d['events']:
-            self.assertIn(event['text'], text)
-        for entry in d['external_content']:
-            if 'gameplay' in entry:
-                for value in entry['texts']:
-                    if value['text']:
-                        from wuwa_story.reading_markup import reading_markup
-                        self.assertIn(reading_markup(value['text']), text)
+            self.assertIn(reading_markup(event['text']), text)
+        self.assertTrue(any('gameplay' in entry for entry in document['external_content']))

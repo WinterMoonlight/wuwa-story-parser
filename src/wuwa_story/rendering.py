@@ -1,5 +1,6 @@
 """Render the configured female Rover reading edition without altering evidence."""
 import re
+from .text_refs import PHONE_MEDIA_TEXT
 
 
 TOKEN = re.compile(r'\{([^{}]*)\}')
@@ -40,8 +41,11 @@ def render_result(result):
             value['text'] = render_text(value['raw_text']) if value['raw_text'] is not None else '[缺失文本]'
     for event in result['events']:
         event['text'] = render_text(event['raw_text'])
-        if event.get('phone_media', {}).get('type') == 'Emoji':
-            event['text'] = '【表情：图片内容尚未核验】'
+        media_type = event.get('phone_media', {}).get('type')
+        if media_type in PHONE_MEDIA_TEXT:
+            event['text'] = PHONE_MEDIA_TEXT[media_type]
+        if media_type == 'Attachment' and event.get('attachment', {}).get('attachment_type') == 'Image':
+            event['text'] = '【附件：图片内容尚未核验】'
         for field in ('display_name', 'resolved_name'):
             if event.get(field):
                 event['raw_' + field] = event[field]
