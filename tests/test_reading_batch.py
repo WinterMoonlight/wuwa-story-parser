@@ -34,15 +34,18 @@ class ReadingBatchTests(unittest.TestCase):
 
     def test_external_failure_does_not_hide_following_call(self):
         nodes = [{'Id': 1, 'Actions': [{'Name': 'SetVar', 'Params': {}},
-                                       {'Name': 'CommonTip', 'Params': {}}]}]
+                                       {'Name': 'CommonTip', 'Params': {}},
+                                       {'Name': 'Wait', 'Params': {'Time': 1}}]}]
         class Source:
             rows = None
         with patch('wuwa_story.reading_batch.inspect_task_content', side_effect=[ValueError('bad'), [{'texts': []}] ]):
             entries, gaps = external_inventory(nodes, Source())
         self.assertEqual(len(entries), 1)
         self.assertEqual(entries[0]['original_action_index'], 1)
+        self.assertEqual(entries[0]['original_preceding_actions'], nodes[0]['Actions'][:1])
+        self.assertEqual(entries[0]['original_following_actions'], nodes[0]['Actions'][2:])
         self.assertEqual(gaps[0]['action_index'], 0)
-        self.assertEqual(len(nodes[0]['Actions']), 2)
+        self.assertEqual(len(nodes[0]['Actions']), 3)
 
     def test_missing_key_is_explicit(self):
         with patch('wuwa_story.reading_batch.texts', {}):

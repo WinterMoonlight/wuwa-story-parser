@@ -40,4 +40,5 @@ class ReadingTests(unittest.TestCase):
             if 'gameplay' in entry:
                 for value in entry['texts']:
                     if value['text']:
-                        self.assertIn(value['text'], text)
+                        from wuwa_story.reading_markup import reading_markup
+                        self.assertIn(reading_markup(value['text']), text)

@@ -40,6 +40,8 @@ def render_result(result):
             value['text'] = render_text(value['raw_text']) if value['raw_text'] is not None else '[缺失文本]'
     for event in result['events']:
         event['text'] = render_text(event['raw_text'])
+        if event.get('phone_media', {}).get('type') == 'Emoji':
+            event['text'] = '【表情：图片内容尚未核验】'
         for field in ('display_name', 'resolved_name'):
             if event.get(field):
                 event['raw_' + field] = event[field]

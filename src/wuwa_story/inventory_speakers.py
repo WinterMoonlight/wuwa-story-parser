@@ -31,6 +31,12 @@ def inventory_identity(key, item, speakers, context):
     sid = item.get('WhoId')
     # Static inventory cannot replay actor changes, so use only the name table.
     record = speakers.records.get(sid, {'name': '', 'source': 'unresolved'})
+    if record.get('configured_empty_name') is True:
+        return {'kind': 'dialogue', 'who_id': sid, 'speaker_id': sid,
+                'display_name': '无署名', 'name_source': dict(record),
+                'identity_status': 'configured_empty_name',
+                'attribution_basis': 'own_WhoId_configured_empty_name',
+                'resolved_speaker_id': None, 'resolved_name': None}
     name = render_text(record.get('name') or '？？？')
     unknown = not name.strip() or set(name.strip()) <= {'?', '？'}
     return {'kind': 'dialogue', 'who_id': sid, 'speaker_id': sid,

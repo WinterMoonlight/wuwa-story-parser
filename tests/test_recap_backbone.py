@@ -8,6 +8,30 @@ from wuwa_story.reading import reading_text
 
 
 class BackboneTests(unittest.TestCase):
+    def test_choice_override_reaches_normal_route_and_recap_fallback(self):
+        from wuwa_story.recap_backbone import export_task_backbone
+        # A normal successfully exported route must honour the same override as
+        # the isolated recap fallback; otherwise selected reply and prose differ.
+        first = export_task_backbone(211750002)
+        key = first['route']['choices'][0]['choice_key']
+        other = export_task_backbone(211750002, {key: 1})
+        self.assertIn('Event_WWPDJSBF_4_5', [e.get('text_id') for e in other['events']])
+        self.assertNotIn('Event_WWPDJSBF_4_4', [e.get('text_id') for e in other['events']])
+        self.assertEqual(first['events'][3:], other['events'][3:])
+        recap = export_task_backbone(145000004)
+        segment = next(s for s in recap['recap_backbone']['segments']
+                       if s.get('route', {}).get('choices') and
+                       len(s['route']['choices'][0]['options']) > 1)
+        decision = segment['route']['choices'][0]
+        changed = export_task_backbone(145000004, {decision['choice_key']: 1})
+        new_segment = next(s for s in changed['recap_backbone']['segments']
+                           if s['entry_index'] == segment['entry_index'])
+        actual = next(c for c in new_segment['route']['choices'] if c['choice_key'] == decision['choice_key'])
+        self.assertEqual(actual['selected_index'], 1)
+        self.assertEqual(next(e['text_id'] for e in new_segment['events']
+                              if e.get('choice_key') == decision['choice_key']), decision['options'][1]['text_id'])
+        self.assertEqual(recap['recap_backbone']['blocked_segments'], changed['recap_backbone']['blocked_segments'])
+
     def test_failed_segment_is_transactional_and_next_segment_survives(self):
         entries = [{'Flow': {'FlowListName': 'f', 'FlowId': 1, 'StateId': n}} for n in (1, 2, 1)]
         class Parser:

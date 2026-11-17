@@ -24,21 +24,70 @@ def string_vector(blob, index):
     return result
 
 
+def apply_phone_media_item(event, message):
+    """Retain configured voice text or an opaque emoji at its source position.
+
+    This does not inspect audio/image assets or infer their meaning.
+    """
+    if message == {'Type': 'Voice'}:
+        event['phone_media'] = {'type': 'Voice', 'text_source': 'source_item.TidTalk',
+                                'audio_content_verified': False}
+        return True
+    if isinstance(message, dict) and message.get('Type') == 'Emoji':
+        if (set(message) != {'Type', 'EmojiId'} or type(message['EmojiId']) is not int
+                or message['EmojiId'] <= 0):
+            raise ValueError('Unsupported phone emoji shape')
+        event['phone_media'] = {'type': 'Emoji', 'emoji_id': message['EmojiId'],
+                                'visual_content_verified': False}
+        event['text'] = '【表情：图片内容尚未核验】'
+        return True
+    return False
+
+
 def inspect_phone(params, read_rows, preserve_unparsed=False):
-    from .export_task import Exporter, flow_actions
-    from .rendering import render_result
     interaction = params.get('InteractType', {})
     if set(params) != {'InteractType'} or set(interaction) != {'Type', 'PhoneRecordActionConfig'} or interaction['Type'] != 'SendPhoneMessage':
         raise ValueError('Unsupported phone interaction')
     config = interaction['PhoneRecordActionConfig']
     if set(config) != {'PhoneMessageId'}:
         raise ValueError('Unsupported phone record configuration')
+    return inspect_message(config['PhoneMessageId'], read_rows)
+
+
+def inspect_open_phone(action, read_rows, choices=None):
+    if (set(action) - {'Name', 'Params', 'ActionId', 'ActionGuid', 'Async'}
+            or action.get('Async', False) is not False):
+        raise ValueError('Unsupported phone open execution parameters')
+    p = action.get('Params', {})
+    if not isinstance(p, dict):
+        raise ValueError('Invalid phone parameters')
+    i = p.get('InteractType', {})
+    if not isinstance(i, dict):
+        raise ValueError('Invalid phone interaction')
+    b = i.get('PhoneBoardType', {})
+    if not isinstance(b, dict):
+        raise ValueError('Invalid phone board')
+    c = b.get('MessageBoardConfig', {})
+    if not isinstance(c, dict):
+        raise ValueError('Invalid phone board config')
+    if (set(p) != {'InteractType'} or set(i) != {'Type', 'PhoneBoardType'}
+            or i['Type'] != 'FlowOpenPhoneMessage'
+            or set(b) != {'Type', 'MessageBoardConfig'} or b['Type'] != 'MessageBoard'
+            or set(c) != {'PhoneMessageId'} or type(c['PhoneMessageId']) is not int
+            or c['PhoneMessageId'] <= 0):
+        raise ValueError('Unsupported explicit phone open shape')
+    return inspect_message(c['PhoneMessageId'], read_rows, choices)
+
+
+def inspect_message(message_id, read_rows, choices=None):
+    from .export_task import Exporter, flow_actions
+    from .rendering import render_result
     def one(db, table, key, value):
         matches = [r for r in read_rows(db, table) if r[key] == value]
         if len(matches) != 1:
             raise ValueError(f'Missing or ambiguous phone reference: {table}/{value}')
         return matches[0]
-    row = one('db_PhoneMsg.db', 'shortmessage', 'Id', config['PhoneMessageId'])
+    row = one('db_PhoneMsg.db', 'shortmessage', 'Id', message_id)
     blob = row['BinData']
     # Field 1 is ChatPartnerId, not a message-type enum. Its integer can
     # accidentally look like a valid FlatBuffer offset; do not decode it as text.
@@ -50,7 +99,7 @@ def inspect_phone(params, read_rows, preserve_unparsed=False):
     key = f'{flow[0]}_{int(flow[1])}_{int(flow[2])}'
     state = one('db_flowState.db', 'flowstate', 'StateKey', key)
     actions, fields = flow_actions(state['BinData'])
-    child = Exporter()
+    child = Exporter(choices=choices)
     child.rows = read_rows
     child.state_key = key
     if child.actions(actions):
@@ -72,6 +121,8 @@ def inspect_phone(params, read_rows, preserve_unparsed=False):
         if message == {'Type': 'SystemTip'}:
             event['kind'] = 'system_tip'
             event['display_name'] = '系统提示'
+        elif apply_phone_media_item(event, message):
+            pass
         elif message.get('Type') == 'Attachment' and set(message) == {'Type', 'AttachmentId'}:
             attachment = one('db_PhoneMessageAttachment.db', 'phonemessageattachment', 'Id', message['AttachmentId'])
             data = attachment['BinData']
@@ -87,7 +138,7 @@ def inspect_phone(params, read_rows, preserve_unparsed=False):
             event.update(kind='attachment', text='【附件：图片内容尚未核验】', attachment=details)
         else:
             raise ValueError('Unsupported phone message item: ' + repr(message))
-    return {'message_id': config['PhoneMessageId'], 'state_key': key,
+    return {'message_id': message_id, 'state_key': key,
             'source_table': 'db_PhoneMsg.db/shortmessage', 'flow_source_table': 'db_flowState.db/flowstate',
             'source_fields': {'chat_partner_id': 1, 'flow_reference': 2},
             'message_bin_data_base64': base64.b64encode(blob).decode('ascii'),

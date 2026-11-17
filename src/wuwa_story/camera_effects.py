@@ -8,7 +8,8 @@ def camera_shape(action):
     if (action.get('Async', False) is not False or
             set(action) - {'Name', 'Params', 'ActionId', 'ActionGuid', 'Async', 'Timeout'}):
         return False
-    if 'Timeout' in action and (type(action['Timeout']) not in (int, float) or action['Timeout'] != 0):
+    if 'Timeout' in action and (type(action['Timeout']) not in (int, float)
+            or not math.isfinite(action['Timeout']) or action['Timeout'] < 0):
         return False
     p = action.get('Params', {})
     if not isinstance(p, dict):
@@ -57,7 +58,9 @@ def camera_shape(action):
                 and p['FadeInTime'] >= 0 and p['ResetType'] == {'Type': 'ResetToDefaultDirection'})
     if name == 'PlayerLookAt':
         pos = p.get('Pos')
-        return (set(p) == {'Pos', 'CameraMove'} and type(p['CameraMove']) is bool
+        return ({'Pos', 'CameraMove'} <= set(p) <= {'Pos', 'CameraMove', 'PlayAnimation'}
+                and ('PlayAnimation' not in p or type(p['PlayAnimation']) is bool)
+                and type(p['CameraMove']) is bool
                 and isinstance(pos, dict) and set(pos) == {'X', 'Y', 'Z'}
                 and all(number(v) for v in pos.values()))
     return False

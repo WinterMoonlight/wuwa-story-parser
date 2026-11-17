@@ -19,7 +19,7 @@ python run.py export-reading-batch
 |failure_ending|失败父链独占引用，或只关联失败结局的卡牌材料|存在失败关联；不代表本次阅读路线失败|
 |unverified|其他静态对白、界面、手机、小游戏与共享结局材料|成功提取到材料；实际触发、时序或路线仍待核验|
 
-分类采用保守证据。成功与失败共享的卡牌不归入失败专属类。失败分支中的选项保留失败分类。未知角色不推测身份；静态对白仍按本条WhoId读取配置姓名，无法确定时保留问号。普通玩家选项、画面文字与QTE结果独立标识，不借用祖先NPC姓名。详见[姓名修正](batch-speaker-validation.md)。
+分类采用保守证据。成功与失败共享的卡牌不归入失败专属类。失败分支中的选项保留失败分类。未知角色不推测身份；静态对白仍按本条WhoId读取配置姓名，无法确定时保留问号。普通玩家选项、画面文字与QTE结果独立标识，不借用祖先NPC姓名。详见[姓名修正](research/batch-speaker-validation.md)。
 
 ## JSON 和 TXT
 
@@ -54,31 +54,31 @@ TXT 只显示分类标题、正文、选择和简短缺失说明。不会展示�
 
 ## 最新进展：副本回顾关联
 
-见[愿系铃中·续核查](recap-levelplay-validation.md)。最新批次20261117_005559_905178，8配置路线、127仅候选；54测试通过。recap_links.py以提示键与副本地图关联LevelPlay，只有完整引用并集精确匹配时在待核验模式解析；严格模式不变。此前批次数字是历史记录。
+见[愿系铃中·续核查](research/recap-levelplay-validation.md)。最新批次20261117_005559_905178，8配置路线、127仅候选；54测试通过。recap_links.py以提示键与副本地图关联LevelPlay，只有完整引用并集精确匹配时在待核验模式解析；严格模式不变。此前批次数字是历史记录。
 
 ## 最新进展：任务独有气泡
 
-见[嘤鸣初相召核查](task-only-bubbles-validation.md)。task_flows.py按调用来源识别气泡并单列解码；candidate_branch现在也包含环境触发候选，不等同于玩家选项。最新批次20261117_010048_326182，9配置路线、126仅候选，59测试通过。严格模式保持不变。
+见[嘤鸣初相召核查](research/task-only-bubbles-validation.md)。task_flows.py按调用来源识别气泡并单列解码；candidate_branch现在也包含环境触发候选，不等同于玩家选项。最新批次20261117_010048_326182，9配置路线、126仅候选，59测试通过。严格模式保持不变。
 
 ## 最新进展：正常完成流程锚点补序
 
-见[正常流程补序核查](normal-flow-order-validation.md)。recap_order.py在严格限定的平铺任务结构中按唯一空提示锚点补入完成流程，证据存anchored_insertions。最新批次20261117_010232_731083，10配置路线、125仅候选，63测试通过；严格成功仍2/85。此前批次统计为历史记录。
+见[正常流程补序核查](research/normal-flow-order-validation.md)。recap_order.py在严格限定的平铺任务结构中按唯一空提示锚点补入完成流程，证据存anchored_insertions。最新批次20261117_010232_731083，10配置路线、125仅候选，63测试通过；严格成功仍2/85。此前批次统计为历史记录。
 
 ## 最新进展：并行依赖
 
-见[幽客销残声依赖核查](parallel-dependencies-validation.md)。dependencies.py记录同节点完成依赖及保守并行关联，未知先后不强行排序。最新批次20261117_010538_773622，11配置路线、124仅候选，68测试通过；严格仍2/85。手机未知布局可保留原始记录与明确缺口。此前统计为历史记录。
+见[幽客销残声依赖核查](research/parallel-dependencies-validation.md)。dependencies.py记录同节点完成依赖及保守并行关联，未知先后不强行排序。最新批次20261117_010538_773622，11配置路线、124仅候选，68测试通过；严格仍2/85。手机未知布局可保留原始记录与明确缺口。此前统计为历史记录。
 
 ## 手机解码纠正与最新批次
 
-见[手机36009核查](phone36009-decoding.md)。字段1为联系人ID，字段9非联系人；无台词Option容器不再误报缺文。PhoneMessage拆分系统提示与图片附件，图片引用不等于图像内容已提取。最新批次20261117_010808_314910，72测试通过，11配置路线；missing_text任务降至7。旧时间戳产物是历史状态。
+见[手机36009核查](research/phone36009-decoding.md)。字段1为联系人ID，字段9非联系人；无台词Option容器不再误报缺文。PhoneMessage拆分系统提示与图片附件，图片引用不等于图像内容已提取。最新批次20261117_010808_314910，72测试通过，11配置路线；missing_text任务降至7。旧时间戳产物是历史状态。
 
 ## 七任务文本引用核查更新（2026-11-17）
 
-以[缺失引用核查](missing-text-validation.md)为当前接手点。NoTextItem/QTE的TidTalk按控制引用处理，JSON保留non_dialogue_controls及原始文本和动作；TXT不输出内部演出占位为台词。QTE成功/失败不按普通选择执行，批量单列qte_runtime_unverified。普通Talk的缺失不静默过滤。76项测试通过；最新批次20261117_011055_476513，135对文件核对通过，missing_text任务剩《灼我以烈阳》1个。资源缺失与失效回顾引用尚不可区分，下一步查4/5与4/1的归属/版本证据。
+以[缺失引用核查](research/missing-text-validation.md)为当前接手点。NoTextItem/QTE的TidTalk按控制引用处理，JSON保留non_dialogue_controls及原始文本和动作；TXT不输出内部演出占位为台词。QTE成功/失败不按普通选择执行，批量单列qte_runtime_unverified。普通Talk的缺失不静默过滤。76项测试通过；最新批次20261117_011055_476513，135对文件核对通过，missing_text任务剩《灼我以烈阳》1个。资源缺失与失效回顾引用尚不可区分，下一步查4/5与4/1的归属/版本证据。
 
 ## 灼我以烈阳引用核查补充（2026-11-17）
 
-见[本轮核查](scorching-sun-reference-validation.md)：缺失键有共用语音候选，但无字幕替代证据，保留missing_text。JSON新增missing_text_diagnostics，包含任务/回顾归属与语音候选，replacement_applied为false；候选不进入阅读正文。79项测试通过，批次20261117_011321_141069核对135对文件，统计不变。该条目待新证据，后续可推进QTE路线验证。
+见[本轮核查](research/scorching-sun-reference-validation.md)：缺失键有共用语音候选，但无字幕替代证据，保留missing_text。JSON新增missing_text_diagnostics，包含任务/回顾归属与语音候选，replacement_applied为false；候选不进入阅读正文。79项测试通过，批次20261117_011321_141069核对135对文件，统计不变。该条目待新证据，后续可推进QTE路线验证。
 
 ## 阅读覆盖与验收更新（2026-11-17）
 
@@ -86,11 +86,11 @@ TXT 只显示分类标题、正文、选择和简短缺失说明。不会展示�
 
 ## 梦枢实体交互更新（2026-11-17）
 
-[本轮证据与阅读检查](mengshu-entity-validation.md)：任务声明子实体及直属节点唤醒、实体单Flow交互可解释回顾额外引用，保存linked_entities与reading_context，不证明必经/实时顺序。168000003新增50事件草稿，字幕缺口保持。88测试，批次20261117_011935_649075有序12、候选123，135对核对通过，严格标准不变。下一步查M0391已有字幕配置并做本章衔接验证。
+[本轮证据与阅读检查](research/mengshu-entity-validation.md)：任务声明子实体及直属节点唤醒、实体单Flow交互可解释回顾额外引用，保存linked_entities与reading_context，不证明必经/实时顺序。168000003新增50事件草稿，字幕缺口保持。88测试，批次20261117_011935_649075有序12、候选123，135对核对通过，严格标准不变。下一步查M0391已有字幕配置并做本章衔接验证。
 
 ## 配置字幕更新（2026-11-17）
 
-见[M0391字幕核查](m0391-caption-validation.md)。媒体事件新增media.captions与caption_order_evidence，字段4关联正文，四组候选数值一致排序仅作为相对顺序推断；无语言/单位/角色猜测。M0391已补10条，C0027已补18条，替代旧“字幕尚未解码”的进度描述。92测试、批次20261117_012201_323353核对135对产物；有序12、候选123不变。阅读检查仍保留实际播放及额外画面文字边界。
+见[M0391字幕核查](research/m0391-caption-validation.md)。媒体事件新增media.captions与caption_order_evidence，字段4关联正文，四组候选数值一致排序仅作为相对顺序推断；无语言/单位/角色猜测。M0391已补10条，C0027已补18条，替代旧“字幕尚未解码”的进度描述。92测试、批次20261117_012201_323353核对135对产物；有序12、候选123不变。阅读检查仍保留实际播放及额外画面文字边界。
 
 ## 后日谈部分有序规则（2026-11-17）
 
@@ -98,7 +98,7 @@ TXT 只显示分类标题、正文、选择和简短缺失说明。不会展示�
 
 批量 `order.selected_route_verified=false`、`recap_segment_order_verified=true`，缺口为 `normal_task_flows_unplaced`。正文开头与每个补充段明确说明顺序未补齐；不得将这些正常正文当作失败分支、任意交互或重复材料删除。`reading_acceptance.status=partial_order`、`accepted=false`；PreQuest只证明任务前置关系，不自动证明连续播放或章节验收通过。
 
-当前135任务：12有序草稿、1部分有序、122候选；95测试通过。完整证据、产物和后续步骤见[后日谈核查](mengshu-epilogue-validation.md)。
+当前135任务：12有序草稿、1部分有序、122候选；95测试通过。完整证据、产物和后续步骤见[后日谈核查](research/mengshu-epilogue-validation.md)。
 
 ## 回顾主干草稿（2026-11-17）
 
@@ -106,12 +106,12 @@ TXT 只显示分类标题、正文、选择和简短缺失说明。不会展示�
 
 逐段使用独立解析状态，段内失败不保留半条路线；`recap_gap` 位于原段落位置，缺口占位不计正文数。主干的覆盖记录使用 `order_scope=recap_segment_only`，即使列在confirmed_route分类，也不证明整个任务实际播放顺序；全任务 `selected_route_verified=false`、`reading_acceptance.accepted=false`。TXT先展示主干，再展示尚未归位/未选择材料，不再把主干选择抽离对白。
 
-`duplicate_text_flows` 只记录非回顾来源与现有材料完整文字序列（含文本键、类型、说话人）一致的情况。`text_duplicate_of` 让TXT省略重复展示，JSON保留来源；不表示动作等价，不折叠回顾中重复出现的位置。当前批次60个回顾草稿；全文仍需检查缺段、未定位流程及运行时条件。详见[回顾主干验证](echoes-recap-validation.md)。
+`duplicate_text_flows` 只记录非回顾来源与现有材料完整文字序列（含文本键、类型、说话人）一致的情况。`text_duplicate_of` 让TXT省略重复展示，JSON保留来源；不表示动作等价，不折叠回顾中重复出现的位置。当前批次60个回顾草稿；全文仍需检查缺段、未定位流程及运行时条件。详见[回顾主干验证](research/echoes-recap-validation.md)。
 
 ## 七缺口复核更新（2026-11-17）
 
-最新[复核报告](echoes-seven-gaps-validation.md)：目标任务90/92段、986事件；剩余2段是缺失流程。PlaySequenceData扩展了镜头重置和受限实体状态回调形状，仍输出unparsed_content，保留asset_content_decoded=false、frame_events_executed=false和源参数。5/16图标动作支持不改变姓名或分支；这些修改不构成演出字幕完整性证明。106测试、135对最终批量核对通过。
+最新[复核报告](research/echoes-seven-gaps-validation.md)：目标任务90/92段、986事件；剩余2段是缺失流程。PlaySequenceData扩展了镜头重置和受限实体状态回调形状，仍输出unparsed_content，保留asset_content_decoded=false、frame_events_executed=false和源参数。5/16图标动作支持不改变姓名或分支；这些修改不构成演出字幕完整性证明。106测试、135对最终批量核对通过。
 
 ## 演出来源状态（2026-11-17）
 
-PlaySequenceData的source_resolution记录完整asset_path、精确videodata匹配和properties_status；属性存在也不等于已解码。视频sound_sources记录音频事件及哈希，text_decoded=false，不能当字幕。TXT区分演出与信息面板；无字幕行不证明没有对白。详见[来源核查](echoes-performance-sources.md)。
+PlaySequenceData的source_resolution记录完整asset_path、精确videodata匹配和properties_status；属性存在也不等于已解码。视频sound_sources记录音频事件及哈希，text_decoded=false，不能当字幕。TXT区分演出与信息面板；无字幕行不证明没有对白。详见[来源核查](research/echoes-performance-sources.md)。

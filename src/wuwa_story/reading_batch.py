@@ -20,6 +20,19 @@ from .inventory_speakers import inventory_identity, option_context
 
 CATEGORIES = ('confirmed_route', 'candidate_branch', 'failure_ending', 'unverified')
 GAP_LABELS = {
+    'dungeon_return_reading': '副本完成前对白已定位，其他副本流程时序待核查',
+    'parallel_guidance_separated': '并行触发教学已单列，播放时机待核查',
+    'entity_trigger_content': '任务声明实体的触发对白已单列，条件与主干顺序未核验',
+    'entity_trigger_unresolved': '实体触发对白配置缺失或不唯一，保留诊断',
+    'phone_tip_anchored': '手机消息已按唯一回顾提示定位，实际阅读时刻未核验',
+    'levelplay_local_order_only': '玩法片段内部同步顺序已确认，主干位置仍未确定',
+    'declared_levelplay_content': '任务声明玩法的对白已单列，异步及跨节点顺序未核验',
+    'declared_levelplay_unresolved': '任务声明玩法的配置或流程缺失，保留诊断',
+    'declared_entity_content': '任务子实体交互与气泡已单列，触发及顺序未核验',
+    'declared_entity_unresolved': '任务子实体配置缺失或不唯一，未据此补入文本',
+    'conditional_recap_rejected': '条件路线存在覆写或调用边界疑点，未按旧变量值筛选',
+    'recap_dependency_unresolved': '局部调用依赖尚未关联到唯一回顾位置',
+    'recap_dependency_conflict': '局部调用依赖与回顾位置冲突，需核查',
     'conditional_recap_scenario': '按所选变量值生成条件阅读路线，外部改写与运行时仍未核验',
     'recap_backbone_only': '仅回顾段落顺序，任务额外内容未归位',
     'recap_segment_blocked': '回顾段落暂未解析，原位置保留缺口',
@@ -97,6 +110,7 @@ def external_inventory(nodes, source):
                     for entry in decoded:
                         entry['original_action_index'] = ai
                         entry['original_preceding_actions'] = node[phase][:ai]
+                        entry['original_following_actions'] = node[phase][ai + 1:]
                         entry['isolation_note'] = 'Decoded independently; temporary array position is not original timing'
                     entries.extend(decoded)
                 except Exception as exc:
@@ -114,7 +128,7 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
     gaps = []
     result = None
     try:
-        result = Exporter(allow_incomplete=True, source=source).export(qid)
+        result = Exporter(allow_incomplete=True, source=source, choices=choices).export(qid)
     except Exception as exc:
         gaps.append({'kind': 'route_blocked', 'detail': str(exc), 'error_type': type(exc).__name__})
     # Never retain partial events from the failed Exporter instance.
@@ -128,10 +142,20 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
         gaps.extend(external_gaps)
         result['task_ui_texts'] = inspect_node_ui(nodes)
     refs = {flow_key(o) for o in walk([quest, nodes]) if o.get('FlowListName') and 'StateId' in o}
-    recap = [flow_key(o['Flow']) for row in handbooks.get(qid, []) for _, entries in embedded(row['BinData'])
-             if isinstance(entries, list) for o in entries if o.get('Flow', {}).get('FlowListName')]
+    recap_rows = handbooks.get(qid, [])
+    recap_arrays = [entries for row in recap_rows for _, entries in embedded(row['BinData'])
+                    if isinstance(entries, list)]
+    recap = [flow_key(o['Flow']) for entries in recap_arrays for o in entries
+             if o.get('Flow', {}).get('FlowListName')]
+    recap_source_unique = len(recap_rows) == 1 and len(recap_arrays) == 1
     if not recap:
         gaps.append({'kind': 'missing_recap_order'})
+    from .dependencies import dependency_report
+    flow_dependencies = dependency_report(quest, nodes, recap, order_source_unique=recap_source_unique)
+    for field, kind in [('recap_dependency_unresolved', 'recap_dependency_unresolved'),
+                        ('recap_dependency_conflicts', 'recap_dependency_conflict')]:
+        if flow_dependencies[field]:
+            gaps.append({'kind': kind, 'details': flow_dependencies[field]})
     resolution = result.get('source', {}).get('recap_reference_resolution', {})
     unplaced = resolution.get('unplaced_task_flows', [])
     entities = resolution.get('linked_entities', [])
@@ -151,40 +175,76 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
     backbone = None
     if not result['events']:
         from .recap_backbone import build_backbone
-        backbone = build_backbone(qid, handbooks.get(qid, []), states, source)
+        backbone = build_backbone(qid, handbooks.get(qid, []), states, source, choices=choices)
         if backbone:
             result['recap_backbone'] = backbone
             from .conditional_recap import project_conditional_recap
             selections = project_conditional_recap(backbone, nodes, source, choices)
+            if backbone.get('conditional_rejections'):
+                gaps.append({'kind': 'conditional_recap_rejected', 'details': backbone['conditional_rejections']})
             if selections:
                 gaps.append({'kind': 'conditional_recap_scenario', 'details': selections})
             from .task_extras import review_extras
             backbone['task_only_review'] = review_extras(quest, nodes, backbone, states, source)
+            from .phone_tip_anchors import phone_tip_insertions, phone_tip_diagnostics
+            backbone['phone_tip_insertions'] = phone_tip_insertions(nodes, backbone, result.get('external_content', []), source=source)
+            backbone['phone_tip_diagnostics'] = phone_tip_diagnostics(nodes, backbone, result.get('external_content', []), backbone['phone_tip_insertions'])
+            if backbone['phone_tip_insertions']:
+                gaps.append({'kind':'phone_tip_anchored', 'messages':[p['message_id'] for p in backbone['phone_tip_insertions']]})
             gaps.append({'kind': 'recap_backbone_only', 'blocked_segments': backbone['blocked_segments']})
     records = []
+    from .parallel_guidance import guidance_evidence
+    guidance = guidance_evidence(nodes, [e for entries in recap_arrays for e in entries])
+    separated_events = [e for e in result['events'] if e.get('state_key') in guidance]
+    if separated_events:
+        result['events'] = [e for e in result['events'] if e.get('state_key') not in guidance]
+        result['parallel_guidance'] = [
+            {'state_key':key, 'proof':proof,
+             'events':[e for e in separated_events if e.get('state_key') == key]}
+            for key, proof in guidance.items() if any(e.get('state_key') == key for e in separated_events)]
+        gaps.append({'kind':'parallel_guidance_separated', 'state_keys':list(guidance)})
     inventories = {}
     speakers = SpeakerResolver()
     controls = []
     selected = {(e.get('state_key'), e.get('text_id')) for e in result['events'] if e.get('text_id')}
+    selected |= {(e.get('state_key'),e.get('text_id')) for e in separated_events if e.get('text_id')}
+    for gi, section in enumerate(result.get('parallel_guidance', [])):
+        for ei, event in enumerate(section['events']):
+            records.append({'category':'candidate_branch',
+                'pointer':f'/parallel_guidance/{gi}/events/{ei}', 'text':event.get('text',''),
+                'reading_context':'parallel_guidance', 'order_verified':False})
     selected |= {(e['bubble']['state_key'], t.get('text_id')) for e in result.get('external_content', [])
                  if 'bubble' in e for t in e.get('texts', []) if t.get('text_id')}
     selected |= {(e['parallel_flow']['state_key'], t.get('text_id')) for e in result.get('external_content', [])
                  if 'parallel_flow' in e for t in e.get('texts', []) if t.get('text_id')}
     selected |= {(e['unplaced_flow']['state_key'], t.get('text_id')) for e in result.get('external_content', []) if 'unplaced_flow' in e for t in e.get('texts', []) if t.get('text_id')}
     if backbone:
+        for pi, insertion in enumerate(backbone.get('phone_tip_insertions', [])):
+            for ei, event in enumerate(insertion['events']):
+                records.append({'category':'confirmed_route',
+                    'pointer':f'/recap_backbone/phone_tip_insertions/{pi}/events/{ei}',
+                    'text':event.get('text',''), 'order_verified':False,
+                    'order_scope':'unique_recap_tip_phone_section_only'})
         for si, segment in enumerate(backbone['segments']):
             if segment['status'] == 'excluded_branch':
                 continue
             for ei, event in enumerate(segment['events']):
                 pointer = f'/recap_backbone/segments/{si}/events/{ei}'
-                records.append({'category': 'confirmed_route', 'pointer': pointer,
+                prefix = bool(segment.get('prefix_event_count'))
+                records.append({'category': 'unverified' if prefix else 'confirmed_route', 'pointer': pointer,
                                 'text': event.get('text', ''), 'order_verified': False,
-                                'order_scope': 'recap_segment_only', 'is_placeholder': event['kind'] == 'recap_gap'})
+                                'order_scope': 'recap_prefix_only' if prefix else 'recap_segment_only', 'is_placeholder': event['kind'] == 'recap_gap'})
                 if event.get('text_id'):
                     selected.add((event.get('state_key', segment['state_key']), event['text_id']))
                 for ci, caption in enumerate(event.get('media', {}).get('captions', [])):
-                    records.append({'category': 'confirmed_route', 'pointer': pointer+f'/media/captions/{ci}',
-                                    'text': caption['text'], 'order_verified': False})
+                    records.append({'category': 'unverified' if prefix else 'confirmed_route', 'pointer': pointer+f'/media/captions/{ci}',
+                                    'text': caption['text'], 'order_verified': False,
+                                    **({'order_scope': 'recap_prefix_only'} if prefix else {})})
+            for ai, attachment in enumerate(segment.get('unordered_attachments', [])):
+                for ti, value in enumerate(attachment['texts']):
+                    records.append({'category':'unverified', 'text':value['text'], 'order_verified':False,
+                        'order_scope':'unordered_async_panel',
+                        'pointer':f'/recap_backbone/segments/{si}/unordered_attachments/{ai}/texts/{ti}'})
             for tid in segment.get('missing_text_ids', []):
                 result['validation']['missing_text_ids'].append(tid)
             if segment['status'] == 'blocked':
@@ -241,7 +301,11 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
         performances = [o for o in walk(actions) if o.get('Name') == 'FlowDefineNpcGroupPerform']
         if performances and all(npc_perform_shape(o) for o in performances):
             unknown = [a for a in unknown if a['name'] != 'FlowDefineNpcGroupPerform']
-        from .reading_effects import FLOW_LOCK_EFFECTS, flow_lock_shape
+        from .reading_effects import FLOW_LOCK_EFFECTS, flow_lock_shape, ENTITY_LOCK_EFFECTS, entity_lock_shape
+        for entity_lock_name in ENTITY_LOCK_EFFECTS:
+            entity_locks = [o for o in walk(actions) if o.get('Name') == entity_lock_name]
+            if entity_locks and all(entity_lock_shape(o) for o in entity_locks):
+                unknown = [o for o in unknown if o['name'] != entity_lock_name]
         for lock_name in FLOW_LOCK_EFFECTS:
             lock_actions = [o for o in walk(actions) if o.get('Name') == lock_name]
             if lock_actions and all(flow_lock_shape(o) for o in lock_actions):
@@ -263,6 +327,126 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
         records.extend(r for r in inventories[key] if (key, r['text_id']) not in selected)
         if channels:
             gaps.append({'kind': 'flow_external_calls_require_review', 'state_key': key, 'calls': channels})
+    # Explicit ownership permits candidate inventory, not a new ordered flow reference.
+    from .declared_entity_content import declared_entity_content
+    child_links, child_gaps = declared_entity_content(quest, source)
+    child_keys = sorted({link['state_key'] for link in child_links} - refs - set(recap))
+    child_occurrences = 0
+    for key in child_keys:
+        if key not in states:
+            child_gaps.append({'state_key': key, 'reason': 'missing_candidate_flow'})
+            continue
+        try:
+            actions, _ = flow_actions(states[key]['BinData'])
+        except (ValueError, KeyError, TypeError) as exc:
+            child_gaps.append({'state_key': key, 'reason': 'candidate_decode_failed', 'detail': str(exc)})
+            continue
+        items = inventory(actions, key, 'candidate_branch', speakers=speakers)
+        for item in items:
+            item.update(reading_context='declared_entity_candidate', mandatory_verified=False)
+        added = [r for r in items if (key, r['text_id']) not in selected]
+        records.extend(added)
+        child_occurrences += len(added)
+        # Do not fold independently triggered candidates into recap duplicates.
+    if child_occurrences:
+        gaps.append({'kind': 'declared_entity_content', 'text_occurrences': child_occurrences,
+                     'state_keys': child_keys})
+    if child_gaps:
+        gaps.append({'kind': 'declared_entity_unresolved', 'details': child_gaps})
+    from .declared_levelplay import declared_levelplays
+    play_links, play_gaps, play_audits = declared_levelplays(quest, nodes,
+        [e for entries in recap_arrays for e in entries], source)
+    from .dungeon_candidates import dungeon_candidates
+    dungeon_links, dungeon_gaps, dungeon_audits = dungeon_candidates(nodes, source)
+    play_links.extend(dungeon_links)
+    play_gaps.extend(dungeon_gaps)
+    known_play_ids = {audit['levelplay_id'] for audit in play_audits}
+    play_audits.extend(audit for audit in dungeon_audits if audit['levelplay_id'] not in known_play_ids)
+    from .dungeon_return_text import dungeon_return_sections
+    result['dungeon_return_sections'] = dungeon_return_sections(result, nodes, dungeon_audits, source)
+    if result['dungeon_return_sections']:
+        gaps.append({'kind':'dungeon_return_reading', 'sections':len(result['dungeon_return_sections'])})
+    for si, section in enumerate(result['dungeon_return_sections']):
+        for ei, event in enumerate(section['events']):
+            records.append({'category':'confirmed_route' if section.get('placement')=='body' else 'candidate_branch', 'pointer':f'/dungeon_return_sections/{si}/events/{ei}',
+                            'text':event.get('text',''), 'order_verified':False,
+                            'order_scope':'dungeon_completion_recap_tip'})
+    return_keys = {key for section in result['dungeon_return_sections'] for key in section['state_keys']}
+    play_keys = sorted({link['state_key'] for link in play_links} - refs - set(recap) - set(child_keys) - return_keys)
+    from .dungeon_trigger_review import trigger_review
+    dungeon_triggers = trigger_review(dungeon_audits, dungeon_links, set(play_keys))
+    from .entity_trigger_content import entity_trigger_content
+    trigger_links, trigger_gaps = entity_trigger_content(quest, source)
+    trigger_keys = sorted({link['state_key'] for link in trigger_links} - refs - set(recap) - set(child_keys) - set(play_keys))
+    trigger_occurrences = 0
+    for key in trigger_keys:
+        if key not in states:
+            trigger_gaps.append({'state_key': key, 'reason': 'missing_candidate_flow'})
+            continue
+        try:
+            actions, _ = flow_actions(states[key]['BinData'])
+        except (ValueError, KeyError, TypeError) as exc:
+            trigger_gaps.append({'state_key': key, 'reason': 'candidate_decode_failed', 'detail': str(exc)})
+            continue
+        items = inventory(actions, key, 'candidate_branch', speakers=speakers)
+        for item in items:
+            item.update(reading_context='entity_trigger_candidate', mandatory_verified=False,
+                        ownership_link_indices=[i for i, link in enumerate(trigger_links) if link['state_key'] == key])
+        added = [r for r in items if (key, r['text_id']) not in selected]
+        records.extend(added)
+        trigger_occurrences += len(added)
+    if trigger_occurrences:
+        gaps.append({'kind': 'entity_trigger_content', 'text_occurrences': trigger_occurrences,
+                     'state_keys': trigger_keys})
+    if trigger_gaps:
+        gaps.append({'kind': 'entity_trigger_unresolved', 'details': trigger_gaps})
+    play_occurrences = 0
+    for key in play_keys:
+        if key not in states:
+            play_gaps.append({'state_key': key, 'reason': 'missing_candidate_flow'})
+            continue
+        try:
+            actions, fields = flow_actions(states[key]['BinData'])
+        except (ValueError, KeyError, TypeError) as exc:
+            play_gaps.append({'state_key': key, 'reason': 'candidate_decode_failed', 'detail': str(exc)})
+            continue
+        # A candidate is a static inventory, not execution of its action list.
+        items = inventory(actions, key, 'candidate_branch', speakers=speakers)
+        for item in items:
+            item.update(reading_context='declared_levelplay_candidate', mandatory_verified=False)
+        added = [r for r in items if (key, r['text_id']) not in selected]
+        records.extend(added)
+        play_occurrences += len(added)
+    if play_occurrences:
+        gaps.append({'kind': 'declared_levelplay_content', 'text_occurrences': play_occurrences,
+                     'state_keys': play_keys})
+    if play_gaps:
+        gaps.append({'kind': 'declared_levelplay_unresolved', 'details': play_gaps})
+    from .levelplay_order import local_sequences
+    play_sequences = local_sequences(play_audits, play_links, states, source, set(play_keys), choices)
+    from .levelplay_completion import completion_evidence
+    from .node_order_evidence import node_order_audit
+    for fragment in play_sequences:
+        audit = next(a for a in play_audits if a['levelplay_id'] == fragment['levelplay_id'])
+        fragment['completion_dependency'] = completion_evidence(audit, fragment['node_id'], nodes,
+            [e for entries in recap_arrays for e in entries])
+        fragment['node_execution_evidence'] = node_order_audit(audit, fragment, nodes,
+            [e for entries in recap_arrays for e in entries], quest['Id'], source)
+    local_ordered = [s for s in play_sequences if s['status'] == 'local_order_only']
+    if local_ordered:
+        gaps.append({'kind':'levelplay_local_order_only','fragments':len(local_ordered)})
+    local_caption_count = 0
+    for fi, fragment in enumerate(play_sequences):
+        if fragment['status'] != 'local_order_only':
+            continue
+        for si, segment in enumerate(fragment['segments']):
+            for ei, event in enumerate(segment['events']):
+                for ci, caption in enumerate(event.get('media', {}).get('captions', [])):
+                    records.append({'category':'candidate_branch',
+                        'pointer':f'/batch_coverage/levelplay_local_sequences/{fi}/segments/{si}/events/{ei}/media/captions/{ci}',
+                        'text':caption['text'], 'text_id':caption['text_id'], 'missing':caption['missing'],
+                        'order_verified':False,'order_scope':'local_configured_caption_track_only'})
+                    local_caption_count += 1
     if backbone:
         from .recap_backbone import duplicate_text_flows
         excluded_keys = {s['state_key'] for s in backbone['segments'] if s['status'] == 'excluded_branch'}
@@ -290,9 +474,14 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
                             'text': item.get('text', render_text(item.get('raw_text') or '')),
                             'order_verified': False})
         for j, event in enumerate(entry.get('phone', {}).get('events', [])):
+            anchor_index = next((pi for pi, p in enumerate((backbone or {}).get('phone_tip_insertions', []))
+                                 if p['external_index']==i), None)
             records.append({'category': 'unverified', 'pointer': f'/external_content/{i}/phone/events/{j}',
                             'text': event.get('text', ''), 'order_verified': False,
+                            **({'text_duplicate_of':f'/recap_backbone/phone_tip_insertions/{anchor_index}/events/{j}',
+                                'counted_elsewhere':True} if anchor_index is not None else {}),
                             'local_phone_order_verified': True})
+        result['validation']['missing_text_ids'].extend(entry.get('phone', {}).get('missing_text_ids', []))
         gaps.append({'kind': 'external_timing_or_content', 'pointer': f'/external_content/{i}',
                      'status': entry.get('status')})
     for i, item in enumerate(result.get('task_ui_texts', [])):
@@ -304,13 +493,25 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
         gaps.append({'kind': 'missing_text', 'text_ids': missing})
     gaps.extend({'kind': 'parser_unverified', 'detail': item} for item in result['validation'].get('unverified_content', []))
     gaps.append({'kind': 'runtime_and_cross_task_order_not_simulated'})
-    counts = {c: sum(r['category'] == c and bool(r.get('text')) and not r.get('is_placeholder') for r in records) for c in CATEGORIES}
+    counts = {c: sum(r['category'] == c and bool(r.get('text')) and not r.get('is_placeholder') and not r.get('counted_elsewhere') for r in records) for c in CATEGORIES}
     source_counts = {'selected_events': len(result['events']),
+                     'dungeon_return_body_events': sum(len(s['events']) for s in result['dungeon_return_sections'] if s.get('placement')=='body'),
+                     'dungeon_return_supplement_events': sum(len(s['events']) for s in result['dungeon_return_sections'] if s.get('placement')!='body'),
                      'recap_parsed_segments': backbone['parsed_segments'] if backbone else 0,
                      'recap_blocked_segments': backbone['blocked_segments'] if backbone else 0,
+                     'recap_prefix_segments': sum(bool(s.get('prefix_event_count')) for s in backbone['segments']) if backbone else 0,
+                     'recap_prefix_events': sum(s.get('prefix_event_count',0) for s in backbone['segments']) if backbone else 0,
+                     'recap_unordered_panel_texts': sum(len(a['texts']) for s in backbone['segments'] for a in s.get('unordered_attachments',[])) if backbone else 0,
                      'recap_events': sum(len(s['events']) for s in backbone['segments'] if s['status'] == 'parsed') if backbone else 0,
                      'movie_caption_texts': sum(len(e.get('media', {}).get('captions', [])) for e in result['events']),
                      'static_flow_occurrences': sum('origin' in r for r in records),
+                     'declared_entity_candidate_occurrences': child_occurrences,
+                     'entity_trigger_candidate_occurrences': trigger_occurrences,
+                     'phone_tip_sections': len((backbone or {}).get('phone_tip_insertions', [])),
+                     'phone_tip_events': sum(len(p['events']) for p in (backbone or {}).get('phone_tip_insertions', [])),
+                     'declared_levelplay_candidate_occurrences': play_occurrences,
+                     'levelplay_local_ordered_fragments': len(local_ordered),
+                     'levelplay_local_caption_texts': local_caption_count,
                      'external_calls_decoded': len(result.get('external_content', [])),
                      'phone_events': sum(len(e.get('phone', {}).get('events', [])) for e in result.get('external_content', [])),
                      'gameplay_texts': sum(len(e.get('texts', [])) for e in result.get('external_content', []) if 'gameplay' in e),
@@ -324,11 +525,18 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
         'status': 'recap_draft' if backbone else 'partial_order' if unplaced else ('selected_route' if result['events'] else 'inventory_only'),
         'counts': counts, 'source_counts': source_counts,
         'count_unit': 'text occurrences, not unique lines or completeness percentage',
-        'order': {'selected_route_verified': bool(result['events']) and not unplaced, 'recap_segment_order_verified': bool(result['events']) or bool(backbone), 'recap_exact_references': bool(recap) and refs == set(recap),
+        'order': {'selected_route_verified': bool(result['events']) and not unplaced
+                  and not flow_dependencies['recap_dependency_conflicts']
+                  and not flow_dependencies['recap_dependency_unresolved'], 'recap_segment_order_verified': bool(result['events']) or bool(backbone), 'recap_exact_references': bool(recap) and refs == set(recap),
                   'recap_references_reconciled': bool(entities or links or bubbles or insertions or parallels),
-                  'dependencies': resolution.get('dependencies', {}),
+                  'dependencies': flow_dependencies,
                   'runtime_verified': False, 'cross_task_verified': False},
         'gaps': gaps, 'records': records, 'non_dialogue_controls': controls,
+        'declared_entity_links': child_links,
+        'entity_trigger_links': trigger_links,
+        'declared_levelplay_links': play_links, 'declared_levelplay_audit': play_audits,
+        'dungeon_trigger_review': dungeon_triggers,
+        'levelplay_local_sequences': play_sequences,
         'missing_text_diagnostics': diagnose_missing(records, refs, set(recap), source.rows if source is not None else rows), 'observed_external_calls': channels,
         'task_conditions': [{'node_id': n['Id'], 'condition': n.get('Condition'),
                              'exit_condition': n.get('ExitCondition'), 'failed_condition': n.get('FailedCondition')}
@@ -339,6 +547,7 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
 
 
 def export_reading_batch():
+    from .remaining_blockers import collect_blockers, write_report as write_blocker_report
     root, strict = export_mainline()
     root = root / '覆盖阅读版'
     root.mkdir()
@@ -351,12 +560,14 @@ def export_reading_batch():
     states = {r['StateKey']: r for r in source.rows('db_flowState.db', 'flowstate')}
     quests = {q['Id']: q for r in source.rows('db_QuestData.db', 'questdata') for _, q in embedded(r['BinData']) if isinstance(q, dict)}
     report = []
+    blocker_cases = []
     for i, original in enumerate(strict['records'], 1):
         qid = original['quest_id']
         result = analyze(quests[qid], nodes[qid], states, handbooks, source, original)
         result['classification'] = {k: original[k] for k in ('type_id', 'chapter', 'quest_tree_memberships')}
         files = write_result(result, root / f'Type{original["type_id"]}' / original['chapter']['folder'], quiet=True)
-        coverage = {k: v for k, v in result['batch_coverage'].items() if k not in {'records', 'observed_external_calls', 'non_dialogue_controls'}}
+        blocker_cases.extend(collect_blockers(result, [p.relative_to(root).as_posix() for p in files]))
+        coverage = {k: v for k, v in result['batch_coverage'].items() if k not in {'records', 'observed_external_calls', 'non_dialogue_controls', 'declared_entity_links', 'entity_trigger_links', 'declared_levelplay_links', 'declared_levelplay_audit', 'levelplay_local_sequences', 'dungeon_trigger_review'}}
         report.append({'quest_id': qid, 'title': result['title'], 'type_id': original['type_id'], **coverage,
                        'files': [p.relative_to(root).as_posix() for p in files]})
         if i % 10 == 0:
@@ -382,5 +593,6 @@ def export_reading_batch():
                  f'[TXT](<{r["files"][1]}>) / [JSON](<{r["files"][0]}>)']
         lines.append('| '+' | '.join(cells)+' |')
     (root / '覆盖报告.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
+    write_blocker_report(blocker_cases, root)
     print(root, summary, flush=True)
     return root, report

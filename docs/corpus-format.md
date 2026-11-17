@@ -104,15 +104,15 @@ TXT仅呈现可读剧情、选择、小游戏正文及简短缺失/未核验说�
 
 ## 手机解码纠正与最新批次
 
-见[手机36009核查](phone36009-decoding.md)。字段1为联系人ID，字段9非联系人；无台词Option容器不再误报缺文。PhoneMessage拆分系统提示与图片附件，图片引用不等于图像内容已提取。最新批次20261117_010808_314910，72测试通过，11配置路线；missing_text任务降至7。旧时间戳产物是历史状态。
+见[手机36009核查](research/phone36009-decoding.md)。字段1为联系人ID，字段9非联系人；无台词Option容器不再误报缺文。PhoneMessage拆分系统提示与图片附件，图片引用不等于图像内容已提取。最新批次20261117_010808_314910，72测试通过，11配置路线；missing_text任务降至7。旧时间戳产物是历史状态。
 
 ## 七任务文本引用核查更新（2026-11-17）
 
-以[缺失引用核查](missing-text-validation.md)为当前接手点。NoTextItem/QTE的TidTalk按控制引用处理，JSON保留non_dialogue_controls及原始文本和动作；TXT不输出内部演出占位为台词。QTE成功/失败不按普通选择执行，批量单列qte_runtime_unverified。普通Talk的缺失不静默过滤。76项测试通过；最新批次20261117_011055_476513，135对文件核对通过，missing_text任务剩《灼我以烈阳》1个。资源缺失与失效回顾引用尚不可区分，下一步查4/5与4/1的归属/版本证据。
+以[缺失引用核查](research/missing-text-validation.md)为当前接手点。NoTextItem/QTE的TidTalk按控制引用处理，JSON保留non_dialogue_controls及原始文本和动作；TXT不输出内部演出占位为台词。QTE成功/失败不按普通选择执行，批量单列qte_runtime_unverified。普通Talk的缺失不静默过滤。76项测试通过；最新批次20261117_011055_476513，135对文件核对通过，missing_text任务剩《灼我以烈阳》1个。资源缺失与失效回顾引用尚不可区分，下一步查4/5与4/1的归属/版本证据。
 
 ## 灼我以烈阳引用核查补充（2026-11-17）
 
-见[本轮核查](scorching-sun-reference-validation.md)：缺失键有共用语音候选，但无字幕替代证据，保留missing_text。JSON新增missing_text_diagnostics，包含任务/回顾归属与语音候选，replacement_applied为false；候选不进入阅读正文。79项测试通过，批次20261117_011321_141069核对135对文件，统计不变。该条目待新证据，后续可推进QTE路线验证。
+见[本轮核查](research/scorching-sun-reference-validation.md)：缺失键有共用语音候选，但无字幕替代证据，保留missing_text。JSON新增missing_text_diagnostics，包含任务/回顾归属与语音候选，replacement_applied为false；候选不进入阅读正文。79项测试通过，批次20261117_011321_141069核对135对文件，统计不变。该条目待新证据，后续可推进QTE路线验证。
 
 ## 阅读覆盖与验收更新（2026-11-17）
 
@@ -120,11 +120,11 @@ TXT仅呈现可读剧情、选择、小游戏正文及简短缺失/未核验说�
 
 ## 梦枢实体交互更新（2026-11-17）
 
-[本轮证据与阅读检查](mengshu-entity-validation.md)：任务声明子实体及直属节点唤醒、实体单Flow交互可解释回顾额外引用，保存linked_entities与reading_context，不证明必经/实时顺序。168000003新增50事件草稿，字幕缺口保持。88测试，批次20261117_011935_649075有序12、候选123，135对核对通过，严格标准不变。下一步查M0391已有字幕配置并做本章衔接验证。
+[本轮证据与阅读检查](research/mengshu-entity-validation.md)：任务声明子实体及直属节点唤醒、实体单Flow交互可解释回顾额外引用，保存linked_entities与reading_context，不证明必经/实时顺序。168000003新增50事件草稿，字幕缺口保持。88测试，批次20261117_011935_649075有序12、候选123，135对核对通过，严格标准不变。下一步查M0391已有字幕配置并做本章衔接验证。
 
 ## 配置字幕更新（2026-11-17）
 
-见[M0391字幕核查](m0391-caption-validation.md)。媒体事件新增media.captions与caption_order_evidence，字段4关联正文，四组候选数值一致排序仅作为相对顺序推断；无语言/单位/角色猜测。M0391已补10条，C0027已补18条，替代旧“字幕尚未解码”的进度描述。92测试、批次20261117_012201_323353核对135对产物；有序12、候选123不变。阅读检查仍保留实际播放及额外画面文字边界。
+见[M0391字幕核查](research/m0391-caption-validation.md)。媒体事件新增media.captions与caption_order_evidence，字段4关联正文，四组候选数值一致排序仅作为相对顺序推断；无语言/单位/角色猜测。M0391已补10条，C0027已补18条，替代旧“字幕尚未解码”的进度描述。92测试、批次20261117_012201_323353核对135对产物；有序12、候选123不变。阅读检查仍保留实际播放及额外画面文字边界。
 
 ## 后日谈部分有序规则（2026-11-17）
 
@@ -132,7 +132,7 @@ TXT仅呈现可读剧情、选择、小游戏正文及简短缺失/未核验说�
 
 批量 `order.selected_route_verified=false`、`recap_segment_order_verified=true`，缺口为 `normal_task_flows_unplaced`。正文开头与每个补充段明确说明顺序未补齐；不得将这些正常正文当作失败分支、任意交互或重复材料删除。`reading_acceptance.status=partial_order`、`accepted=false`；PreQuest只证明任务前置关系，不自动证明连续播放或章节验收通过。
 
-当前135任务：12有序草稿、1部分有序、122候选；95测试通过。完整证据、产物和后续步骤见[后日谈核查](mengshu-epilogue-validation.md)。
+当前135任务：12有序草稿、1部分有序、122候选；95测试通过。完整证据、产物和后续步骤见[后日谈核查](research/mengshu-epilogue-validation.md)。
 
 ## 批量静态记录的姓名和类型（2026-11-17）
 
@@ -140,7 +140,7 @@ TXT仅呈现可读剧情、选择、小游戏正文及简短缺失/未核验说�
 
 普通对白的 `who_id/speaker_id` 只来自当前TidTalk对象；`source_who_id` 保存当前原始值，`inherited_who_id` 仅保存递归祖先信息供审计，不能用于归属。`name_source` 保存配置姓名读取依据，`identity_status` 区分display_name_only和unresolved；不从静态顺序推测演员身份变化。未确定显示问号。
 
-普通选项 `kind=choice`、`display_name=漂泊者`、`who_id=null`、`selected=false`，只代表可选文字存在；TXT显示漂泊者【选择】。居中文字无人物归属；QTE结果和系统选项不等于已发生的玩家对白。详见[核查报告](batch-speaker-validation.md)。
+普通选项 `kind=choice`、`display_name=漂泊者`、`who_id=null`、`selected=false`，只代表可选文字存在；TXT显示漂泊者【选择】。居中文字无人物归属；QTE结果和系统选项不等于已发生的玩家对白。详见[核查报告](research/batch-speaker-validation.md)。
 
 ## 回顾主干草稿（2026-11-17）
 
@@ -148,20 +148,20 @@ TXT仅呈现可读剧情、选择、小游戏正文及简短缺失/未核验说�
 
 逐段使用独立解析状态，段内失败不保留半条路线；`recap_gap` 位于原段落位置，缺口占位不计正文数。主干的覆盖记录使用 `order_scope=recap_segment_only`，即使列在confirmed_route分类，也不证明整个任务实际播放顺序；全任务 `selected_route_verified=false`、`reading_acceptance.accepted=false`。TXT先展示主干，再展示尚未归位/未选择材料，不再把主干选择抽离对白。
 
-`duplicate_text_flows` 只记录非回顾来源与现有材料完整文字序列（含文本键、类型、说话人）一致的情况。`text_duplicate_of` 让TXT省略重复展示，JSON保留来源；不表示动作等价，不折叠回顾中重复出现的位置。当前批次60个回顾草稿；全文仍需检查缺段、未定位流程及运行时条件。详见[回顾主干验证](echoes-recap-validation.md)。
+`duplicate_text_flows` 只记录非回顾来源与现有材料完整文字序列（含文本键、类型、说话人）一致的情况。`text_duplicate_of` 让TXT省略重复展示，JSON保留来源；不表示动作等价，不折叠回顾中重复出现的位置。当前批次60个回顾草稿；全文仍需检查缺段、未定位流程及运行时条件。详见[回顾主干验证](research/echoes-recap-validation.md)。
 
 ## 七缺口复核更新（2026-11-17）
 
-最新[复核报告](echoes-seven-gaps-validation.md)：目标任务90/92段、986事件；剩余2段是缺失流程。PlaySequenceData扩展了镜头重置和受限实体状态回调形状，仍输出unparsed_content，保留asset_content_decoded=false、frame_events_executed=false和源参数。5/16图标动作支持不改变姓名或分支；这些修改不构成演出字幕完整性证明。106测试、135对最终批量核对通过。
+最新[复核报告](research/echoes-seven-gaps-validation.md)：目标任务90/92段、986事件；剩余2段是缺失流程。PlaySequenceData扩展了镜头重置和受限实体状态回调形状，仍输出unparsed_content，保留asset_content_decoded=false、frame_events_executed=false和源参数。5/16图标动作支持不改变姓名或分支；这些修改不构成演出字幕完整性证明。106测试、135对最终批量核对通过。
 
 ## 演出来源状态（2026-11-17）
 
-PlaySequenceData的source_resolution记录完整asset_path、精确videodata匹配和properties_status；属性存在也不等于已解码。视频sound_sources记录音频事件及哈希，text_decoded=false，不能当字幕。TXT区分演出与信息面板；无字幕行不证明没有对白。详见[来源核查](echoes-performance-sources.md)。
+PlaySequenceData的source_resolution记录完整asset_path、精确videodata匹配和properties_status；属性存在也不等于已解码。视频sound_sources记录音频事件及哈希，text_decoded=false，不能当字幕。TXT区分演出与信息面板；无字幕行不证明没有对白。详见[来源核查](research/echoes-performance-sources.md)。
 
 ## InformationView（2026-11-17核验）
 
-OpenSystemBoard.InformationView的BoardId精确关联db_infodisplay.infodisplay.Id；BinData字段3/4分别为标题和正文文本键。information_board事件保存两条texts、purpose、source_field、text_id、raw_text及源行哈希，组合显示标题和正文。任务级调用保持外部材料位置；面板中的引用对白不自动归属人物。见[资料核查](echoes-information-view.md)。
+OpenSystemBoard.InformationView的BoardId精确关联db_infodisplay.infodisplay.Id；BinData字段3/4分别为标题和正文文本键。information_board事件保存两条texts、purpose、source_field、text_id、raw_text及源行哈希，组合显示标题和正文。任务级调用保持外部材料位置；面板中的引用对白不自动归属人物。见[资料核查](research/echoes-information-view.md)。
 
 ## 任务额外流程证据
 
-recap_backbone.task_only_review保存额外流程源节点、祖先、性别/异步证据和placement_verified。仅受限同步转场可用task_placement标记插入事件；空文本只留text_evidence，visible_event_count=0，不生成缺失或空白台词。来源分类不能当成确定的实际执行路线。详见[额外流程规则](echoes-task-extras.md)。
+recap_backbone.task_only_review保存额外流程源节点、祖先、性别/异步证据和placement_verified。仅受限同步转场可用task_placement标记插入事件；空文本只留text_evidence，visible_event_count=0，不生成缺失或空白台词。来源分类不能当成确定的实际执行路线。详见[额外流程规则](research/echoes-task-extras.md)。

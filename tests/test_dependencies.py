@@ -33,6 +33,24 @@ class DependenciesTests(unittest.TestCase):
         d = dependency_report({}, [node], ['f_6_1', 'f_7_1'])
         self.assertEqual(len(d['recap_dependency_conflicts']), 1)
 
+    def test_ambiguous_recap_source_cannot_establish_dependency_order(self):
+        node = {'Id': 1, 'Type': 'ChildQuest', 'ParentNodeId': 0,
+                'Condition': {'Type': 'PlayFlow', 'Flow': self.inner},
+                'FinishActions': [{'Name': 'PlayFlow', 'Params': self.outer}]}
+        for ordered in (['f_6_1', 'f_7_1'], ['f_7_1', 'f_6_1']):
+            d = dependency_report({}, [node], ordered, order_source_unique=False)
+            self.assertFalse(d['recap_dependency_conflicts'])
+            self.assertFalse(d['recap_dependency_consistent'])
+            self.assertEqual(d['recap_dependency_unresolved'][0]['reason'], 'ambiguous_recap_order_source')
+
+    def test_real_conflict_is_visible_without_reordering_recap(self):
+        from wuwa_story.recap_backbone import export_task_backbone
+        result = export_task_backbone(125000125)
+        self.assertFalse(result['batch_coverage']['order']['selected_route_verified'])
+        conflicts = result['batch_coverage']['order']['dependencies']['recap_dependency_conflicts']
+        self.assertTrue(any(c['node_id'] == 117 for c in conflicts))
+        self.assertIn('【顺序待核验】', reading_text(result))
+
     def test_changed_pattern_and_shared_call_not_separated(self):
         for mode in ('center', 'count', 'async', 'shared', 'failure'):
             ns = deepcopy(self.nodes); quest = {}

@@ -7,6 +7,7 @@ from .branch_recap import annotate_branch_entries
 from .variables import VariableEnvironment, set_var_shape, compare_var_shape
 from .export_task import Exporter, walk, flow_key
 from .rendering import render_result
+from .conditional_guard import conditional_variable_guard
 
 
 def project_conditional_recap(backbone, nodes, source, choices=None):
@@ -69,6 +70,11 @@ def project_conditional_recap(backbone, nodes, source, choices=None):
             continue
         if any(o['Actions'][0] not in assignments for o in options):
             continue
+        guard = conditional_variable_guard(action_tree, owners[0], selector, nodes, ref)
+        if not guard['allowed']:
+            backbone.setdefault('conditional_rejections', []).append({
+                'selector_id': sid, 'writer_entry_index': wi, 'guard': guard})
+            continue
         env = VariableEnvironment(f"quest:{backbone['quest_id']}:selector:{sid}")
         parser = Exporter(choices=choices, source=source, allow_incomplete=True, variable_environment=env)
         parser.state_key = writer['state_key']
@@ -103,7 +109,7 @@ def project_conditional_recap(backbone, nodes, source, choices=None):
                        'condition_results': values, 'conditions': conditions,
                        'variable_snapshot': env.snapshot(), 'annotations': tagged,
                        'excluded_entry_indices': excluded,
-                       'runtime_route_verified': False,
+                       'runtime_route_verified': False, 'variable_guard': guard,
                        'assumption': 'Selected option value remains unchanged until this selector; recap configuration scenario only'})
     if proofs:
         backbone['conditional_selections'] = proofs

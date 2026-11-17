@@ -49,3 +49,32 @@ class ConditionalRecapTests(unittest.TestCase):
             right_text = segments[12].get('unselected_original', segments[12])['events'][0]['text']
             if index == 0: self.assertNotIn(right_text, main)
             else: self.assertIn(right_text, main)
+
+
+    def test_known_overwrite_and_async_writer_reject_projection_without_losing_source(self):
+        from copy import deepcopy
+        from wuwa_story.batch import Snapshot
+        from wuwa_story.database import embedded
+        from wuwa_story.export_task import walk
+        from wuwa_story.recap_backbone import build_backbone
+        from wuwa_story.conditional_recap import project_conditional_recap
+        source = Snapshot(); qid = 147000002
+        nodes = [embedded(r['BinData'])[0][1] for r in source.rows('db_QuestNodeData.db', 'questnodedata')
+                 if r['Key'].startswith(str(qid) + '_')]
+        books = [r for r in source.rows('db_PlotHandBook.db', 'plothandbookconfig') if r['QuestId'] == qid]
+        states = {r['StateKey']: r for r in source.rows('db_flowState.db', 'flowstate')}
+        original = build_backbone(qid, books, states, source)
+        for mutation in ('overwrite', 'async'):
+            b = deepcopy(original); ns = deepcopy(nodes)
+            writer = next(s for s in b['segments'] if s['entry_index'] == 6)
+            if mutation == 'overwrite':
+                assignment = deepcopy(next(o for o in walk(writer['source_actions']) if o.get('Name') == 'SetVar'))
+                assignment['Params']['VarRight']['Value'] = True
+                next(n for n in ns if n['Id'] == 22)['FinishActions'].append(assignment)
+            else:
+                next(a for a in writer['source_actions'] if a['Name'] == 'ShowTalk')['Async'] = True
+            before = deepcopy(b['segments'])
+            self.assertEqual(project_conditional_recap(b, ns, source), [])
+            self.assertEqual(b['segments'], before)
+            self.assertFalse(b['conditional_rejections'][0]['guard']['allowed'])
+            self.assertFalse(any(s['status'] == 'excluded_branch' for s in b['segments']))

@@ -23,6 +23,11 @@ class SpeakerResolver:
                     continue
                 raw = lang[index]
                 name = texts.get(raw, raw)
+                if raw in texts and name == '':
+                    result = {'name': '', 'source': source, 'language_index': index,
+                              'raw_name': raw, 'name_text_id': raw,
+                              'configured_empty_name': True}
+                    break
                 if name and not name.startswith('Speaker_'):
                     result = {'name': name, 'source': source, 'language_index': index,
                               'raw_name': raw}
@@ -54,10 +59,11 @@ class SpeakerResolver:
 
     def identify(self, sid):
         record = self.records.get(sid, {'name': '', 'source': 'unresolved'})
-        name = record['name'] or ('旁白' if sid is None else '未知说话人')
+        empty_name = record.get('configured_empty_name') is True
+        name = '无署名' if empty_name else record['name'] or ('旁白' if sid is None else '未知说话人')
         result = {'speaker_id': sid, 'display_name': name, 'name_source': record,
                   'resolved_speaker_id': None, 'resolved_name': None,
-                  'identity_status': 'unresolved' if anonymous(name) or not record['name'] else 'display_name_only'}
+                  'identity_status': 'configured_empty_name' if empty_name else 'unresolved' if anonymous(name) or not record['name'] else 'display_name_only'}
         if anonymous(name):
             candidates = [a for a in self.actors if a['talker_id'] == sid]
             # A shared anonymous label must never select an arbitrary actor.

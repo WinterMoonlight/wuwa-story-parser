@@ -1,0 +1,84 @@
+{
+  "review_id": "reading-acceptance-001",
+  "snapshot": "3.8.11",
+  "batch": "20261117_130102_488024",
+  "selection": {
+    "center": 139000026,
+    "before": 139000025,
+    "after": 139000027,
+    "basis": "PreQuest chain and chapter placement"
+  },
+  "tasks": [
+    {
+      "quest_id": 139000025,
+      "title": "万象新声·上",
+      "verdict": "readable_with_gaps",
+      "summary": "觉醒、结识秧秧与炽霞、遭遇战斗及白芷检查的主干可连续阅读。",
+      "limitations": [
+        "开场Start及演出额外字幕尚未核验。",
+        "部分引导文字保留富文本标签、动态参数或重复平台记录。"
+      ],
+      "source_json_sha256": "35e9f795f8f799d404a810e264af50ed55c535c2361be3dd39a12449d4cde4a0",
+      "source_txt_sha256": "9e441d19285022422c3db9066a7aebe212eb6f164f2c4a614b0e98fe7c8be4a0",
+      "checks": {
+        "text_and_duplicates": "reviewed",
+        "choices": "reviewed_against_decisions_and_jump_targets",
+        "speaker_and_markup": "limitations_recorded",
+        "order": "reviewed_with_media_gaps"
+      },
+      "evidence_document": "docs/research/reading-acceptance-001.md"
+    },
+    {
+      "quest_id": 139000026,
+      "title": "万象新声·下",
+      "verdict": "readable_with_gaps",
+      "summary": "已核查吸收声骸尝试至前往今州的主干，以及选项与后续对白。",
+      "limitations": [
+        "结尾C3jinzhoutexie/M01012_Nvzhu的额外对白或字幕尚未核验。",
+        "附录包含未选择回应与平台界面文字，阅读位置仍需区分。"
+      ],
+      "source_json_sha256": "07c17900b72b72ae8677b114ada69796ab52ad000defbc5356cb792c1799113e",
+      "source_txt_sha256": "241af76eb49710c2c925130323985a63138e02eadaa2bf936fca2d4153ef1b42",
+      "checks": {
+        "text_and_duplicates": "reviewed",
+        "choices": "reviewed_against_decisions_and_jump_targets",
+        "speaker_and_markup": "limitations_recorded",
+        "order": "reviewed_with_media_gaps"
+      },
+      "evidence_document": "docs/research/reading-acceptance-001.md"
+    },
+    {
+      "quest_id": 139000027,
+      "title": "嘤鸣初相召",
+      "verdict": "materials_only",
+      "summary": "主干文本与选项跳转可追溯，连续阅读存在待核查的任务内部时序冲突。",
+      "limitations": [
+        "炽霞告别后接续同行引导台词，回顾条目32至34的归属或顺序待核查。",
+        "莫特斐开场及体检后问答缺少可确认的上下文，演出内容待核验。",
+        "部分叙述显示未知说话人，富文本标记影响阅读。"
+      ],
+      "source_json_sha256": "9d6fbd519e5c676e6c609b3187a19ddb6b9c4ffbbbfe3f815cc7355af8f074ef",
+      "source_txt_sha256": "4ec696803a278c4b5dd45ecebf49e31b8ed73886dab18746b563f1bcbd71f812",
+      "checks": {
+        "text_and_duplicates": "reviewed",
+        "choices": "reviewed_against_decisions_and_jump_targets",
+        "speaker_and_markup": "limitations_recorded",
+        "order": "requires_revision"
+      },
+      "evidence_document": "docs/research/reading-acceptance-001.md"
+    }
+  ],
+  "readthrough": {
+    "verdict": "requires_revision",
+    "scope": [
+      139000025,
+      139000026,
+      139000027
+    ],
+    "cross_task_connection": "上篇白芷检查及吸收建议→下篇尝试吸收声骸、前往今州→嘤鸣初相召抵达中枢信标。",
+    "blocking_findings": [
+      "第三任务炽霞离开与同行引导时序冲突，待配置核查。"
+    ],
+    "chapter_readthrough_verified": false
+  }
+}

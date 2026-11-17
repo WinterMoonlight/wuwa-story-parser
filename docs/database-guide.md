@@ -175,16 +175,16 @@ shortmessage字段1是ChatPartnerId整数，字段2为字符串向量（流程�
 
 ## 七任务文本引用核查更新（2026-11-17）
 
-以[缺失引用核查](missing-text-validation.md)为当前接手点。NoTextItem/QTE的TidTalk按控制引用处理，JSON保留non_dialogue_controls及原始文本和动作；TXT不输出内部演出占位为台词。QTE成功/失败不按普通选择执行，批量单列qte_runtime_unverified。普通Talk的缺失不静默过滤。76项测试通过；最新批次20261117_011055_476513，135对文件核对通过，missing_text任务剩《灼我以烈阳》1个。资源缺失与失效回顾引用尚不可区分，下一步查4/5与4/1的归属/版本证据。
+以[缺失引用核查](research/missing-text-validation.md)为当前接手点。NoTextItem/QTE的TidTalk按控制引用处理，JSON保留non_dialogue_controls及原始文本和动作；TXT不输出内部演出占位为台词。QTE成功/失败不按普通选择执行，批量单列qte_runtime_unverified。普通Talk的缺失不静默过滤。76项测试通过；最新批次20261117_011055_476513，135对文件核对通过，missing_text任务剩《灼我以烈阳》1个。资源缺失与失效回顾引用尚不可区分，下一步查4/5与4/1的归属/版本证据。
 
 ## 灼我以烈阳引用核查补充（2026-11-17）
 
-见[本轮核查](scorching-sun-reference-validation.md)：缺失键有共用语音候选，但无字幕替代证据，保留missing_text。JSON新增missing_text_diagnostics，包含任务/回顾归属与语音候选，replacement_applied为false；候选不进入阅读正文。79项测试通过，批次20261117_011321_141069核对135对文件，统计不变。该条目待新证据，后续可推进QTE路线验证。
+见[本轮核查](research/scorching-sun-reference-validation.md)：缺失键有共用语音候选，但无字幕替代证据，保留missing_text。JSON新增missing_text_diagnostics，包含任务/回顾归属与语音候选，replacement_applied为false；候选不进入阅读正文。79项测试通过，批次20261117_011321_141069核对135对文件，统计不变。该条目待新证据，后续可推进QTE路线验证。
 
 ## 配置字幕更新（2026-11-17）
 
-见[M0391字幕核查](m0391-caption-validation.md)。媒体事件新增media.captions与caption_order_evidence，字段4关联正文，四组候选数值一致排序仅作为相对顺序推断；无语言/单位/角色猜测。M0391已补10条，C0027已补18条，替代旧“字幕尚未解码”的进度描述。92测试、批次20261117_012201_323353核对135对产物；有序12、候选123不变。阅读检查仍保留实际播放及额外画面文字边界。
+见[M0391字幕核查](research/m0391-caption-validation.md)。媒体事件新增media.captions与caption_order_evidence，字段4关联正文，四组候选数值一致排序仅作为相对顺序推断；无语言/单位/角色猜测。M0391已补10条，C0027已补18条，替代旧“字幕尚未解码”的进度描述。92测试、批次20261117_012201_323353核对135对产物；有序12、候选123不变。阅读检查仍保留实际播放及额外画面文字边界。
 
 ## InformationView（2026-11-17核验）
 
-OpenSystemBoard.InformationView的BoardId精确关联db_infodisplay.infodisplay.Id；BinData字段3/4分别为标题和正文文本键。information_board事件保存两条texts、purpose、source_field、text_id、raw_text及源行哈希，组合显示标题和正文。任务级调用保持外部材料位置；面板中的引用对白不自动归属人物。见[资料核查](echoes-information-view.md)。
+OpenSystemBoard.InformationView的BoardId精确关联db_infodisplay.infodisplay.Id；BinData字段3/4分别为标题和正文文本键。information_board事件保存两条texts、purpose、source_field、text_id、raw_text及源行哈希，组合显示标题和正文。任务级调用保持外部材料位置；面板中的引用对白不自动归属人物。见[资料核查](research/echoes-information-view.md)。

@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 dependencies = []
 
 [project.scripts]
-wuwa-story = "wuwa_story.__main__:main"
+wuwa-story = "wuwa_story.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

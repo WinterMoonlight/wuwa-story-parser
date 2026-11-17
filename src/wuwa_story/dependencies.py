@@ -2,9 +2,10 @@
 from .export_task import flow_key
 from .task_flows import classify_task_flows
 from .external import node_context
+from .dependency_positions import adjacent_sync_dependencies, dependency_positions
 
 
-def dependency_report(quest, nodes, ordered):
+def dependency_report(quest, nodes, ordered, order_source_unique=True):
     occurrences = classify_task_flows(quest, nodes)
     edges, parallels, supplements = [], [], []
     for node in nodes:
@@ -63,10 +64,17 @@ def dependency_report(quest, nodes, ordered):
                     'reason': 'Concentric ranges are spatial evidence, not a completion-before relation'}
         parallels.append(evidence)
         supplements.append(ko)
-    positions = {key: i for i, key in enumerate(ordered)}
-    conflicts = [e for e in edges if e['from_state'] in positions and e['to_state'] in positions
-                 and positions[e['from_state']] > positions[e['to_state']]]
-    return {'edges': edges, 'recap_dependency_conflicts': conflicts,
+    edges.extend(adjacent_sync_dependencies(nodes))
+    positions = dependency_positions(edges, ordered)
+    if not order_source_unique:
+        for item in positions['conflicts'] + positions['consistent']:
+            positions['unresolved'].append(dict(item, reason='ambiguous_recap_order_source'))
+        positions['conflicts'] = []
+        positions['consistent'] = []
+    conflicts = positions['conflicts']
+    return {'recap_source_unique': order_source_unique, 'edges': edges, 'recap_dependency_conflicts': conflicts,
+            'recap_dependency_unresolved': positions['unresolved'],
+            'recap_dependency_consistent': positions['consistent'],
             'parallel_relations': parallels, 'separate_state_keys': supplements,
             'scope': 'Explicit same-node completion dependencies and inspected parallel range pattern only',
             'global_order_verified': False}

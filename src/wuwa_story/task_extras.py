@@ -87,6 +87,8 @@ def review_extras(quest, nodes, backbone, states, source):
         review['interaction_evidence'] = [e for e in evidence if e is not None]
         from .sync_prefix import insert_qte_prefix
         insert_qte_prefix(review, quest, nodes, backbone, states, source)
+        from .sync_call_suffix import insert_consensus_suffix
+        insert_consensus_suffix(review, quest, nodes, backbone, states, source)
         # A pure screen-text flow immediately before a unique synchronous recap call.
         if len(owners) == 1 and chains[0]['ancestors']:
             n = owners[0]

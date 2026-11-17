@@ -10,23 +10,68 @@ def coverage_reading_text(result):
                     if r.get('interaction_evidence')}
     if backbone:
         lines = [result['title'], '', '【回顾顺序正文】按回顾配置逐段排列，选择保留在对话中；未解析段落原位标明，尚非完整任务路线。']
+        if any(a.get('kind') == 'unconditional_option_selection' for s in backbone.get('segments', []) for a in s.get('unverified_content', [])):
+            lines.append('【选项说明】部分选项的条件尚未核验，本版仅沿明确无条件的选项继续，其他选项保留为候选。')
         if backbone.get('conditional_selections'):
             lines.append('【条件阅读路线】按本次选项计算并排除另一分支；假设该选择值未被其他交互覆盖，实际触发时序尚未核验。')
+        if backbone.get('conditional_rejections'):
+            lines.append('【分支待核验】选择之后的状态或调用时序尚不能确定，以下保留候选分支，未筛选为单一路线。')
+        if any(g['kind'] == 'recap_dependency_conflict' for g in coverage.get('gaps', [])):
+            lines.append('【顺序待核验】部分回顾段落与任务调用先后不一致，暂保留回顾顺序。')
+        if any(u.get('kind') == 'unselected_control_actions' for s in backbone['segments']
+               for u in s.get('unverified_content', [])):
+            lines.append('【分支说明】仅展示本次选择的可解析对话，其他选择可能仍含未解析流程。')
+        pending_phone = iter(sorted(backbone.get('phone_tip_insertions', []), key=lambda p:p['entry_index']))
+        next_phone = next(pending_phone, None)
+        def emit_phone_before(index):
+            nonlocal next_phone
+            while next_phone is not None and next_phone['entry_index'] < index:
+                lines.extend(['', '【手机消息：按回顾任务提示位置排列】'])
+                if next_phone.get('title'):
+                    lines.append(next_phone['title'])
+                lines.append(reading_text({'title':'', 'events':next_phone['events'], 'validation':{}}).strip())
+                next_phone = next(pending_phone, None)
         for number, segment in enumerate(backbone['segments'], 1):
+            emit_phone_before(segment['entry_index'])
             if segment['status'] == 'excluded_branch':
                 continue
             lines += ['', f'【回顾第{number}段】']
+            if segment.get('prefix_event_count'):
+                lines.append('【本段仅展示已解析的开头，未越过后续控制缺口】')
             body = reading_text({'title': '', 'events': segment['events'], 'validation': {}})
             lines.append(body.strip())
+            for attachment in segment.get('unordered_attachments', []):
+                lines.append('【本段异步界面材料：以下字段排列不代表与对白的显示先后】')
+                lines.extend('界面文字：' + v['text'] for v in attachment['texts'])
+        emit_phone_before(float('inf'))
         lines += ['', '【附录：未选择、未解析或尚未定位的材料；以下排列不代表剧情顺序】']
         if backbone.get('duplicate_text_flows'):
             lines.append('重复来源的相同文本仅展示一份；来源与动作差异保留在JSON，不代表两份流程等价。')
     if coverage['status'] == 'partial_order':
         lines.append('本任务仅回顾部分有序；其他正常剧情片段尚未定位先后，不能视为完整路线。')
+    locally_shown = set()
+    for section in result.get('dungeon_return_sections', []):
+        if section.get('placement')=='body':
+            continue
+        lines += ['', '【副本成功转场文字：与其他片段的相对顺序待核查】']
+        lines.append(reading_text({'title':'', 'events':section['events'], 'validation':{}}).strip())
+    for fragment in coverage.get('levelplay_local_sequences', []):
+        if fragment['status'] != 'local_order_only':
+            continue
+        lines += ['', '【玩法局部有序片段：以下按连续同步调用排列，与主干的衔接位置尚未确定】']
+        dependency = fragment.get('completion_dependency', {})
+        if dependency.get('task_gates'):
+            lines.append('【已关联任务的玩法完成条件，但尚不能确定这段内容在主干中的位置或是否重复触发。】')
+        for segment in fragment['segments']:
+            lines.append(reading_text({'title':'', 'events':segment['events'], 'validation':{}}).strip())
+            locally_shown.update((segment['state_key'],e['text_id']) for e in segment['events'] if e.get('text_id'))
     labels = [('confirmed_route', '已解析的所选路线'), ('candidate_branch', '候选回应及可触发对白（未确认实际发生）'),
               ('failure_ending', '失败分支及结局材料'), ('unverified', '待核验的对白、小游戏及界面材料')]
     for category, title in labels:
         entries = [r for r in coverage['records'] if r['category'] == category and r.get('text')
+                   and (r.get('origin'), r.get('text_id')) not in locally_shown
+                   and not r.get('pointer','').startswith('/batch_coverage/levelplay_local_sequences/')
+                   and not r.get('pointer','').startswith('/dungeon_return_sections/')
                    and not r.get('pointer', '').startswith('/recap_backbone/') and not r.get('text_duplicate_of')]
         if not entries:
             continue
@@ -36,23 +81,43 @@ def coverage_reading_text(result):
         previous_origin = None
         previous_context = None
         for entry in entries:
+            if category == 'confirmed_route' and entry.get('pointer','').startswith('/events/'):
+                event_index = int(entry['pointer'].split('/')[2])
+                for section in result.get('dungeon_return_sections', []):
+                    if section.get('placement')=='body' and section['insert_before_event']==event_index:
+                        lines += ['', '【副本完成对白：按回顾任务提示定位】']
+                        lines.append(reading_text({'title':'', 'events':section['events'], 'validation':{}}).strip())
             value = entry
             if entry.get('pointer'):
                 value = result
                 for part in entry['pointer'].strip('/').split('/'):
                     value = value[int(part)] if isinstance(value, list) else value[part]
             context = value.get('reading_context')
+            if entry.get('reading_context') == 'parallel_guidance':
+                context = 'parallel_guidance'
             if context != previous_context:
                 if context == 'entity_interaction_in_recap_order':
                     lines.append('【实体交互：按回顾顺序排列，实际触发先后及是否必经尚未核验】')
                 elif context == 'unselected_conditional_branch':
                     lines.append('【本次未选择的条件分支】')
+                elif context == 'declared_entity_candidate':
+                    lines.append('【任务场景交互与气泡：可触发的候选文本，出现条件及先后未核验】')
+                elif context == 'entity_trigger_candidate':
+                    lines.append('【任务场景触发对白：归属有配置依据，触发条件及与主干的先后尚未核验】')
+                elif context == 'parallel_guidance':
+                    lines.append('【教学触发对白：配置属于并行教学分支，实际播放时机待核查】')
+                elif context == 'declared_levelplay_candidate':
+                    lines.append('【任务场景玩法对白：归属有配置依据，触发及与主干的先后尚未核验】')
                 elif previous_context:
                     lines.append('【继续回顾中的其他剧情】')
                 previous_context = context
             origin = entry.get('origin') or '/'.join(entry.get('pointer', '').split('/')[:3])
             if category != 'confirmed_route' and origin != previous_origin:
                 lines += ['', '【探索交互：触发条件有记录，与主干的先后尚未确认】' if origin in interactions else '【补充片段】']
+                trigger = next((item for item in coverage.get('dungeon_trigger_review', [])
+                                if item['state_key']==origin and item['multiple_callsites']), None)
+                if trigger:
+                    lines.append('【同一对白有多处触发配置，实际播放次数与先后待核查】')
                 previous_origin = origin
             name = '漂泊者【选择】' if value.get('kind') == 'choice' else value.get('display_name')
             if name:
@@ -79,6 +144,19 @@ def coverage_reading_text(result):
 
 
 def reading_text(result):
+    from .reading_markup import reading_markup
+    return reading_markup(_reading_text(result))
+
+
+def _reading_text(result):
+    if result.get('reading_review'):
+        review = result['reading_review']
+        body = dict(result)
+        body.pop('reading_review')
+        labels = {'readable':'可连续阅读', 'readable_with_gaps':'带明确缺口可阅读', 'materials_only':'仍是材料'}
+        header = ['【阅读验收】' + labels[review['verdict']], review['summary']]
+        header.extend('【阅读限制】' + limitation for limitation in review.get('limitations', []))
+        return '\n'.join(header) + '\n\n' + reading_text(body)
     if 'batch_coverage' in result:
         return coverage_reading_text(result)
     lines = [result['title']]
@@ -113,7 +191,18 @@ def reading_text(result):
             lines.append(name + '：' + event['text'])
     if result.get('validation', {}).get('unplaced_flow_count'):
         lines.append('【以下为回顾已排列的部分剧情；其他正常剧情单列，整个任务顺序尚未补齐】')
-    events(result['events'])
+    dungeon_sections = sorted((section for section in result.get('dungeon_return_sections', []) if section.get('placement')=='body'), key=lambda section:section['insert_before_event'])
+    start = 0
+    for section in dungeon_sections:
+        position = section['insert_before_event']
+        events(result['events'][start:position])
+        lines.append('【副本完成对白：按回顾任务提示定位】')
+        events(section['events'])
+        start = position
+    events(result['events'][start:])
+    for attachment in result.get('unordered_attachments', []):
+        lines.append('【异步界面材料：以下字段排列不代表与对白的显示先后】')
+        lines.extend('界面文字：' + v['text'] for v in attachment['texts'])
     games = set()
     for entry in result.get('external_content', []):
         status = entry.get('status')

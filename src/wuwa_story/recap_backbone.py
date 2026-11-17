@@ -1,11 +1,12 @@
 """Independent recap segments: preserve explicit order without claiming task execution."""
 import hashlib
 from .database import embedded
-from .export_task import Exporter, flow_key, flow_actions
+from .export_task import Exporter, flow_key, flow_actions, walk
 from .rendering import render_result
+from .prefix_boundary import UnresolvedControlBoundary
 
 
-def build_backbone(quest_id, handbook_rows, states, source):
+def build_backbone(quest_id, handbook_rows, states, source, choices=None):
     if len(handbook_rows) != 1:
         return None
     row = handbook_rows[0]
@@ -35,17 +36,48 @@ def build_backbone(quest_id, handbook_rows, states, source):
             actions, fields = flow_actions(blob)
             segment.update(source_actions=actions, equivalent_action_fields=fields)
             # Each occurrence gets a fresh parser: no leaked actor, option, or partial state.
-            parser = Exporter(source=source, allow_incomplete=True, speaker_records=names)
+            from .write_only_recap import write_only_environment
+            local_env = write_only_environment(actions, f'recap:{quest_id}:{i}:{key}')
+            if local_env is None:
+                from .constant_writes import constant_write_recorder
+                local_env = constant_write_recorder(actions, f'recap:{quest_id}:{i}:{key}')
+                if (local_env is None and any(o.get('Name') == 'SetVar' for o in walk(actions))
+                        and any(isinstance(o.get('Options'), list) and any(isinstance(v, dict) and 'PreCondition' in v for v in o['Options']) for o in walk(actions))):
+                    from .unconditional_options import write_audit_projection
+                    local_env = constant_write_recorder(write_audit_projection(actions), f'recap:{quest_id}:{i}:{key}')
+            parser = Exporter(source=source, allow_incomplete=True, speaker_records=names, choices=choices,
+                              variable_environment=local_env, capture_control_prefix=True)
             parser.state_key = key
             if parser.actions(actions):
                 raise ValueError('Unexpected control outside dialogue')
+            if local_env is not None:
+                record_only = getattr(local_env, 'record_only', False)
+                parser.unverified_content.append({'kind': ('isolated_constant_write_audit' if record_only else 'isolated_write_only_variables'),
+                    'scope_id': local_env.self_scope, 'trace': local_env.trace,
+                    ('recorded_writes' if record_only else 'final_values'): local_env.snapshot(),
+                    'no_cross_segment_propagation': True,
+                    'runtime_executed': False, 'downstream_effects_verified': False,
+                    'note': ('Audit selected constant writes only; no runtime variable environment or cross-segment propagation'
+                             if record_only else 'Record selected constant Self writes only; no conditions or state transfers in this segment')})
             rendered = render_result({'title': '', 'route': {'choices': parser.decisions},
                                       'events': parser.events})
             segment.update(status='parsed', events=rendered['events'],
                            route=rendered['route'], action_trace=parser.action_log,
                            talk_groups=parser.talk_coverage,
                            unverified_content=parser.unverified_content,
+                           unordered_attachments=getattr(parser, 'unordered_attachments', []),
                            missing_text_ids=sorted(set(parser.missing)))
+        except UnresolvedControlBoundary as exc:
+            # Only an explicit reached control may preserve a prefix. Ordinary
+            # parse failures below remain transactional and discard partial text.
+            rendered = render_result({'title': '', 'route': {'choices': parser.decisions}, 'events': parser.events})
+            segment.update(error=str(exc), events=rendered['events'], route=rendered['route'],
+                prefix_event_count=len(rendered['events']), control_boundary=exc.as_dict(),
+                action_trace=parser.action_log, unverified_content=parser.unverified_content,
+                unordered_attachments=getattr(parser, 'unordered_attachments', []),
+                missing_text_ids=sorted(set(parser.missing)))
+            segment['events'].append({'kind':'recap_gap','display_name':'缺口',
+                'text':'【此处遇到尚未解析的控制动作；本段后续流程仍待核验】','state_key':key})
         except (ValueError, KeyError, TypeError, IndexError) as exc:
             segment['error'] = str(exc)
             segment['events'] = [{'kind': 'recap_gap', 'display_name': '缺口',

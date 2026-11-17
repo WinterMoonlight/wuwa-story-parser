@@ -8,7 +8,7 @@ from .rendering import render_result
 from .sequence_calls import head_icon, sequence_call
 from .text_refs import option_container, non_dialogue_reason, control_references
 from .camera_effects import CAMERA_EFFECTS, camera_shape
-from .reading_effects import FLOW_LOCK_EFFECTS, flow_lock_shape
+from .reading_effects import FLOW_LOCK_EFFECTS, flow_lock_shape, ENTITY_LOCK_EFFECTS, entity_lock_shape
 from .npc_perform import npc_perform_shape
 from .sublevels import switch_shape, switch_evidence
 from .screen_effects import screen_stop_shape
@@ -62,9 +62,11 @@ def choose_option(options, override=None):
 
 
 class Exporter:
-    def __init__(self, choices=None, source=None, allow_incomplete=False, speaker_records=None, variable_environment=None):
+    def __init__(self, choices=None, source=None, allow_incomplete=False, speaker_records=None, variable_environment=None, capture_control_prefix=False):
         self.allow_incomplete = allow_incomplete
         self.variable_environment = variable_environment
+        self.capture_control_prefix = capture_control_prefix
+        self.unordered_attachments = []
         self.external_content = []
         self.task_ui_texts = []
         self.unverified_content = []
@@ -247,6 +249,30 @@ class Exporter:
         evidence = {'state_key': self.state_key, 'action_id': action.get('ActionId'), 'action': name}
         if name == 'SetVar' and self.allow_incomplete and self.variable_environment is not None:
             self.variable_environment.assign(action, evidence)
+        elif name == 'PhoneSystemInteract' and self.allow_incomplete:
+            from .phone import inspect_open_phone
+            phone = inspect_open_phone(action, self.rows, self.choices)
+            self.missing.extend(phone['missing_text_ids'])
+            self.unverified_content.append({'kind': 'explicit_phone_open', **evidence,
+                'source_action': action, 'phone': phone, 'read_completion_verified': False,
+                'close_completion_verified': False, 'order_basis': 'explicit_config_call'})
+            for event in phone['events']:
+                self.events.append({**event, 'parent_state_key': self.state_key,
+                    'parent_phone_action': action, 'phone_message_id': phone['message_id']})
+            from copy import deepcopy
+            for choice in phone['route']['choices']:
+                decision = deepcopy(choice)
+                for option in decision['options']:
+                    option['text'] = option.get('raw_text', option['text'])
+                self.decisions.append(decision)
+        elif name == 'LeisureInteract' and self.allow_incomplete:
+            from .reading_effects import leisure_sit_shape
+            if not leisure_sit_shape(action):
+                raise ValueError('Unsupported leisure interaction parameters')
+            self.unverified_content.append({'kind': 'leisure_pose_call', **evidence,
+                'source_action': action, 'runtime_executed': False,
+                'pose_completion_verified': False, 'indirect_triggers_verified': False,
+                'scene_entity_identity_verified': False})
         elif name == 'Wait':
             if set(params) != {'Time'} or not isinstance(params['Time'], (int, float)) or params['Time'] < 0:
                 raise ValueError('Unsupported flow wait')
@@ -274,6 +300,13 @@ class Exporter:
                 self.unverified_content[-1].update(
                     enum_semantics_verified=False, runtime_completion_verified=False,
                     asset_content_verified=False, order_scope='explicit_configuration_only')
+        elif name in ENTITY_LOCK_EFFECTS and self.allow_incomplete:
+            if not entity_lock_shape(action):
+                raise ValueError('Unsupported entity lock parameters: ' + name)
+            self.unverified_content.append({'kind': 'entity_lock_state', **evidence,
+                'source_action': action, 'runtime_executed': False, 'callbacks_verified': False,
+                'reachability_verified': False,
+                'note': 'Explicit entity IDs recorded in configuration order; interaction availability and indirect triggers not simulated'})
         elif name in FLOW_LOCK_EFFECTS and self.allow_incomplete:
             if not flow_lock_shape(action):
                 raise ValueError('Unsupported flow lock parameters: ' + name)
@@ -284,6 +317,13 @@ class Exporter:
                 raise ValueError('Unsupported camera effect parameters: ' + name)
             self.unverified_content.append({'kind': 'camera_effect', **evidence,
                 'source_action': action, 'note': 'Camera effect retained in call order; timing and runtime effects not simulated'})
+            if name == 'PlayerLookAt' and 'PlayAnimation' in params:
+                self.unverified_content[-1].update(play_animation=params['PlayAnimation'],
+                    animation_playback_verified=False, animation_completion_verified=False)
+            if action.get('Timeout', 0) > 0:
+                self.unverified_content[-1].update(timeout_seconds=action['Timeout'],
+                    deadline_outcome_verified=False, camera_completion_verified=False,
+                    order_scope='configuration_text_order_only')
         elif name == 'SetAudioState' and self.allow_incomplete:
             from .reading_effects import flow_audio_state_shape
             if not flow_audio_state_shape(action):
@@ -331,6 +371,32 @@ class Exporter:
             self.events.append({'kind': 'narration', 'state_key': self.state_key,
                                 'text_id': key, 'display_name': '画面文字',
                                 'raw_text': self.text(key), 'source_action': action})
+        elif self.allow_incomplete and name == 'OpenSystemBoard' and params.get('SystemType') == 'TransitionPopup':
+            from .transition_panels import inspect_transition
+            panel = inspect_transition(action, self.rows)
+            panel['parent_state_key'] = self.state_key
+            panel['call_anchor']['after_event_count'] = len(self.events)
+            self.unordered_attachments.append(panel)
+            self.unverified_content.append({'kind': 'async_panel_display_unverified', **evidence,
+                'board_id': panel['board_id'], 'display_order_verified': False})
+        elif self.allow_incomplete and name == 'OpenSystemBoard' and params.get('SystemType') == 'WriteLetter':
+            from .letters import inspect_letter
+            letter = inspect_letter(action, self.rows, self.choices)
+            self.missing.extend(letter['missing_text_ids'])
+            self.unverified_content.append({'kind': 'explicit_letter_open', **evidence,
+                'source_action': action, 'letter': letter, 'order_basis': 'explicit_config_call'})
+            for event in letter['events']:
+                self.events.append({**event, 'parent_state_key': self.state_key,
+                    'parent_letter_action': action, 'letter_id': letter['letter_id']})
+        elif self.allow_incomplete and name == 'OpenSystemBoard' and params.get('SystemType') == 'ConfirmBox':
+            from .confirm_boxes import inspect_confirm_box
+            board = inspect_confirm_box(action, self.rows)
+            self.unverified_content.append({'kind': 'static_confirmation_panel', **evidence,
+                                            'panel': board})
+            for value in board['texts']:
+                self.events.append({'kind': 'narration', 'state_key': self.state_key,
+                    'display_name': '界面文字', **value, 'source_action': action,
+                    'panel_source': board['source_table'], 'board_id': board['board_id']})
         elif self.allow_incomplete and ((name == 'PlaySequenceData' and sequence_call(params))
                                        or (name == 'OpenSystemBoard' and set(params) == {'SystemType', 'BoardId'}
                                            and params['SystemType'] == 'InformationView')):
@@ -385,6 +451,10 @@ class Exporter:
         elif name == 'FinishTalk':
             return ('finish', None)
         elif name not in PRESENTATION_ACTIONS:
+            if self.allow_incomplete and self.capture_control_prefix:
+                from .prefix_boundary import unresolved_control_shape, UnresolvedControlBoundary
+                if unresolved_control_shape(action):
+                    raise UnresolvedControlBoundary(action, self.state_key)
             raise ValueError('Unsupported action: ' + name)
 
     def actions(self, actions):
@@ -404,18 +474,31 @@ class Exporter:
             supported |= CAMERA_EFFECTS
             supported |= CLIENT_SCENE_EFFECTS
             supported |= FLOW_LOCK_EFFECTS
+            supported |= ENTITY_LOCK_EFFECTS
             supported.add('FlowDefineNpcGroupPerform')
             supported.add('SwitchSubLevels')
             supported.add('StopUiScreenEffect')
+            supported.add('LeisureInteract')
+            supported.add('PhoneSystemInteract')
         # QTE outcomes are runtime gates, not freely chosen dialogue responses.
         if any(i.get('Type') == 'QTE' for i in items):
             raise ValueError('QTE runtime outcome evaluator is unsupported')
-        for obj in walk(items):
+        # A control on an unselected dialogue path must not block a known path.
+        # Its semantics remain unsupported: action() still rejects it if reached.
+        deferred_controls = []
+        for item in items:
+            for obj in walk(item):
+                if (self.allow_incomplete and obj.get('Name') in {'SetVar', 'FinishState', 'ChangeState'}
+                        and obj['Name'] not in supported and 'Params' in obj):
+                    deferred_controls.append({'talk_id': item['Id'], 'source_action': obj})
+        from .unconditional_options import preflight_walk, select_option, selection_evidence
+        for obj in (preflight_walk(items) if self.allow_incomplete else walk(items)):
             if any('condition' in k.lower() for k in obj):
                 raise ValueError('Conditional dialogue requires a condition evaluator')
             if 'Name' in obj and 'Params' in obj:
                 if obj['Name'] not in supported:
-                    raise ValueError('Unsupported action: ' + obj['Name'])
+                    if not (self.allow_incomplete and obj['Name'] in {'SetVar', 'FinishState', 'ChangeState'}):
+                        raise ValueError('Unsupported action: ' + obj['Name'])
                 if obj['Name'] == 'JumpTalk' and obj['Params']['TalkId'] not in positions:
                     raise ValueError('Missing JumpTalk target')
             for key in ('TidTalk', 'TidTalkOption'):
@@ -446,15 +529,23 @@ class Exporter:
                                     'talk_id': item['Id'], 'text_id': key,
                                     **self.speakers.identify(item.get('WhoId')),
                                     'raw_text': self.text(key), 'source_item': item})
-            # This client's sample has controls on either options or items, never both.
+            # Only inspected combinations may cross the item/option boundary.
             options = item.get('Options', [])
             if options and item.get('Actions'):
-                # Only visual effects are accepted here. Control/identity/text
-                # actions have observable ordering and still require evidence.
+                from .combined_presentation import combined_hide, combined_actor, evidence as combined_evidence
+                safe_combined_hide = self.allow_incomplete and combined_hide(item)
+                safe_combined_actor = self.allow_incomplete and combined_actor(item, items, self.speakers.records)
+                # Other control/identity/text combinations retain their ordering barrier.
                 visual = {'FadeInScreen', 'FadeOutScreen', 'DestroyEntity', 'SetFlowTemplate', 'CameraLookAt'}
-                if any(a['Name'] not in visual and not (self.allow_incomplete and a['Name'] == 'SetHeadIconVisible'
+                if not (safe_combined_hide or safe_combined_actor) and any(a['Name'] not in visual and not (self.allow_incomplete and a['Name'] == 'SetHeadIconVisible'
                         and head_icon(a.get('Params'))) for a in item['Actions']):
                     raise ValueError('Combined item/option actions need ordering verification')
+                if safe_combined_hide:
+                    self.unverified_content.append({'state_key': self.state_key,
+                        **combined_evidence(item, 'combined_range_visibility')})
+                if safe_combined_actor:
+                    self.unverified_content.append({'state_key': self.state_key, 'identity_inferred': False,
+                        **combined_evidence(item, 'combined_actor_change')})
                 if any(a['Name'] == 'SetHeadIconVisible' for a in item['Actions']):
                     self.unverified_content.append({'kind': 'combined_head_icon_presentation',
                         'state_key': self.state_key, 'talk_id': item['Id'],
@@ -463,7 +554,14 @@ class Exporter:
             if options:
                 choice_key = f'{self.state_key}:{item["Id"]}' + (f':group{group}' if group > 1 else '')
                 tried = chosen.setdefault(item['Id'], set())
-                if tried:
+                guarded_menu = self.allow_incomplete and any('PreCondition' in o for o in options)
+                if guarded_menu:
+                    selected = select_option(options, override=self.choices.get(choice_key) if not tried else None, tried=tried)
+                    if tried:
+                        self.used_loop_policy = True
+                    self.unverified_content.append({**selection_evidence(options), 'state_key': self.state_key,
+                        'talk_id': item['Id'], 'choice_key': choice_key, 'selected_index': selected})
+                elif tried:
                     self.used_loop_policy = True
                     candidates = [i for i in range(len(options)) if i not in tried]
                     if not candidates:
@@ -478,6 +576,11 @@ class Exporter:
                             'options': [{'text_id': o.get('TidTalkOption'),
                                          'text': self.text(o.get('TidTalkOption')),
                                          'actions': o.get('Actions', [])} for o in options]}
+                if guarded_menu:
+                    decision['condition_policy'] = selection_evidence(options)
+                    for original, rendered_option in zip(options, decision['options']):
+                        if 'PreCondition' in original:
+                            rendered_option.update(source_condition=original['PreCondition'], availability='unverified')
                 self.decisions.append(decision)
                 self.events.append({'kind': 'choice', 'state_key': self.state_key,
                                     'talk_group': group, 'visit': len(tried),
@@ -496,7 +599,13 @@ class Exporter:
                 index = positions[control[1]]
             else:
                 index += 1
+        if deferred_controls:
+            self.unverified_content.append({'kind': 'unselected_control_actions',
+                'state_key': self.state_key, 'talk_group': group, 'controls': deferred_controls,
+                'note': 'Unsupported controls were not reached on the selected dialogue path; other routes remain unverified'})
         self.talk_coverage.append({'state_key': self.state_key, 'talk_group': group,
+                                   **({'unselected_control_actions': deferred_controls,
+                                       'all_branch_actions_verified': False} if deferred_controls else {}),
                                    'non_dialogue_option_containers': [i for i in items if option_container(i)],
                                    'non_dialogue_controls': control_references(items, texts),
                                    'all_talk_ids': list(positions), 'visited_talk_ids': visited_ids,
@@ -507,6 +616,7 @@ class Exporter:
         result = self._export_raw(quest_id)
         if self.allow_incomplete:
             result['external_content'] = self.external_content
+            result['unordered_attachments'] = self.unordered_attachments
             result['task_ui_texts'] = self.task_ui_texts
             external_missing = [t['text_id'] for c in self.external_content for t in c.get('texts', []) if t.get('missing')]
             external_missing += [key for c in self.external_content for key in c.get('phone', {}).get('missing_text_ids', [])]

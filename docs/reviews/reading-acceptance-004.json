@@ -1,0 +1,87 @@
+{
+  "review_id": "reading-acceptance-004",
+  "snapshot": "3.8.11",
+  "batch": "20261117_132422_026095",
+  "selection": {
+    "center": 139000026,
+    "before": 139000025,
+    "after": 139000027,
+    "basis": "PreQuest chain and chapter placement"
+  },
+  "tasks": [
+    {
+      "quest_id": 139000025,
+      "title": "万象新声·上",
+      "verdict": "readable_with_gaps",
+      "summary": "觉醒、结识秧秧与炽霞、遭遇战斗及白芷检查的主干可连续阅读。",
+      "limitations": [
+        "开场Start及演出额外字幕尚未核验。",
+        "动态参数和平台引导重复仍有显示限制。"
+      ],
+      "source_json_sha256": "678d20f13dea1c1a45bbc4e0ea1815ba9fb1ac4aa439761c4ee6d5180e84c6f7",
+      "source_txt_sha256": "fd11f532ee909bc75e62eb25a9e3377e67a014c34eef775bbf62f28b03de02dc",
+      "checks": {
+        "text_and_duplicates": "reviewed",
+        "choices": "reviewed_against_decisions_and_jump_targets",
+        "speaker_and_markup": "configured_empty_name_and_known_markup_reviewed",
+        "order": "reviewed_with_media_gaps"
+      },
+      "evidence_document": "docs/research/reading-acceptance-004.md"
+    },
+    {
+      "quest_id": 139000026,
+      "title": "万象新声·下",
+      "verdict": "readable_with_gaps",
+      "summary": "已核查吸收声骸尝试至前往今州的主干，以及选项与后续对白。",
+      "limitations": [
+        "结尾C3jinzhoutexie/M01012_Nvzhu的额外对白或字幕尚未核验。",
+        "附录包含未选择回应与平台界面文字，阅读位置仍需区分。"
+      ],
+      "source_json_sha256": "cf2b4e2f25fed99dacc43692c2d063ba36a003cc265b6b0ee3f4b3daeef15f05",
+      "source_txt_sha256": "ea4ae57d22060e5d9aad8cd77da4516a461e933b944fc6cf6cc28d21c7f4ee3a",
+      "checks": {
+        "text_and_duplicates": "reviewed",
+        "choices": "reviewed_against_decisions_and_jump_targets",
+        "speaker_and_markup": "configured_empty_name_and_known_markup_reviewed",
+        "order": "reviewed_with_media_gaps"
+      },
+      "evidence_document": "docs/research/reading-acceptance-004.md"
+    },
+    {
+      "quest_id": 139000027,
+      "title": "嘤鸣初相召",
+      "verdict": "readable_with_gaps",
+      "summary": "副本完成前四句已按任务提示定位，成功转场叙述补入独立材料，主干返回问答衔接改善。",
+      "limitations": [
+        "其余14条模拟领域候选对白及成功转场的相对顺序待核查。",
+        "莫特斐环境气泡的实际听取与后续交互衔接待核查。",
+        "媒体和动态参数仍有待核验项。"
+      ],
+      "source_json_sha256": "e60bce772a2a2facd155cf964cd0f01a6a5588885d9e49bf0e8fbd12e3d77c6d",
+      "source_txt_sha256": "927d8ab7cd7af47277c1f29ac0edc86d59bf597ed33b31b4d5bbe727ab8724f0",
+      "checks": {
+        "text_and_duplicates": "reviewed",
+        "choices": "reviewed_against_decisions_and_jump_targets",
+        "speaker_and_markup": "configured_empty_name_and_known_markup_reviewed",
+        "order": "dungeon_completion_dialogue_anchored_other_sequences_pending"
+      },
+      "evidence_document": "docs/research/reading-acceptance-004.md"
+    }
+  ],
+  "readthrough": {
+    "verdict": "readable_with_gaps",
+    "scope": [
+      139000025,
+      139000026,
+      139000027
+    ],
+    "cross_task_connection": "上篇白芷检查及吸收建议→下篇尝试吸收声骸、前往今州→嘤鸣初相召抵达中枢信标。",
+    "blocking_findings": [],
+    "chapter_readthrough_verified": false,
+    "limitations": [
+      "模拟领域结束问答已按完成提示定位，其他候选及成功转场的相对顺序待核验。",
+      "莫特斐气泡的实际听取与交互衔接待核验。",
+      "媒体与动态参数仍有缺口。"
+    ]
+  }
+}

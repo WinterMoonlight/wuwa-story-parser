@@ -2,6 +2,31 @@
 READING_EFFECTS = {'HideGroup', 'SetAudioState'}
 
 FLOW_LOCK_EFFECTS = {'SetTimeLockState', 'SetWeatherLockState'}
+ENTITY_LOCK_EFFECTS = {'LockEntity', 'UnlockEntity'}
+
+
+def leisure_sit_shape(action):
+    if not isinstance(action, dict):
+        return False
+    p = action.get('Params')
+    return (action.get('Name') == 'LeisureInteract'
+            and set(action) <= {'Name', 'Params', 'ActionId', 'ActionGuid', 'Async'}
+            and action.get('Async', False) is False
+            and isinstance(p, dict) and set(p) == {'Option', 'SceneEntity'}
+            and p['Option'] == {'Type': 'SitDown'}
+            and type(p['SceneEntity']) is int and p['SceneEntity'] > 0)
+
+
+def entity_lock_shape(action):
+    if not isinstance(action, dict):
+        return False
+    params = action.get('Params')
+    return (action.get('Name') in ENTITY_LOCK_EFFECTS
+            and set(action) <= {'Name', 'Params', 'ActionId', 'ActionGuid', 'Async'}
+            and action.get('Async', False) is False
+            and isinstance(params, dict) and set(params) == {'EntityIds'}
+            and isinstance(params['EntityIds'], list) and bool(params['EntityIds'])
+            and all(type(i) is int and i > 0 for i in params['EntityIds']))
 
 
 def flow_lock_shape(action):
