@@ -16,7 +16,9 @@
 
 构建环境最初缺少setuptools，改用项目内临时环境安装构建依赖后验证通过；Windows子进程输出编码不一致导致第一次帮助输出解码失败，改为UTF-8后通过。归档文档的相对链接已重新定位并验证。
 
-远端推送与公开状态待最后核对。
+整理提交`3ada9db`已推送到GitHub，随后将仓库切换为PUBLIC并核对远端状态。仓库为https://github.com/WinterMoonlight/wuwa-story-parser。GitHub Actions已触发，正在验证Linux/Windows上的Python 3.10和3.13无数据检查。
+
+首次远端CI发现CLI单元测试的patch操作导入了真实数据库模块；本地有数据时未暴露。已改为注入模拟模块，只测试分发行为，并用明确不存在的WUWA_CONFIG_DB路径重新运行5项测试通过。工作流在每次提交后检查Linux/Windows与Python 3.10/3.13，结果见仓库Actions。Markdown研究摘录的显式换行也已规范化。
 
 ## 最近解析进展
 

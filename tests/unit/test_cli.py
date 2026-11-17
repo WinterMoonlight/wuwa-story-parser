@@ -1,8 +1,9 @@
 import contextlib
 import io
 import unittest
+from types import ModuleType
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from wuwa_story.cli import main
 
@@ -22,6 +23,9 @@ class CliTests(unittest.TestCase):
         self.assertEqual(raised.exception.code, 2)
 
     def test_review_dispatch_preserves_paths(self):
-        with patch('wuwa_story.reading_review.export_review') as export:
+        # Test dispatch without importing the database-backed review implementation.
+        review = ModuleType('wuwa_story.reading_review')
+        export = review.export_review = Mock()
+        with patch.dict('sys.modules', {'wuwa_story.reading_review': review}):
             main(['export-review','--batch','batch','--review','review.json','--output','out'])
         export.assert_called_once_with(Path('batch'),Path('review.json'),Path('out'))

@@ -1,5 +1,7 @@
 # 鸣潮剧情解析 · Wuwa Story Parser
 
+[![Source checks](https://github.com/WinterMoonlight/wuwa-story-parser/actions/workflows/ci.yml/badge.svg)](https://github.com/WinterMoonlight/wuwa-story-parser/actions/workflows/ci.yml)
+
 把本地 ConfigDB 中分散的任务、对白、人物和回顾配置，整理为**每任务一份 JSON 与 TXT**的剧情基础语料。
 
 [快速开始](#快速开始) · [当前进度](#当前进度) · [命令参考](docs/commands.md) · [开发指南](docs/handoff.md)

@@ -1,5 +1,7 @@
 # 仓库与本地数据管理
 
+源码仓库已公开：[WinterMoonlight/wuwa-story-parser](https://github.com/WinterMoonlight/wuwa-story-parser)。公开范围为下文所列源码与文档，原始数据和完整语料继续在本地管理。
+
 ## 提交范围
 
 仓库提交解析器、测试、维护脚本、文档和虚构格式示例。`ConfigDB/`、`outputs/`、`work/`、`.codex/`、虚拟环境、构建产物与缓存由`.gitignore`排除。
