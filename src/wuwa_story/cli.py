@@ -5,6 +5,12 @@ from pathlib import Path
 
 
 def main(argv=None):
+    # Redirected Windows consoles may default to cp1252, which cannot print
+    # the Chinese command descriptions. StringIO test streams need no change.
+    import sys
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, 'reconfigure') and not stream.isatty():
+            stream.reconfigure(encoding='utf-8')
     parser = argparse.ArgumentParser(description='鸣潮剧情数据库只读解析工具')
     parser.add_argument('command', choices=['inspect', 'inventory', 'index', 'export-task', 'export-mainline', 'export-reading-batch', 'export-recap', 'export-review', 'scan-mainline', 'refresh-reading'])
     parser.add_argument('--quest-id', type=int, default=211750002)

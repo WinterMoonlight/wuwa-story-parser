@@ -1,6 +1,9 @@
 import contextlib
 import io
 import unittest
+import os
+import subprocess
+import sys
 from types import ModuleType
 from pathlib import Path
 from unittest.mock import Mock, patch
@@ -9,6 +12,15 @@ from wuwa_story.cli import main
 
 
 class CliTests(unittest.TestCase):
+    def test_redirected_help_uses_utf8_without_database(self):
+        root = Path(__file__).resolve().parents[2]
+        env = {**os.environ, 'PYTHONPATH': str(root / 'src'),
+               'PYTHONIOENCODING': 'cp1252', 'WUWA_CONFIG_DB': str(root / 'missing-ci-data')}
+        result = subprocess.run([sys.executable, '-B', '-m', 'wuwa_story', '--help'],
+                                cwd=root, env=env, capture_output=True, check=True)
+        output = result.stdout.decode('utf-8')
+        self.assertIn('export-reading-batch', output)
+
     def test_help_lists_reading_commands(self):
         output = io.StringIO()
         with contextlib.redirect_stdout(output), self.assertRaises(SystemExit) as raised:
