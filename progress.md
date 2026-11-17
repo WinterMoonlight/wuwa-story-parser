@@ -17,6 +17,6 @@
 - CLI新增export-recap和export-review，已有运行入口兼容。
 - 结构检查覆盖170个Python文件与83份Markdown，链接检查通过。
 - 本轮307项测试通过，代表任务正文、原始来源与选择保持，统一CLI可重导3份审查文件。
-- 已发布到原有GitHub私有仓库，核验远端提交树与本地一致，本地main和origin/main同步。发布通过GitHub连接器完成。
+- 已发布到原有GitHub私有仓库，核验远端提交树与本地一致，本地main和origin/main同步。主体提交通过GitHub连接器发布，最终文档提交使用重新授权的GitHub CLI认证推送。
 
 完整历史见[历史进度](docs/history/progress.md)。
