@@ -1,27 +1,17 @@
-# 鸣潮剧情解析 · Wuwa Story Parser
+# 鸣潮剧情解析
 
 [![Source checks](https://github.com/WinterMoonlight/wuwa-story-parser/actions/workflows/ci.yml/badge.svg)](https://github.com/WinterMoonlight/wuwa-story-parser/actions/workflows/ci.yml)
 
-把本地 ConfigDB 中分散的任务、对白、人物和回顾配置，整理为**每任务一份 JSON 与 TXT**的剧情基础语料。
+从本地《鸣潮》ConfigDB 读取任务、对白、说话人和剧情回顾，生成按章幕组织的 **TXT 阅读稿、JSON 语料和主线连读索引**。TXT 适合从序幕连续读，JSON 保存每段对白的来源、选项和排序依据。
 
-[快速开始](#快速开始) · [当前进度](#当前进度) · [命令参考](docs/commands.md) · [开发指南](docs/handoff.md)
+[快速开始](#快速开始) · [文档](docs/README.md) · [虚构输出示例](examples/minimal-story.txt) · [报告问题](https://github.com/WinterMoonlight/wuwa-story-parser/issues)
 
 > [!NOTE]
-> 本仓库提供解析器和文档，不附带游戏数据库、客户端脚本、资产或完整剧情语料。你需要自行准备同一版本的 ConfigDB。示例中的文字为虚构内容。
-
-## 可以做什么
-
-- 关联任务、剧情回顾、流程状态、说话人和语言文本，按章节批量导出。
-- 输出可阅读的对白、选择与简短缺口说明；JSON保留原始引用、条件、动作与证据。
-- 优先使用任务调用关系，结合已核查的回顾、实体和玩法关联恢复顺序。
-- 统一玩家名为“漂泊者”，选择女性属性；身份无法确认时保留问号。
-- 区分完整的有序草稿、带缺口草稿、局部片段和暂无有序正文，避免把提取成功当作顺序正确。
-
-项目当前聚焦解析器与基础语料。知识库、知识图谱和剧情推理不在本仓库当前范围内。
+> 仓库提供源码、文档和虚构示例。运行解析需要自行准备同一版本的 ConfigDB。数据库、客户端文件和完整剧情产物保存在本地。
 
 ## 快速开始
 
-需要 **Python 3.10+**，解析运行时仅使用标准库。
+需要 **Python 3.10 或更高版本**。解析器使用 Python 标准库。
 
 ```shell
 git clone https://github.com/WinterMoonlight/wuwa-story-parser.git
@@ -29,77 +19,44 @@ cd wuwa-story-parser
 python run.py --help
 ```
 
-把同一版本的数据库放到项目根目录 `ConfigDB/`，保留 `zh-Hans/`、`Misc/` 子目录。也可以在 PowerShell 中指定外部目录：
-
-```powershell
-$env:WUWA_CONFIG_DB = 'D:\GameData\ConfigDB'
-
-# 导出单个任务
-python run.py export-recap --quest-id 168850009 --output outputs/sample
-
-# 按章节导出并生成覆盖、顺序和阅读报告
-python run.py export-reading-batch
-```
-
-可选安装命令入口：`python -m pip install -e .`，之后可使用 `wuwa-story` 替代 `python run.py`。
-
-数据库清单和字段关系见[数据库说明](docs/database-guide.md)。其他系统的环境变量设置方式见[开发指南](docs/handoff.md)。
-
-## 输出长什么样
-
-```text
-outputs/主线批量/<批次>/覆盖阅读版/
-├─ Type1/<章节>/<幕>/
-│  ├─ <任务ID>_<任务名>.json
-│  └─ <任务ID>_<任务名>.txt
-├─ Type15/...
-├─ 主线阅读报告.md
-└─ 覆盖报告.json
-```
-
-TXT便于阅读；JSON适合继续加工，并可追溯每段内容的来源和排序依据。查看[虚构TXT示例](examples/minimal-story.txt)、[简化JSON示例](examples/minimal-story.json)和[完整字段说明](docs/corpus-format.md)。
-
-## 当前进度
-
-以下是本地 **3.8.11快照**的验证结果，不代表其他游戏版本或全部分支都已支持。
-
-|主线阅读状态|任务记录数|
-|---|---:|
-|有序草稿|44|
-|有序草稿，含明确缺口或略过过程|29|
-|仅局部有序|11|
-|暂无有序正文|1|
-|合计|85|
-
-另外导出50条Type15记录。最近完整回归为**479项测试通过**。最新解析修复将《梦枢心相由心生·后日谈》的三个正常流程按关联回顾顺序接回，阅读内容由51条增至127条。
-
-> [!IMPORTANT]
-> 有序草稿不等于游戏运行时复现或人工验收通过。缺少证据的顺序继续保留说明；视频和演出内部内容、复杂活动的小分支暂时后置。
-
-12条整体顺序待恢复的主线、已解决问题和下一步见[当前状态](docs/status.md)。
-
-## 开发与验证
+将同版本数据放入 `ConfigDB/`，保留 `zh-Hans/` 和 `Misc/` 等原有目录。也可用 `WUWA_CONFIG_DB` 指定数据路径。核心库清单见[数据库说明](docs/database-guide.md)。
 
 ```shell
-# 不需要游戏数据库
-python scripts/check_project.py
-python -m unittest discover -s tests/unit -v
-
-# 需要本地同版本数据库；从源码运行时先配置 PYTHONPATH=src
-python -m unittest discover -s tests -v
+python run.py export-reading-batch
+python run.py export-recap --quest-id 139000025 --output outputs/sample
 ```
 
-未安装项目时，PowerShell使用 `$env:PYTHONPATH='src'`；Linux/macOS使用 `export PYTHONPATH=src`。GitHub Actions只运行无数据库检查，完整解析回归在本地执行。
+第一条命令生成完整批次。第二条命令只导出指定任务，适合先试跑。执行 `python -m pip install -e .` 后也可使用 `wuwa-story`。选项覆盖、路径变量和审查版的用法见[命令参考](docs/commands.md)。
+
+## 从哪里开始读
+
+打开终端输出的批次目录，再进入 `覆盖阅读版/`。
 
 ```text
-src/wuwa_story/     解析、排序、渲染与命令入口
-tests/unit/        无数据库测试
-tests/             数据库回归与通用规则测试
-scripts/audits/    导出结果对照检查
-docs/              使用指南、当前状态与研究证据
-examples/          不含游戏原文的格式示例
-ConfigDB/          本地输入，不提交
-outputs/、work/    本地产物和临时文件，不提交
+覆盖阅读版/
+  主线连读索引.md
+  主线阅读报告.md / .json
+  覆盖报告.md / .json
+  Type1/<章>/<幕>/<任务ID>_<任务名>.txt
+  Type1/<章>/<幕>/<任务ID>_<任务名>.json
+  Type15/...
 ```
 
-[项目架构](docs/architecture.md) · [阅读验收标准](docs/reading-acceptance.md) · [仓库与数据管理](docs/repository.md)
+- **主线连读索引** 从《万象新声》开始。顺序依据是任务前置、已核对的章节回顾和章节树，待核的位置会注明。
+- **TXT 阅读稿** 保留选中的对白和选项。视频、交互或无法定位的过程会有简短标记。
+- **JSON 语料** 适合程序读取，包含原始动作和引用、候选材料、阅读顺序以及指回原事件的路径。可先看[简化 JSON 示例](examples/minimal-story.json)和[字段说明](docs/corpus-format.md)。
+
+## 解析范围
+
+本地 **3.8.11 快照**的 85 条 Type1 记录都有可读主干。连读索引串起 44 幕的 80 条任务，另附追月节 4 条和乘霄山总回顾。另有 50 条 Type15 补充记录单独导出。
+
+阅读稿采用一条配置支持的路线。实机时序、部分分支及素材内部内容仍有待核验，细节见[当前状态](docs/status.md)和[任务节点与对白选择](docs/selection.md)。
+
+## 开发检查
+
+```shell
+python scripts/check_project.py
+python -m unittest discover -s tests/unit -v
+```
+
+这两项检查可在无游戏数据的克隆中运行。[运行架构](docs/architecture.md)说明程序从数据读取到导出的过程。修改解析规则前可参考[贡献指南](CONTRIBUTING.md)和[仓库与本地数据管理](docs/repository.md)。

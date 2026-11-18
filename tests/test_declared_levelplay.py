@@ -88,6 +88,84 @@ class DeclaredLevelPlayTests(unittest.TestCase):
         segments = result['recap_backbone']['segments']
         self.assertEqual([s['error'] for s in segments[27:29]], ['Missing flow state'] * 2)
 
+    def test_echoes_new_sprout_dialogue_uses_its_recap_stage(self):
+        from wuwa_story.reading_cases.echoes import FACILITY_FLOW, GREENHOUSE_FLOW, ISLE_FLOW
+        from wuwa_story.mainline_reading import build_mainline_reading
+        from wuwa_story.recap_backbone import export_task_backbone
+
+        result = export_task_backbone(145000004)
+        segments = result['recap_backbone']['segments']
+        index = next(i for i, s in enumerate(segments) if s['state_key'] == GREENHOUSE_FLOW)
+        self.assertEqual(segments[index + 1]['state_key'], FACILITY_FLOW)
+        continuation = segments[index]['current_task_continuation']
+        self.assertEqual(continuation['state_key'], ISLE_FLOW)
+        self.assertEqual([e['text_id'] for e in continuation['events']],
+                         [f'Heihaian_main_1_3_2403_{i}' for i in range(1, 16)])
+        placement = continuation['placement']
+        self.assertEqual([t['entry_index'] for t in placement['recap_tips']], [55, 56, 57, 58])
+        self.assertEqual(placement['levelplay_flow_call']['node_id'], 15)
+        self.assertFalse(placement['runtime_sibling_order_verified'])
+        self.assertEqual(continuation['deferred_prelude']['source_action']['Name'], 'PlaySequenceData')
+        view = build_mainline_reading(result)
+        blocks = view['blocks']
+        inserted = next(i for i, b in enumerate(blocks) if b['scope'] == 'current_task_continuation')
+        self.assertEqual(blocks[inserted - 1]['source_pointer'], f'/recap_backbone/segments/{index}/events')
+        self.assertEqual(blocks[inserted + 1]['source_pointer'], f'/recap_backbone/segments/{index + 1}/events')
+        self.assertEqual(view['retained_text_events'], 1008)
+        self.assertEqual(view['omission_markers'], 7)
+
+    def test_floating_ruins_battle_report_uses_exact_completion_stage(self):
+        from wuwa_story.mainline_reading import build_mainline_reading
+        from wuwa_story.recap_backbone import export_task_backbone
+        from wuwa_story.reading_cases.ruins import PREVIOUS, REPORT, SUMMIT
+
+        result = export_task_backbone(102000000)
+        segments = result['recap_backbone']['segments']
+        index = next(i for i, s in enumerate(segments) if s['state_key'] == PREVIOUS)
+        self.assertEqual(segments[index + 1]['state_key'], SUMMIT)
+        continuation = segments[index]['current_task_continuation']
+        self.assertEqual(continuation['state_key'], REPORT)
+        expected_keys = [f'Huanglong_main_1_7_{suffix}' for suffix in
+                         ('65_1', '65_2', '65_5', '65_6', '65_7', '65_3', '65_4', '66_1', '66_2')]
+        self.assertEqual([event['text_id'] for event in continuation['events']], expected_keys)
+        proof = continuation['placement']
+        self.assertEqual(proof['task_node_id'], 322)
+        self.assertEqual(proof['levelplay_flow_call']['node_id'], 162)
+        self.assertEqual(proof['battle_condition']['Type'], 'Kill')
+        self.assertEqual([t['entry_index'] for t in proof['recap_tips']], [34, 35])
+        self.assertFalse(proof['runtime_verified'])
+        view = build_mainline_reading(result)
+        self.assertEqual(view['retained_text_events'], 95)
+        self.assertEqual(view['omission_markers'], 7)
+        candidates = {r.get('origin') for r in result['batch_coverage']['records']}
+        self.assertNotIn(REPORT, candidates)
+        self.assertIn('剧情_第八章_7_3', candidates)
+
+    def test_whispering_town_investigation_is_placed_before_sonoro(self):
+        from wuwa_story.mainline_reading import build_mainline_reading
+        from wuwa_story.recap_backbone import export_task_backbone
+        from wuwa_story.reading_cases.whispering_town import ARRIVAL, INVESTIGATION, SONORO
+
+        result = export_task_backbone(311000002)
+        segments = result['recap_backbone']['segments']
+        index = next(i for i, segment in enumerate(segments) if segment['state_key'] == ARRIVAL)
+        self.assertEqual(segments[index + 1]['state_key'], SONORO)
+        continuation = segments[index]['current_task_continuation']
+        self.assertEqual(continuation['state_key'], INVESTIGATION)
+        self.assertEqual([event['text_id'] for event in continuation['events']],
+                         [f'Main_Linaxita_2_9_395_{i}' for i in range(2, 26)])
+        self.assertTrue(all(event['kind'] == 'dialogue' for event in continuation['events']))
+        placement = continuation['placement']
+        self.assertEqual(placement['levelplay_flow_call']['node_id'], 17)
+        self.assertEqual([tip['entry_index'] for tip in placement['recap_tips']], [2, 3])
+        self.assertFalse(placement['runtime_verified'])
+        view = build_mainline_reading(result)
+        self.assertEqual(view['retained_text_events'], 515)
+        self.assertEqual(view['omission_markers'], 0)
+        candidates = {record.get('origin') for record in result['batch_coverage']['records']}
+        self.assertNotIn(INVESTIGATION, candidates)
+        self.assertIn('剧情_2_6_狄斯台地主线_上半_呓语镇_3_1', candidates)
+
     def test_real_glory_four_lines_keep_recap_and_asset_gaps(self):
         from wuwa_story.recap_backbone import export_task_backbone
         d=export_task_backbone(125000125)

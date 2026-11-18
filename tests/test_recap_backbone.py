@@ -76,6 +76,87 @@ class BackboneTests(unittest.TestCase):
         self.assertEqual(d['batch_coverage']['status'], 'recap_draft')
         self.assertFalse(d['batch_coverage']['reading_acceptance']['accepted'])
 
+    def test_courtyard_reads_library_success_dialogue_before_boss_transition(self):
+        from wuwa_story.reading_cases.courtyard import BOSS_INTRO, CONFRONTATION, LIBRARY_FLOW
+        from wuwa_story.mainline_reading import build_mainline_reading
+        from wuwa_story.recap_backbone import export_task_backbone
+
+        result = export_task_backbone(139000031)
+        segments = result['recap_backbone']['segments']
+        index = next(i for i, segment in enumerate(segments) if segment['state_key'] == LIBRARY_FLOW)
+        self.assertEqual(segments[index + 1]['state_key'], BOSS_INTRO)
+        inserted = segments[index]['current_task_continuation']
+        self.assertEqual(inserted['state_key'], CONFRONTATION)
+        self.assertEqual([e['text_id'] for e in inserted['events']],
+                         [f'Huanglong_main_1_5_76_{i}' for i in (1, 12, 2, 3, 10, 4, 5, 6, 11, 7, 8, 9)])
+        proof = inserted['placement']
+        self.assertEqual(proof['investigation_node']['Id'], 81)
+        self.assertEqual(proof['success_node']['FinishActions'][1]['Params']['DungeonId'], 1503)
+        self.assertFalse(proof['runtime_verified'])
+        view = build_mainline_reading(result)
+        blocks = view['blocks']
+        continuation = next(i for i, block in enumerate(blocks) if block['scope'] == 'current_task_continuation')
+        self.assertEqual(blocks[continuation - 1]['source_pointer'], f'/recap_backbone/segments/{index}/events')
+        self.assertEqual(blocks[continuation + 1]['source_pointer'], f'/recap_backbone/segments/{index + 1}/events')
+        self.assertEqual(view['retained_text_events'], 389)
+        self.assertEqual(view['omission_markers'], 7)
+
+    def test_old_house_awakening_sits_between_fainting_and_exit(self):
+        from wuwa_story.mainline_reading import build_mainline_reading
+        from wuwa_story.reading_cases.old_house import AFTER_EXIT, AWAKENING, FAINT
+        from wuwa_story.recap_backbone import export_task_backbone
+
+        result = export_task_backbone(189000005)
+        segments = result['recap_backbone']['segments']
+        index = next(i for i, segment in enumerate(segments) if segment['state_key'] == FAINT)
+        self.assertEqual(segments[index + 1]['state_key'], AFTER_EXIT)
+        continuation = segments[index]['current_task_continuation']
+        self.assertEqual(continuation['state_key'], AWAKENING)
+        self.assertEqual([e['text_id'] for e in continuation['events']],
+                         [f'Main_HuangLong_SYYLFML_290_{i}' for i in range(1, 8)])
+        placement = continuation['placement']
+        self.assertEqual(placement['entry_teleport']['Params']['DungeonId'], 2525)
+        self.assertEqual(placement['flow_call_sites'][AWAKENING]['path'][1], 135)
+        self.assertEqual((placement['exit_node_id'], placement['exit_tip']['entry_index']), (133, 8))
+        self.assertFalse(placement['runtime_verified'])
+        view = build_mainline_reading(result)
+        blocks = view['blocks']
+        inserted = next(i for i, block in enumerate(blocks) if block['scope'] == 'current_task_continuation')
+        self.assertEqual(blocks[inserted - 1]['source_pointer'], f'/recap_backbone/segments/{index}/events')
+        self.assertEqual(blocks[inserted + 1]['source_pointer'], f'/recap_backbone/segments/{index + 1}/events')
+        self.assertEqual(view['retained_text_events'], 453)
+        self.assertEqual(view['omission_markers'], 1)
+        self.assertNotIn(AWAKENING, {r.get('origin') for r in result['batch_coverage']['records']})
+
+    def test_camp_conversation_uses_entity_lifecycle_and_is_marked_optional(self):
+        from wuwa_story.reading_cases.camp import ARRIVAL, CAMP_TALK, MESSENGER
+        from wuwa_story.mainline_reading import build_mainline_reading
+        from wuwa_story.recap_backbone import export_task_backbone
+
+        result = export_task_backbone(140000004)
+        segments = result['recap_backbone']['segments']
+        index = next(i for i, segment in enumerate(segments) if segment['state_key'] == ARRIVAL)
+        self.assertEqual(segments[index + 1]['state_key'], MESSENGER)
+        continuation = segments[index]['current_task_continuation']
+        self.assertEqual(continuation['state_key'], CAMP_TALK)
+        self.assertTrue(continuation['optional'])
+        self.assertEqual([e['text_id'] for e in continuation['events']],
+                         [f'Huanglong_main_1_7_5_{i}' for i in (1, 7, 8, 2, 3, 4, 5, 6)])
+        placement = continuation['placement']
+        self.assertEqual(placement['entity_interaction']['entity_id'], 140800001)
+        self.assertEqual(placement['awake']['source_path'], [30, 'FinishActions', 2])
+        self.assertEqual(placement['destroy']['source_path'], [110, 'EnterActions', 1])
+        self.assertFalse(placement['runtime_verified'])
+        view = build_mainline_reading(result)
+        self.assertEqual(view['retained_text_events'], 404)
+        self.assertEqual(view['omission_markers'], 0)
+        blocks = view['blocks']
+        inserted = next(i for i, block in enumerate(blocks) if block['scope'] == 'current_task_continuation')
+        self.assertEqual(blocks[inserted]['introduction'], '【检查营地 · 可选交谈】')
+        self.assertEqual(blocks[inserted - 1]['source_pointer'], f'/recap_backbone/segments/{index}/events')
+        self.assertEqual(blocks[inserted + 1]['source_pointer'], f'/recap_backbone/segments/{index + 1}/events')
+        self.assertNotIn(CAMP_TALK, {r.get('origin') for r in result['batch_coverage']['records']})
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,66 +1,42 @@
-# 项目架构
+# 程序运行架构
 
-## 数据流
+## 命令走向
 
-```text
-ConfigDB只读快照
-  → 数据库解码与文本/姓名索引
-  → 任务、回顾、流程及外部内容关联
-  → 所选路线或回顾草稿与候选材料
-  → JSON证据与TXT阅读版
-  → 绑定源哈希的阅读验收
+```mermaid
+flowchart TD
+    CLI["cli.main"] --> Strict["export-task / export-mainline"]
+    CLI --> Reading["export-recap / export-reading-batch"]
+    DB["本地 ConfigDB（SQLite 只读）"] --> Decode["配置解码与语言文本索引"]
+    Decode --> Exporter["Exporter 解析选中流程"]
+    Strict --> Exporter
+    Reading --> Analyze["reading_batch.analyze"]
+    Analyze --> Exporter
+    Analyze --> Recap["回顾、触发证据与独立片段"]
+    Exporter --> Write["write_result"]
+    Recap --> Write
+    Write --> Pair["JSON 语料和 TXT 阅读稿"]
+    Pair --> Index["批量报告和主线连读索引"]
 ```
 
-## 模块分组
+`python run.py`、`python -m wuwa_story` 和安装后的 `wuwa-story` 都调用 `cli.main`。CLI 按命令加载相应模块，因此帮助和参数校验可在无数据环境中运行。具体命令见[命令参考](commands.md)。
 
-源码包保留既有 `wuwa_story.*` 导入路径。下表按职责定位模块。
+## 一次导出怎么运行
 
-|职责|主要模块|
+1. **读取配置。** `paths.py` 解析输入和输出目录，`database.py` 以 SQLite 只读模式打开 ConfigDB。解析器从 `BinData` 提取内嵌动作、任务和回顾记录，再解析中文文本与说话人。批次通过 `Snapshot` 复用已读取的行。
+2. **评估任务路线。** `export_task.py` 的 `Exporter` 识别支持的任务结构、流程引用和选项。严格批次记录每个任务的首个失败原因。覆盖导出优先使用可取得的路线，必要时由 `recap_backbone.py` 按回顾条目逐段解析。
+3. **核对顺序和来源。** `dependencies.py` 与 `task_flows.py` 记录同节点的调用和完成关系。实体、玩法和副本模块补充来源。`reading_cases/` 保存依赖特定任务配置的补位规则，按证据可用的阶段接入。无法定位的材料保留在 JSON。
+4. **写出阅读稿。** `write_result` 保存完整 JSON。`mainline_reading.py` 选择 TXT 要展示的正文、选项和略过标记，并保存指回 JSON 原事件的路径。
+5. **建立跨任务索引。** `chapter_reading_index.py` 在批量产物写出后，按任务前置、已核对的章节回顾和章节树组织阅读顺序。索引链接原有 TXT 和 JSON 文件。
+
+## 源码位置
+
+| 职责 | 主要模块 |
 |---|---|
-|程序入口|`cli.py`、`__main__.py`、根目录`run.py`|
-|路径与数据|`paths.py`、`database.py`、`inventory.py`、`index.py`|
-|任务和流程|`export_task.py`、`coverage.py`、`variables.py`、`conditional_recap.py`|
-|批量与回顾|`batch.py`、`reading_batch.py`、`recap_backbone.py`、`remaining_blockers.py`|
-|依赖与归属|`dependencies.py`、`declared_entity_content.py`、`declared_levelplay.py`、`dungeon_candidates.py`|
-|副本时序|`levelplay_order.py`、`dungeon_return_text.py`、`dungeon_trigger_review.py`|
-|外部正文|`external.py`、`phone.py`、`guides.py`、`letters.py`、`reigns.py`、`captions.py`|
-|人物与显示|`speakers.py`、`inventory_speakers.py`、`rendering.py`、`reading.py`、`reading_markup.py`|
-|阅读验收|`reading_review.py`与`docs/reviews/`中的审查记录|
+| CLI、目录与输入 | `cli.py`、`paths.py`、`database.py`、`batch.py` |
+| 任务结构、流程和选项 | `export_task.py`、`coverage.py`、`variables.py`、`conditional_recap.py` |
+| 回顾、依赖及归属 | `recap_backbone.py`、`chapter_recap.py`、`dependencies.py`、`declared_entity_content.py`、`declared_levelplay.py` |
+| 特定任务的补位 | `reading_cases/`，其中 `continuations.py` 集中接入依赖回顾、任务、实体或玩法证据的补充对白 |
+| 手机、资料和字幕 | `external.py`、`phone.py`、`letters.py`、`captions.py` 等 |
+| 批量输出与阅读审查 | `reading_batch.py`、`mainline_reading.py`、`chapter_reading_index.py`、`reading_review.py` |
 
-动作支持模块在同一包内按主题划分，例如镜头、屏幕效果、NPC表演、子关卡和变量赋值。新增规则优先复用现有解析器，并以明确参数形状及真实案例验证。
-
-## 运行入口
-
-`python run.py`、`python -m wuwa_story`和安装后的`wuwa-story`共同委派到`cli.main`。CLI按需加载解析模块，帮助与参数检查可在没有数据库时运行。详细参数见[命令参考](commands.md)。
-
-旧的模块运行入口如`python -m wuwa_story.recap_backbone`继续可用。公开模块路径保留，便于已有脚本和测试继续运行。
-
-## 文件生命周期
-
-GitHub仓库按下面的层次组织；保留现有解析模块名，避免目录调整破坏调用方。
-
-```text
-.github/workflows/   无游戏数据的CI检查
-src/wuwa_story/      解析、证据关联、渲染和CLI
-tests/unit/          不需要数据库的测试
-tests/               配置回归与规则测试
-scripts/audits/      批次比较与专项检查
-examples/            虚构的输出格式示例
-docs/                指南、状态、研究和历史
-```
-
-- `ConfigDB/`保存输入快照，由数据库模块使用SQLite只读连接访问。
-- `outputs/`保存可复现语料、覆盖报告和审查版。批次目录带时间戳。
-- `work/`保存临时探查及运行日志。
-- `docs/research/`保存长期有用的规则证据，`docs/reviews/`保存审查结论。
-- 根目录规划文件只保留当前状态，完整历史存于`docs/history/`。
-
-`work/asset_exports/`和`work/client-scripts/`属于本地补充输入，不按普通缓存处理。清理目录前先区分输入与可重新生成的产物。
-
-## 能力与已知限制
-
-已有能力包括分支选择、可验证的条件投影、回顾顺序、说话人关联、外部文本提取、局部同步调用及保守的候选归属。JSON分别保留确定范围和未核验项，阅读验收需检查关键缺段、重复与衔接。
-
-当前还有任务路线中断、无回顾排序、复杂变量和状态转移、QTE、运行时回调、部分媒体内容等限制。数据库字段解释依赖快照版本。`database.py`导入会建立文本索引，一些旧检查模块仍通过脚本入口执行。
-
-下一步开发以[任务计划](../task_plan.md)为准。各项具体规则的证据见[研究目录](research/README.md)。
+支持了哪些节点与选项，以及写入阅读稿时需要哪些证据，见[任务节点与对白选择](selection.md)。JSON 的字段及其保证范围见[语料格式](corpus-format.md)。

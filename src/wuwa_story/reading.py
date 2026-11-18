@@ -84,6 +84,10 @@ def coverage_reading_text(result):
                     lines.append('【条件路线】按“' + option + '”可选时的分支排列，具体条件保留在JSON。')
             body = reading_text({'title': '', 'events': segment['events'], 'validation': {}}, named_values=named_values)
             lines.append(body.strip())
+            continuation = segment.get('current_task_continuation')
+            if continuation:
+                lines.append(continuation['scene_title'])
+                lines.append(reading_text({'title': '', 'events': continuation['events'], 'validation': {}}).strip())
             for fragment in segment.get('local_fragments', []):
                 lines.append('【界面调用后的配置对白：实际返回及与前文的衔接待核验】')
                 lines.append(reading_text({'title': '', 'events': fragment['events'], 'validation': {}}).strip())

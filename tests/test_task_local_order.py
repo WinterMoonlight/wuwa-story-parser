@@ -253,7 +253,7 @@ class TaskLocalOrderTests(unittest.TestCase):
         self.assertEqual(text.count('小满的心愿纸条'), 1)
         self.assertLess(text.index('第三张心愿纸'), text.index('小满的心愿纸条'))
         self.assertLess(text.index('小满的心愿纸条'), text.index('在你思考关于'))
-        self.assertEqual(build_mainline_reading(result)['status'], 'local_fragments_only')
+        self.assertEqual(build_mainline_reading(result)['status'], 'ordered_draft_with_gaps')
         external_records = [r for r in result['batch_coverage']['records']
                             if r.get('pointer', '').startswith('/external_content/0/texts/')]
         self.assertEqual(len(external_records), 2)

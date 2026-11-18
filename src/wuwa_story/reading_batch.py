@@ -250,6 +250,8 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
                 gaps.append({'kind': 'recap_dependency_corrected', 'details': corrections})
             if backbone['phone_tip_insertions']:
                 gaps.append({'kind':'phone_tip_anchored', 'messages':[p['message_id'] for p in backbone['phone_tip_insertions']]})
+            from .reading_cases.continuations import add_recap_continuations
+            add_recap_continuations(quest, nodes, backbone, states, source, choices)
             gaps.append({'kind': 'recap_backbone_only', 'blocked_segments': backbone['blocked_segments']})
     if not result['events'] and not backbone and not recap:
         from .task_local_order import adjacent_task_sequences
@@ -276,6 +278,15 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
             result['task_local_sequences'] = task_sequences
     task_sequences = (backbone or result).get('task_local_sequences', [])
     local_sequence_pointer = '/recap_backbone/task_local_sequences' if backbone else '/task_local_sequences'
+    from .declared_levelplay import declared_levelplays
+    play_links, play_gaps, play_audits = declared_levelplays(quest, nodes,
+        [e for entries in recap_arrays for e in entries], source)
+    from .declared_entity_content import declared_entity_content
+    child_links, child_gaps = declared_entity_content(quest, source)
+    if backbone:
+        from .reading_cases.continuations import add_owned_continuations
+        add_owned_continuations(quest, nodes, backbone, states, source, choices,
+                                play_links, play_audits, child_links)
     records = []
     from .parallel_guidance import guidance_evidence
     guidance = guidance_evidence(nodes, [e for entries in recap_arrays for e in entries])
@@ -384,6 +395,13 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
                                     'pointer': f'/recap_backbone/segments/{si}/local_fragments/{fi}/events/{ei}'})
                     if event.get('text_id'):
                         selected.add((event.get('state_key', segment['state_key']), event['text_id']))
+            continuation = segment.get('current_task_continuation')
+            if continuation:
+                for ei, event in enumerate(continuation['events']):
+                    records.append({'category': 'unverified', 'text': event['text'],
+                                    'order_verified': False, 'order_scope': continuation['order_scope'],
+                                    'pointer': f'/recap_backbone/segments/{si}/current_task_continuation/events/{ei}'})
+                    selected.add((event['state_key'], event['text_id']))
             for tid in segment.get('missing_text_ids', []):
                 result['validation']['missing_text_ids'].append(tid)
             if segment['status'] == 'blocked':
@@ -467,8 +485,6 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
         if channels:
             gaps.append({'kind': 'flow_external_calls_require_review', 'state_key': key, 'calls': channels})
     # Explicit ownership permits candidate inventory, not a new ordered flow reference.
-    from .declared_entity_content import declared_entity_content
-    child_links, child_gaps = declared_entity_content(quest, source)
     child_keys = sorted({link['state_key'] for link in child_links} - refs - set(recap))
     child_occurrences = 0
     for key in child_keys:
@@ -492,9 +508,6 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
                      'state_keys': child_keys})
     if child_gaps:
         gaps.append({'kind': 'declared_entity_unresolved', 'details': child_gaps})
-    from .declared_levelplay import declared_levelplays
-    play_links, play_gaps, play_audits = declared_levelplays(quest, nodes,
-        [e for entries in recap_arrays for e in entries], source)
     from .dungeon_candidates import dungeon_candidates
     dungeon_links, dungeon_gaps, dungeon_audits = dungeon_candidates(nodes, source)
     play_links.extend(dungeon_links)
@@ -726,6 +739,26 @@ def analyze(quest, nodes, states, handbooks, source, strict_record, choices=None
         from .sequence_dependencies import review_sequence_dependencies
         result['sequence_dependency_review'] = review_sequence_dependencies(
             quest, nodes, source, result.get('task_local_sequences', []), play_audits)
+        if not recap_rows and qid == 140800000:
+            from .reading_cases.jinzhou import build_jinzhou_draft
+            draft = build_jinzhou_draft(result, quest, nodes, states, source, choices)
+            if draft:
+                result['jinzhou_reading_draft'] = draft
+        if not recap_rows and result.get('task_local_sequences'):
+            from .reading_cases.moon import build_moon_draft
+            moon_draft = build_moon_draft(result, quest, nodes, states, source, choices)
+            if moon_draft:
+                result['moon_reading_draft'] = moon_draft
+            from .chapter_recap import recover_chapter_recap
+            placement = recover_chapter_recap(
+                quest, nodes, result['task_local_sequences'], result['batch_coverage'], source,
+                states=states, choices=choices)
+            if placement:
+                result['chapter_recap_order'] = placement
+                result['batch_coverage']['order']['chapter_recap_placement'] = {
+                    'recap_quest_id': placement['recap_quest_id'],
+                    'covers_all_reading_groups': placement['covers_all_reading_groups'],
+                    'runtime_order_verified': False}
     return result
 
 
@@ -785,6 +818,8 @@ def export_reading_batch():
     from .text_order import write_report as write_text_order_report
     write_text_order_report(text_order_reviews, root)
     from .mainline_reading import write_mainline_report
-    write_mainline_report(root, report)
+    reading_report = write_mainline_report(root, report)
+    from .chapter_reading_index import write_chapter_reading_index
+    write_chapter_reading_index(root, reading_report, source.rows('db_QuestTree.db', 'questtreenode'))
     print(root, summary, flush=True)
     return root, report

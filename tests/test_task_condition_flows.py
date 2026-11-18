@@ -108,7 +108,9 @@ class TaskConditionFlowTests(unittest.TestCase):
         self.assertEqual(len(keys), 3)
         view = build_mainline_reading(result)
         self.assertEqual(view['retained_text_events'], 67)
-        self.assertEqual(view['status'], 'local_fragments_only')
+        self.assertEqual(view['status'], 'ordered_draft')
+        self.assertEqual([entry['state_key'].rsplit('_', 1)[-1]
+                          for entry in result['chapter_recap_order']['flow_entries']], ['1', '3', '2'])
         self.assertFalse(result['condition_flow_review']['whole_task_order_verified'])
         female = next(g for g in groups if g['node_id'] == 84)
         self.assertEqual(female['proof']['gender_selections'][0]['selector_id'], 89)

@@ -43,15 +43,23 @@ def _dependency_runs(edges):
     return runs
 
 
-def _flow_segment(key, states, source, choices):
-    parser = Exporter(source=source, choices=choices, allow_incomplete=True, configured_text_order=True)
-    parser.state_key = key
+def _flow_segment(key, states, source, choices, *, record_constant_writes=False):
     try:
         raw, fields = flow_actions(states[key]['BinData'])
+        recorder = None
+        if record_constant_writes:
+            from .constant_writes import constant_write_recorder
+            recorder = constant_write_recorder(raw, key)
+        parser = Exporter(source=source, choices=choices, allow_incomplete=True, configured_text_order=True,
+                          variable_environment=recorder)
+        parser.state_key = key
         if parser.actions(raw):
             return None
     except (ValueError, KeyError, TypeError, IndexError, struct.error):
         return None
+    if recorder:
+        parser.unverified_content.append({'kind': 'isolated_constant_write_audit',
+                                          'trace': recorder.trace, 'runtime_executed': False})
     rendered = render_result({'title': '', 'events': parser.events, 'route': {'choices': parser.decisions}})
     return {'state_key': key, 'events': rendered['events'], 'route': rendered['route'],
             'source_actions': raw, 'action_fields': fields, 'sha256': sha256(states[key]['BinData']).hexdigest(),

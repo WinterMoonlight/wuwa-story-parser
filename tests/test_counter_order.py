@@ -91,7 +91,7 @@ class CounterOrderTests(unittest.TestCase):
         text = mainline_reading_text(result)
         self.assertLess(text.index('还有两个'), text.index('还剩下最后一个'))
         self.assertLess(text.index('还剩下最后一个'), text.index('岁主应该可以脱困'))
-        self.assertEqual(build_mainline_reading(result)['status'], 'local_fragments_only')
+        self.assertEqual(build_mainline_reading(result)['status'], 'ordered_draft_with_gaps')
         self.assertFalse(group['proof']['initial_value_assumed'])
 
 
